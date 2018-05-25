@@ -6,6 +6,11 @@ spring:
 #    username: ${SPRING_DATASOURCE_USERNAME:pup}
 #    password: ${SPRING_DATASOURCE_PASSWORD:pup}
 
+management:
+  endpoints:
+    web:
+      base-path: '/'
+
 reform:
   idam:
     api:
@@ -21,28 +26,6 @@ info:
     project: ${PACKAGES_PROJECT:evidence}
     name: ${PACKAGES_NAME:dm-store}
 #    version: ${PACKAGES_VERSION:unknown}
-
-health:
-  status:
-    order:
-    - FATAL
-    - DOWN
-    - UNKNOWN
-    - UP
-  disk:
-    threshold: ${HEALTH_DISK_THRESHOLD:262144000}
-
-management:
-  endpoints:
-    web:
-      base-path: '/'
-
-
-#endpoints:
-#  health:
-#    sensitive: ${ENDPOINTS_HEALTH_SENSITIVE:false}
-#  info:
-#    sensitive: ${ENDPOINTS_INFO_SENSITIVE:false}
 
 toggle:
   includeidamhealth: ${ENABLE_IDAM_HEALTH_CHECK:false}
