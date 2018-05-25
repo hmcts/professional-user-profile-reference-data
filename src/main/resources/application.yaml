@@ -37,13 +37,6 @@ management:
     web:
       base-path: '/'
 
-management:
-  security:
-#    enabled: ${MANAGEMENT_SECURITY_ENABLED:false}
-  diskspace:
-    enabled: true
-  db:
-    enabled: true
 
 #endpoints:
 #  health:
