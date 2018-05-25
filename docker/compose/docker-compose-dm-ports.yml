@@ -1,0 +1,16 @@
+---
+version: '2.1'
+
+services:
+
+  dm-show:
+    ports:
+     - 3608:8080
+
+  dm-store:
+    ports:
+     - 4603:8080
+
+  dm-store-db:
+    ports:
+     - 5432:5432

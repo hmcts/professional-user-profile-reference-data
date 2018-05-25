@@ -1,0 +1,196 @@
+#!groovy
+
+properties([
+    [
+        $class: 'GithubProjectProperty',
+        displayName: 'Document Management Store App',
+        projectUrlStr: 'https://github.com/hmcts/document-management-store-app'
+    ],
+    parameters([
+        booleanParam(
+            defaultValue: false,
+            description: 'Run Performance',
+            name: 'RUN_PT'
+        )
+    ]),
+    pipelineTriggers([
+        [$class: 'GitHubPushTrigger']
+    ])
+])
+
+@Library("Infrastructure")
+
+def type = "java"
+def product = "pui"
+def component = "pup"
+
+def channel = '#pui-pipeline'
+
+List<LinkedHashMap<String, Object>> secrets = [
+    secret('s2s-token', 'S2S_TOKEN')
+]
+
+static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
+    [ $class: 'AzureKeyVaultSecret',
+      secretType: 'Secret',
+      name: secretName,
+      version: '',
+      envVariable: envVar
+    ]
+}
+
+withPipeline(type , product, component) {
+    enableSlackNotifications(channel)
+//    enableDbMigration()
+    loadVaultSecrets(secrets)
+
+//    after('checkout') {
+//        echo '${product}-${component} out'
+//        sh '''
+//mkdir -p application/src/main/resources/META-INF
+//echo "allprojects { task printVersionInit { doLast { println project.version } } }" > init.gradle
+//
+//tee application/src/main/resources/META-INF/build-info.properties <<EOF 2>/dev/null
+//build.version=$(./gradlew -q printVersion)
+//build.number=${BUILD_NUMBER}
+//build.commit=$(git rev-parse HEAD)
+//build.date=$(date)
+//EOF
+//
+//'''
+//    }
+//
+//    after('test'){
+//        junit 'application/build/test-results/test/**/*.xml'
+//        publishHTML([
+//            allowMissing         : true,
+//            alwaysLinkToLastBuild: true,
+//            keepAll              : true,
+//            reportDir            : "application/build/reports/tests/test/",
+//            reportFiles          : 'index.html',
+//            reportName           : 'Unit Test Report'
+//        ])
+//
+//        publishHTML([
+//            allowMissing         : true,
+//            alwaysLinkToLastBuild: true,
+//            keepAll              : true,
+//            reportDir            : "application/build/reports/checkstyle/",
+//            reportFiles          : 'main.html',
+//            reportName           : 'Checkstyle Main Report'
+//        ])
+//        publishHTML([
+//            allowMissing         : true,
+//            alwaysLinkToLastBuild: true,
+//            keepAll              : true,
+//            reportDir            : "application/build/reports/checkstyle/",
+//            reportFiles          : 'test.html',
+//            reportName           : 'Checkstyle Test Report'
+//        ])
+//        publishHTML([
+//            allowMissing         : true,
+//            alwaysLinkToLastBuild: true,
+//            keepAll              : true,
+//            reportDir            : "application/build/reports/pmd/",
+//            reportFiles          : 'main.html',
+//            reportName           : 'PMD Main Report'
+//        ])
+//        publishHTML([
+//            allowMissing         : true,
+//            alwaysLinkToLastBuild: true,
+//            keepAll              : true,
+//            reportDir            : "application/build/reports/pmd/",
+//            reportFiles          : 'test.html',
+//            reportName           : 'PMD Test Report'
+//        ])
+//
+//        try {
+//            sh './gradlew jacocoTestReport --info'
+//        }finally {
+//            jacoco(execPattern: 'application/build/jacoco/test.exec', buildOverBuild: false,
+//                exclusionPattern: '**/test/*, ' +
+//                    '**/uk/gov/hmcts/dm/DmApp.java,'+
+//                    '**/uk/gov/hmcts/dm/hateos/*,'+
+//                    '**/uk/gov/hmcts/dm/exception/*,'+
+//                    '**/uk/gov/hmcts/dm/domain/*,'+
+//                    '**/uk/gov/hmcts/dm/commandobject/*,'+
+//                    '**/uk/gov/hmcts/dm/hibernate/*,'+
+//                    '**/uk/gov/hmcts/dm/config/**/*,'+
+//                    '**/uk/gov/hmcts/dm/errorhandler/*,'+
+//                    '**/uk/gov/hmcts/dm/repository/RepositoryFinder.java')
+//            publishHTML([
+//                allowMissing         : true,
+//                alwaysLinkToLastBuild: true,
+//                keepAll              : true,
+//                reportDir            : "application/build/reports/jacoco/test/html/",
+//                reportFiles          : 'index.html',
+//                reportName           : 'Jacoco Coverage Report'
+//            ])
+//        }
+//    }
+//
+//    after('smoketest:spreview') {
+//        publishHTML([
+//            allowMissing         : true,
+//            alwaysLinkToLastBuild: true,
+//            keepAll              : true,
+//            reportDir            : "smokeTests/build/reports/tests/smoke/",
+//            reportFiles          : 'index.html',
+//            reportName           : 'SPREVIEW Smoke Test'
+//        ])
+//    }
+//
+//    after('functionalTest:spreview') {
+//        publishHTML([
+//            allowMissing         : true,
+//            alwaysLinkToLastBuild: true,
+//            keepAll              : true,
+//            reportDir            : "functionalTests/build/reports/tests/functional/",
+//            reportFiles          : 'index.html',
+//            reportName           : 'SPREVIEW Functional Test'
+//        ])
+//        if (params.RUN_PT) {
+////            Performance Test
+//            sh './gradlew gatlingRun'
+//            gatlingArchive()
+//        }
+//    }
+//
+//    after('smoketest:saat') {
+//        publishHTML([
+//            allowMissing         : true,
+//            alwaysLinkToLastBuild: true,
+//            keepAll              : true,
+//            reportDir            : "smokeTests/build/reports/tests/smoke/",
+//            reportFiles          : 'index.html',
+//            reportName           : 'SAAT Smoke Test'
+//        ])
+//    }
+//
+//    after('functionalTest:saat') {
+//        publishHTML([
+//            allowMissing         : true,
+//            alwaysLinkToLastBuild: true,
+//            keepAll              : true,
+//            reportDir            : "functionalTests/build/reports/tests/functional/",
+//            reportFiles          : 'index.html',
+//            reportName           : 'SAAT Functional Test'
+//        ])
+//        if (params.RUN_PT) {
+////            Performance Test
+//            sh './gradlew gatlingRun'
+//            gatlingArchive()
+//        }
+//    }
+//
+//    after('smoketest:sprod'){
+//        publishHTML([
+//            allowMissing         : true,
+//            alwaysLinkToLastBuild: true,
+//            keepAll              : true,
+//            reportDir            : "smokeTests/build/reports/tests/smoke/",
+//            reportFiles          : 'index.html',
+//            reportName           : 'SPROD Smoke Test'
+//        ])
+//    }
+}
