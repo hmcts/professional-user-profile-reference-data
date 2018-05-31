@@ -3,15 +3,6 @@ version: '2.1'
 
 services:
 
-  dm-show:
-    ports:
-     - 3608:8080
-
-#  dm-store:
-#    ports:
-#     - 4603:8080
-#     - 5005:5005
-
-  dm-store-db:
-    ports:
-     - 5432:5432
+  rd-pup-postgres-db:
+      ports:
+      - 5432:5432

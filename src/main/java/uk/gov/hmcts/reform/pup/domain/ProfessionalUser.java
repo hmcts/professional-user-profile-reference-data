@@ -1,10 +1,24 @@
 package uk.gov.hmcts.reform.pup.domain;
 
-public class ProfessionalUserProfile {
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.util.List;
+import java.util.UUID;
+
+@Entity
+public class ProfessionalUser {
+
+    @Id
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    private UUID uuid;
 
     private String loginId;
     private String proOrgId;
-    private String pbaRefs;
+//    private List<PayByAccountNumber> pbaRefs;
     private String firstName;
     private String lastName;
     private String email;
@@ -12,25 +26,26 @@ public class ProfessionalUserProfile {
     private String roles;
 
 
-    public ProfessionalUserProfile(String loginId) {
+    public ProfessionalUser() {}
+
+    public ProfessionalUser(String loginId) {
         this.loginId = loginId;
     }
 
-    public ProfessionalUserProfile() {
-    }
-
+    public UUID getUuid() {return uuid;}
     public String getLoginId() { return loginId; }
     public String getProOrgId() { return proOrgId; }
-    public String getPbaRefs() { return pbaRefs; }
+//    public List<PayByAccountNumber> getPbaRefs() { return pbaRefs; }
     public String getFirstName() { return firstName; }
     public String getLastName() { return lastName; }
     public String getEmail() { return email; }
     public String getMobile2fa() { return mobile2fa; }
     public String getRoles() { return roles; }
 
+    public void setUuid(UUID uuid) {this.uuid = uuid;}
     public void setLoginId(String loginId) { this.loginId = loginId; }
     public void setProOrgId(String proOrgId) { this.proOrgId = proOrgId; }
-    public void setPbaRefs(String pbaRefs) { this.pbaRefs = pbaRefs; }
+//    public void setPbaRefs(List<PayByAccountNumber> pbaRefs) { this.pbaRefs = pbaRefs; }
     public void setFirstName(String firstName) { this.firstName = firstName; }
     public void setLastName(String lastName) { this.lastName = lastName; }
     public void setEmail(String email) { this.email = email; }
