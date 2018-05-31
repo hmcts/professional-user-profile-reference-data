@@ -5,9 +5,9 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQL94Dialect
     database: postgresql
     show-sql: ${SHOW_SQL:true}
-  hibernate:
-    naming:
-      physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/pup}
     username: ${SPRING_DATASOURCE_USERNAME:pup}
