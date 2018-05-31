@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.web.client.RestTemplate;
-import uk.gov.hmcts.reform.pup.actuate.health.model.HealthCheckResponse;
+import uk.gov.hmcts.reform.ref.pup.actuate.health.model.HealthCheckResponse;
 import uk.gov.hmcts.reform.ref.pup.actuate.health.model.HealthCheckResponse;
 
 import static net.logstash.logback.argument.StructuredArguments.keyValue;

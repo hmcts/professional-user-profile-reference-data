@@ -2,8 +2,8 @@ package uk.gov.hmcts.reform.ref.pup.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import uk.gov.hmcts.reform.pup.repository.ProfessionalUserRepository;
-import uk.gov.hmcts.reform.pup.domain.ProfessionalUser;
+import uk.gov.hmcts.reform.ref.pup.repository.ProfessionalUserRepository;
+import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
 
 import java.util.UUID;
 

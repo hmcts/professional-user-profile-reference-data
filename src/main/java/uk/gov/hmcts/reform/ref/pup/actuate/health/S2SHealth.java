@@ -10,12 +10,12 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 @ConditionalOnProperty("toggle.includes2shealth")
-public class IdamServiceHealth implements HealthIndicator {
+public class S2SHealth implements HealthIndicator {
 
     private final WebChecker idamServiceWebChecker;
 
     @Autowired
-    public IdamServiceHealth(@Value("${reform.s2s.api.baseUrl}") String idamService) {
+    public S2SHealth(@Value("${auth.provider.service.client.baseUrl}") String idamService) {
         idamServiceWebChecker = new WebChecker("s2s", idamService, new RestTemplate());
     }
 

@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.ref.pup.controllers;
+package uk.gov.hmcts.reform.ref.pup.controller;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -6,8 +6,7 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uk.gov.hmcts.reform.pup.domain.ProfessionalUser;
-import uk.gov.hmcts.reform.pup.services.ProfessionalUserProfileService;
+import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
 import uk.gov.hmcts.reform.ref.pup.services.ProfessionalUserProfileService;
 
 import javax.validation.Valid;
