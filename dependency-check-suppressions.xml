@@ -14,4 +14,11 @@
         <gav regex="true">^org\.postgresql:postgresql:.*$</gav>
         <cpe>cpe:/a:postgresql:postgresql_jdbc_driver</cpe>
     </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: h2-1.4.197.jar
+   ]]></notes>
+        <gav regex="true">com.h2database:h2:1.4.197</gav>
+        <cpe>cpe:/a:h2database:h2:1.4.197</cpe>
+    </suppress>
 </suppressions>
