@@ -6,7 +6,7 @@ properties([
         displayName: 'Reference Data Professional User Profile',
         projectUrlStr: 'https://github.com/hmcts/ref-professional-user-profile'
     ],
-    parameters(),
+//    parameters(),
     pipelineTriggers([
         [$class: 'GitHubPushTrigger']
     ])
