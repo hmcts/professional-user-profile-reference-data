@@ -69,6 +69,44 @@ dependencies {
     testCompile('com.h2database:h2:1.4.197')
 }
 
+def coverageExclusionList = [
+    '**uk/gov/hmcts/reform/ref/pup/Application*',
+    '**uk/gov/hmcts/reform/ref/pup/domain/*',
+    '**uk/gov/hmcts/reform/ref/pup/config/**/*',
+    '**uk/gov/hmcts/reform/ref/pup/actuate/health/IdamHealth*',
+    '**uk/gov/hmcts/reform/ref/pup/actuate/health/S2SHealth*'
+]
+
+//(jacocoTestReport | jacocoTestCoverageVerification)
+jacoco {
+    toolVersion = '0.7.9' // jacocoMavenPluginVersion
+    reportsDir = file("$buildDir/reports/jacoco")
+}
+
+jacocoTestReport {
+    executionData(test)
+
+    reports {
+        xml.enabled = true
+        csv.enabled = true
+    }
+
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: coverageExclusionList)
+        })
+    }
+}
+
+//(./gradlew sonarqube)
+sonarqube {
+    properties {
+        property "sonar.projectName", "${rootProject.name}"
+        property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
+        property "sonar.exclusions", coverageExclusionList.join(", ")
+    }
+}
+
 sourceSets {
     aat {
         java {

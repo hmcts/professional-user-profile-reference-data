@@ -5,22 +5,22 @@
 #####################
 ./gradlew check
 
-xdg-open application/build/reports/checkstyle/main.html
-open application/build/reports/checkstyle/main.html
-start "" application/build/reports/checkstyle/main.html
+xdg-open build/reports/checkstyle/main.html
+open build/reports/checkstyle/main.html
+start "" build/reports/checkstyle/main.html
 
-xdg-open application/build/reports/checkstyle/test.html
-open application/build/reports/checkstyle/test.html
-start "" application/build/reports/checkstyle/test.html
+xdg-open build/reports/checkstyle/test.html
+open build/reports/checkstyle/test.html
+start "" build/reports/checkstyle/test.html
 
-xdg-open application/build/reports/pmd/main.html
-open application/build/reports/pmd/main.html
-start "" application/build/reports/pmd/main.html
+xdg-open build/reports/pmd/main.html
+open build/reports/pmd/main.html
+start "" build/reports/pmd/main.html
 
-xdg-open application/build/reports/pmd/test.html
-open application/build/reports/pmd/test.html
-start "" application/build/reports/pmd/test.html
+xdg-open build/reports/pmd/test.html
+open build/reports/pmd/test.html
+start "" build/reports/pmd/test.html
 
-xdg-open application/build/reports/tests/test/index.html
-open application/build/reports/tests/test/index.html
-start "" application/build/reports/tests/test/index.html
+xdg-open build/reports/tests/test/index.html
+open build/reports/tests/test/index.html
+start "" build/reports/tests/test/index.html
