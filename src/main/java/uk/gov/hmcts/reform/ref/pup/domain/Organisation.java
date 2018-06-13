@@ -26,6 +26,11 @@ public class Organisation {
 
     @Getter
     @Setter
+    @ManyToOne
+    private OrganisationType organisationType;
+
+    @Getter
+    @Setter
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "organisation")
     private Set<PaymentAccount> pbas;
 

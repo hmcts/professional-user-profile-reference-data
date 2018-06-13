@@ -1,0 +1,25 @@
+databaseChangeLog:
+- objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+- changeSet:
+    id: 1528891288866-1
+    author: alec (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            name: organisationType_uuid
+            type: uuid
+        tableName: Organisation
+- changeSet:
+    id: 1528891288866-2
+    author: alec (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: organisationType_uuid
+        baseTableName: Organisation
+        constraintName: FKq6hmqc1mkeoeh1tm38pw2mxs
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: uuid
+        referencedTableName: OrganisationType
+
