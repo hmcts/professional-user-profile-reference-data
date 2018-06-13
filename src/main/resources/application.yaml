@@ -66,7 +66,7 @@ auth:
 
 
 authorization:
-  idam-roles-whitelist: ${IDAM_ROLES_WHITELIST:solicitor}
+  idam-roles-whitelist: ${IDAM_ROLES_WHITELIST:solicitor,citizen}
   s2s-names-whitelist: ${S2S_NAMES_WHITELIST:sscs,divorce,ccd,em_gw}
 
 info:

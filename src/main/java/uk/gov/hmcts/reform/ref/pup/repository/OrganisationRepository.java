@@ -2,12 +2,12 @@ package uk.gov.hmcts.reform.ref.pup.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
-import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
+import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
 
 import java.util.UUID;
 
 @PreAuthorize("hasRole('citizen')")
-public interface ProfessionalUserRepository extends CrudRepository<ProfessionalUser,String> {
+public interface OrganisationRepository extends CrudRepository<Organisation,UUID> {
 //
 //    /*
 //     * (non-Javadoc)

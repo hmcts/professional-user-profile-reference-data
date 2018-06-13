@@ -50,6 +50,13 @@ public class Address {
     @Setter
     private String postcode;
 
+    @Getter
+    @Setter
     @ManyToOne()
     private Organisation organisation;
+
+    @Getter
+    @Setter
+    @ManyToOne()
+    private AddressType addressType;
 }
