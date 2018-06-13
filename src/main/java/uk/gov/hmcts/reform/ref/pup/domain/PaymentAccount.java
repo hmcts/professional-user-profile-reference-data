@@ -18,6 +18,7 @@ public class PaymentAccount {
 
     @Getter
     @Setter
+    @ManyToOne
     private PaymentAccountType pbaType;
 
     @Getter

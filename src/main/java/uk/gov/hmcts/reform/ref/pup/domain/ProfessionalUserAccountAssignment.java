@@ -24,10 +24,11 @@ public class ProfessionalUserAccountAssignment {
 
     @Getter
     @Setter
+    @ManyToOne
     private PaymentAccount paymentAccount;
 
     @Getter
     @Setter
-    @ManyToOne()
+    @ManyToOne
     private ProfessionalUser user;
 }
