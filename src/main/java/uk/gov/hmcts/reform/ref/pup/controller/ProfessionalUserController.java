@@ -37,8 +37,8 @@ public class ProfessionalUserController {
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Success", response = ProfessionalUser.class)
     })
-    public ResponseEntity<ProfessionalUser> getMarketStall(@PathVariable UUID uuid) {
-        ProfessionalUser professionalUser = professionalUserProfileService.retrieveProfessionalUser(uuid);
+    public ResponseEntity<ProfessionalUser> getMarketStall(@PathVariable String userId) {
+        ProfessionalUser professionalUser = professionalUserProfileService.retrieveProfessionalUser(userId);
         if (professionalUser != null) {
             return ResponseEntity.ok(professionalUser);
         } else {
@@ -51,8 +51,8 @@ public class ProfessionalUserController {
     @ApiResponses(value = {
         @ApiResponse(code = 204, message = "No Content")
     })
-    public ResponseEntity<ProfessionalUser> deleteMarketStall(@PathVariable UUID uuid) {
-        professionalUserProfileService.deleteProfessionalUser(uuid);
+    public ResponseEntity<ProfessionalUser> deleteMarketStall(@PathVariable String userId) {
+        professionalUserProfileService.deleteProfessionalUser(userId);
         return ResponseEntity.noContent().build();
     }
 

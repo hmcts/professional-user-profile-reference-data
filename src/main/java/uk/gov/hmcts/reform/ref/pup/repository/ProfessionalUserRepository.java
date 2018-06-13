@@ -5,5 +5,5 @@ import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
 
 import java.util.UUID;
 
-public interface ProfessionalUserRepository extends CrudRepository<ProfessionalUser,UUID> {
+public interface ProfessionalUserRepository extends CrudRepository<ProfessionalUser,String> {
 }

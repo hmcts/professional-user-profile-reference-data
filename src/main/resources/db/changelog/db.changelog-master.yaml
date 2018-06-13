@@ -1,4 +1,5 @@
+#- objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
 databaseChangeLog:
 - include:
     relativeToChangelogFile: true
-    file: db.changelog-diff-20180531-1103.yaml
+#    file: db.changelog-diff-20180605-1557.yaml
