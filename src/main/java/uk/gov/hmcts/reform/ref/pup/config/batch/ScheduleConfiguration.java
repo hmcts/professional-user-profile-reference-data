@@ -19,7 +19,7 @@ import org.springframework.scheduling.annotation.Scheduled;
  */
 @Configuration
 @EnableBatchProcessing
-@ConditionalOnProperty("toggle.ttl")
+@ConditionalOnProperty("toggle.uploadCSV")
 public class ScheduleConfiguration {
 
     @Autowired

@@ -20,7 +20,7 @@ spring:
       test-on-borrow: ${TEST_ON_BORROW_DB_CONNECTION:true} # Validate the connection before borrowing it from the pool.
   batch:
     job:
-      enabled: ${ENABLE_TTL:true}
+      enabled: ${ENABLE_CRON:true}
       csvUpload: ${TTL_CRON_EXPRESSION:"*/60 * * * * *"}
 
   liquibase:
@@ -91,3 +91,4 @@ app-insights:
 toggle:
   includeidamhealth: ${ENABLE_IDAM_HEALTH_CHECK:false}
   includes2shealth: ${ENABLE_S2S_HEALTH_CHECK:false}
+  uploadCSV: ${ENABLE_UPLOAD_CSV:true}
