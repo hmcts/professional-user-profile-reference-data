@@ -11,6 +11,7 @@ import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -20,6 +21,7 @@ import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUserAccountAssignmentCsvDT
 import uk.gov.hmcts.reform.ref.pup.services.batch.ProfessionalUserAccountAssignmentCsvProcessor;
 
 @Configuration
+@ConditionalOnProperty("toggle.uploadCSV")
 public class JobConfiguration {
 
     @Autowired
