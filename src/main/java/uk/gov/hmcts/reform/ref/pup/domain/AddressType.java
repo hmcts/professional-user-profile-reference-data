@@ -11,15 +11,10 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class AddressType {
 
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Getter
-    @Setter
-    private UUID uuid;
-
     @Getter
     @Setter
     private String name;

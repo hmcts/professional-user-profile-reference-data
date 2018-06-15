@@ -12,21 +12,19 @@ import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
-/**
- * Created by pawel on 24/01/2018.
- */
 @Configuration
 @EnableBatchProcessing
-@ConditionalOnProperty("toggle.uploadCSV")
+//@ConditionalOnProperty("toggle.uploadCSV")
 public class ScheduleConfiguration {
 
     @Autowired
     private JobLauncher jobLauncher;
 
     @Autowired
-    private Job job;
+    private Job csvFileToDatabaseJob;
 
     @Scheduled(cron = "${spring.batch.job.csvUpload}")
     public void perform() throws JobExecutionAlreadyRunningException, JobRestartException,
@@ -36,7 +34,6 @@ public class ScheduleConfiguration {
             .addString("JobID", String.valueOf(System.currentTimeMillis()))
             .toJobParameters();
 
-        jobLauncher.run(job, param);
-
+        jobLauncher.run(csvFileToDatabaseJob, param);
     }
 }

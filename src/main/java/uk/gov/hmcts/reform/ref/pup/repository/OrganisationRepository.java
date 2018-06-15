@@ -7,8 +7,8 @@ import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
 
 import java.util.UUID;
 
-@PreAuthorize("hasRole('citizen')")
-@Api
+//@PreAuthorize("hasRole('citizen')")
+//@Api
 public interface OrganisationRepository extends CrudRepository<Organisation,UUID> {
 //
 //    /*

@@ -5,8 +5,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
 
-@PreAuthorize("hasRole('citizen')")
-public interface PayAccountRepository extends CrudRepository<PaymentAccount,String> {
+//@PreAuthorize("hasRole('citizen')")
+public interface PaymentAccountRepository extends CrudRepository<PaymentAccount,String> {
 //
 //    /*
 //     * (non-Javadoc)

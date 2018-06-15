@@ -51,6 +51,7 @@ def versions = [
     springBoot         : '2.0.1.RELEASE',
     hmctsJavaLogging   : '3.0.0',
     springfoxSwagger   : '2.9.0',
+    liquibase          : '3.5.3',
 ]
 
 dependencies {
@@ -62,6 +63,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.data:spring-data-rest-webmvc')
+    compile("org.liquibase:liquibase-core:${versions.liquibase}")
     compile("org.postgresql:postgresql:${versions.postgresql}")
     compile("uk.gov.hmcts.reform:java-logging-spring:${versions.hmctsJavaLogging}")
     compile("uk.gov.hmcts.reform:java-logging-httpcomponents:${versions.hmctsJavaLogging}")

@@ -1,7 +1,7 @@
 databaseChangeLog:
 - objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
 - changeSet:
-    id: 1528899714003-1
+    id: 1529058994074-1
     author: alec (generated)
     changes:
     - createTable:
@@ -33,14 +33,14 @@ databaseChangeLog:
             name: postcode
             type: VARCHAR(255)
         - column:
-            name: addressType_uuid
-            type: UUID
+            name: addressType_name
+            type: VARCHAR(255)
         - column:
             name: organisation_uuid
             type: UUID
         tableName: Address
 - changeSet:
-    id: 1528899714003-2
+    id: 1529058994074-2
     author: alec (generated)
     changes:
     - createTable:
@@ -48,14 +48,11 @@ databaseChangeLog:
         - column:
             constraints:
               nullable: false
-            name: uuid
-            type: UUID
-        - column:
             name: name
             type: VARCHAR(255)
         tableName: AddressType
 - changeSet:
-    id: 1528899714003-3
+    id: 1529058994074-3
     author: alec (generated)
     changes:
     - createTable:
@@ -69,11 +66,11 @@ databaseChangeLog:
             name: name
             type: VARCHAR(255)
         - column:
-            name: organisationType_uuid
-            type: UUID
+            name: organisationType_name
+            type: VARCHAR(255)
         tableName: Organisation
 - changeSet:
-    id: 1528899714003-4
+    id: 1529058994074-4
     author: alec (generated)
     changes:
     - createTable:
@@ -81,14 +78,11 @@ databaseChangeLog:
         - column:
             constraints:
               nullable: false
-            name: uuid
-            type: UUID
-        - column:
             name: name
             type: VARCHAR(255)
         tableName: OrganisationType
 - changeSet:
-    id: 1528899714003-5
+    id: 1529058994074-5
     author: alec (generated)
     changes:
     - createTable:
@@ -102,11 +96,11 @@ databaseChangeLog:
             name: organisation_uuid
             type: UUID
         - column:
-            name: pbaType_uuid
-            type: UUID
+            name: pbaType_name
+            type: VARCHAR(255)
         tableName: PaymentAccount
 - changeSet:
-    id: 1528899714003-6
+    id: 1529058994074-6
     author: alec (generated)
     changes:
     - createTable:
@@ -114,14 +108,11 @@ databaseChangeLog:
         - column:
             constraints:
               nullable: false
-            name: uuid
-            type: UUID
-        - column:
             name: name
             type: VARCHAR(255)
         tableName: PaymentAccountType
 - changeSet:
-    id: 1528899714003-7
+    id: 1529058994074-7
     author: alec (generated)
     changes:
     - createTable:
@@ -145,7 +136,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: ProfessionalUser
 - changeSet:
-    id: 1528899714003-8
+    id: 1529058994074-8
     author: alec (generated)
     changes:
     - createTable:
@@ -163,7 +154,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: ProfessionalUserAccountAssignment
 - changeSet:
-    id: 1528899714003-9
+    id: 1529058994074-9
     author: alec (generated)
     changes:
     - addPrimaryKey:
@@ -171,15 +162,15 @@ databaseChangeLog:
         constraintName: AddressPK
         tableName: Address
 - changeSet:
-    id: 1528899714003-10
+    id: 1529058994074-10
     author: alec (generated)
     changes:
     - addPrimaryKey:
-        columnNames: uuid
+        columnNames: name
         constraintName: AddressTypePK
         tableName: AddressType
 - changeSet:
-    id: 1528899714003-11
+    id: 1529058994074-11
     author: alec (generated)
     changes:
     - addPrimaryKey:
@@ -187,15 +178,15 @@ databaseChangeLog:
         constraintName: OrganisationPK
         tableName: Organisation
 - changeSet:
-    id: 1528899714003-12
+    id: 1529058994074-12
     author: alec (generated)
     changes:
     - addPrimaryKey:
-        columnNames: uuid
+        columnNames: name
         constraintName: OrganisationTypePK
         tableName: OrganisationType
 - changeSet:
-    id: 1528899714003-13
+    id: 1529058994074-13
     author: alec (generated)
     changes:
     - addPrimaryKey:
@@ -203,15 +194,15 @@ databaseChangeLog:
         constraintName: PaymentAccountPK
         tableName: PaymentAccount
 - changeSet:
-    id: 1528899714003-14
+    id: 1529058994074-14
     author: alec (generated)
     changes:
     - addPrimaryKey:
-        columnNames: uuid
+        columnNames: name
         constraintName: PaymentAccountTypePK
         tableName: PaymentAccountType
 - changeSet:
-    id: 1528899714003-15
+    id: 1529058994074-15
     author: alec (generated)
     changes:
     - addPrimaryKey:
@@ -219,7 +210,7 @@ databaseChangeLog:
         constraintName: ProfessionalUserAccountAssignmentPK
         tableName: ProfessionalUserAccountAssignment
 - changeSet:
-    id: 1528899714003-16
+    id: 1529058994074-16
     author: alec (generated)
     changes:
     - addPrimaryKey:
@@ -227,7 +218,7 @@ databaseChangeLog:
         constraintName: ProfessionalUserPK
         tableName: ProfessionalUser
 - changeSet:
-    id: 1528899714003-17
+    id: 1529058994074-17
     author: alec (generated)
     changes:
     - addForeignKeyConstraint:
@@ -239,7 +230,7 @@ databaseChangeLog:
         referencedColumnNames: userId
         referencedTableName: ProfessionalUser
 - changeSet:
-    id: 1528899714003-18
+    id: 1529058994074-18
     author: alec (generated)
     changes:
     - addForeignKeyConstraint:
@@ -251,19 +242,7 @@ databaseChangeLog:
         referencedColumnNames: uuid
         referencedTableName: Organisation
 - changeSet:
-    id: 1528899714003-19
-    author: alec (generated)
-    changes:
-    - addForeignKeyConstraint:
-        baseColumnNames: addressType_uuid
-        baseTableName: Address
-        constraintName: FK49y1tml0btfn22qxi3183xrid
-        deferrable: false
-        initiallyDeferred: false
-        referencedColumnNames: uuid
-        referencedTableName: AddressType
-- changeSet:
-    id: 1528899714003-20
+    id: 1529058994074-19
     author: alec (generated)
     changes:
     - addForeignKeyConstraint:
@@ -275,19 +254,31 @@ databaseChangeLog:
         referencedColumnNames: uuid
         referencedTableName: Organisation
 - changeSet:
-    id: 1528899714003-21
+    id: 1529058994074-20
     author: alec (generated)
     changes:
     - addForeignKeyConstraint:
-        baseColumnNames: pbaType_uuid
+        baseColumnNames: pbaType_name
         baseTableName: PaymentAccount
-        constraintName: FKff308o5km4fnrv5fxlrg90s2x
+        constraintName: FKcf3uv6vklicslf45b9ty6yyt6
         deferrable: false
         initiallyDeferred: false
-        referencedColumnNames: uuid
+        referencedColumnNames: name
         referencedTableName: PaymentAccountType
 - changeSet:
-    id: 1528899714003-22
+    id: 1529058994074-21
+    author: alec (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: organisationType_name
+        baseTableName: Organisation
+        constraintName: FKhfymuy4u7xl9qfc9i12r5voo2
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: name
+        referencedTableName: OrganisationType
+- changeSet:
+    id: 1529058994074-22
     author: alec (generated)
     changes:
     - addForeignKeyConstraint:
@@ -299,15 +290,33 @@ databaseChangeLog:
         referencedColumnNames: pbaNumber
         referencedTableName: PaymentAccount
 - changeSet:
-    id: 1528899714003-23
+    id: 1529058994074-23
     author: alec (generated)
     changes:
     - addForeignKeyConstraint:
-        baseColumnNames: organisationType_uuid
-        baseTableName: Organisation
-        constraintName: FKq6hmqc1mkeoeh1tm38pw2mxs
+        baseColumnNames: addressType_name
+        baseTableName: Address
+        constraintName: FKs31rx4mgfa1tla4f2xx251n5u
         deferrable: false
         initiallyDeferred: false
-        referencedColumnNames: uuid
-        referencedTableName: OrganisationType
+        referencedColumnNames: name
+        referencedTableName: AddressType
+- changeSet:
+    id: 1529058994074-24
+    author: alec (generated)
+    changes:
+    - dropSequence:
+        sequenceName: batch_job_execution_seq
+- changeSet:
+    id: 1529058994074-25
+    author: alec (generated)
+    changes:
+    - dropSequence:
+        sequenceName: batch_job_seq
+- changeSet:
+    id: 1529058994074-26
+    author: alec (generated)
+    changes:
+    - dropSequence:
+        sequenceName: batch_step_execution_seq
 

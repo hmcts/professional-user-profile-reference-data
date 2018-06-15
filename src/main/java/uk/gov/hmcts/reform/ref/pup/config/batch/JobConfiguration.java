@@ -5,12 +5,19 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
-import org.springframework.batch.core.step.tasklet.Tasklet;
+import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
+import org.springframework.batch.item.file.mapping.DefaultLineMapper;
+import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.transaction.PlatformTransactionManager;
+import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUserAccountAssignment;
+import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUserAccountAssignmentCsvDTO;
+import uk.gov.hmcts.reform.ref.pup.services.batch.ProfessionalUserAccountAssignmentCsvProcessor;
 
 @Configuration
 public class JobConfiguration {
@@ -24,24 +31,49 @@ public class JobConfiguration {
     @Autowired
     private StepBuilderFactory stepBuilderFactory;
 
-    @Autowired
-    @Qualifier("uploadCSVTasklet")
-    private Tasklet uploadCSVTasklet;
+    @Bean
+    public FlatFileItemReader<ProfessionalUserAccountAssignmentCsvDTO> csvPupaaReader(){
+        FlatFileItemReader<ProfessionalUserAccountAssignmentCsvDTO> reader = new FlatFileItemReader<>();
+        reader.setResource(new ClassPathResource("PBAdata.csv"));
+        reader.setLineMapper(new DefaultLineMapper<ProfessionalUserAccountAssignmentCsvDTO>() {{
+            setLineTokenizer(new DelimitedLineTokenizer() {{
+                setNames("orgName", "pbaNumber", "userEmail");
+            }});
+            setFieldSetMapper(new BeanWrapperFieldSetMapper<ProfessionalUserAccountAssignmentCsvDTO>() {{
+                setTargetType(ProfessionalUserAccountAssignmentCsvDTO.class);
+            }});
+        }});
+        return reader;
+    }
 
     @Bean
-    protected Step step1() {
-        return stepBuilderFactory.get("step1")
+    ItemProcessor<ProfessionalUserAccountAssignmentCsvDTO, ProfessionalUserAccountAssignment> csvPupaaProcessor() {
+        return new ProfessionalUserAccountAssignmentCsvProcessor();
+    }
+
+//    @Bean
+//    ItemProcessor<ProfessionalUserAccountAssignment, ProfessionalUserAccountAssignment> savePupaaProcessor() {
+//        return new ProfessionalUserAccountAssignmentSaveProcessor();
+//    }
+
+
+    @Bean
+    protected Step csvFileToDatabaseStep() {
+        return stepBuilderFactory.get("csvFileToDatabaseStep")
             .transactionManager(transactionManager)
-            .tasklet(uploadCSVTasklet)
+            .<ProfessionalUserAccountAssignmentCsvDTO, ProfessionalUserAccountAssignment>chunk(1)
+            .reader(csvPupaaReader())
+            .processor(csvPupaaProcessor())
+//            .processor(savePupaaProcessor())
             .build();
     }
 
     @Bean
-    public Job job() {
+    Job csvFileToDatabaseJob() {
         return jobBuilderFactory
-            .get("documentRetentionJob")
+            .get("csvFileToDatabaseJob")
             .incrementer(new RunIdIncrementer())
-            .flow(step1())
+            .flow(csvFileToDatabaseStep())
             .end()
             .build();
     }

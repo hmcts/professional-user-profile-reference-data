@@ -8,7 +8,7 @@ import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
 
 import java.util.UUID;
 
-@PreAuthorize("hasRole('citizen')")
+//@PreAuthorize("hasRole('citizen')")
 public interface PaymentAccountTypeRepository extends CrudRepository<PaymentAccountType,UUID> {
 //
 //    /*
