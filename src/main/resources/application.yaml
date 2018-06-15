@@ -78,7 +78,6 @@ info:
     environment: ${PACKAGES_ENVIRONMENT:local}
     project: ${PACKAGES_PROJECT:evidence}
     name: ${PACKAGES_NAME:dm-store}
-#    version: ${PACKAGES_VERSION:unknown}
 
 azure:
   app_insights_key: ${APPINSIGHTS_INSTRUMENTATIONKEY:false}

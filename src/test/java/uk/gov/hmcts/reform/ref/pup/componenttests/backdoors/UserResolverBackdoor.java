@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.ref.pup.test.util.backdoors;
+package uk.gov.hmcts.reform.ref.pup.componenttests.backdoors;
 
 import com.google.common.collect.ImmutableSet;
 import uk.gov.hmcts.reform.auth.checker.core.SubjectResolver;

@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.ref.pup.test;
+package uk.gov.hmcts.reform.ref.pup.componenttests;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,9 +8,8 @@ import uk.gov.hmcts.reform.auth.checker.core.SubjectResolver;
 import uk.gov.hmcts.reform.auth.checker.core.service.Service;
 import uk.gov.hmcts.reform.auth.checker.core.user.User;
 import uk.gov.hmcts.reform.auth.checker.spring.serviceanduser.AuthCheckerServiceAndUserFilter;
-import uk.gov.hmcts.reform.auth.checker.spring.serviceonly.AuthCheckerServiceOnlyFilter;
-import uk.gov.hmcts.reform.ref.pup.test.util.backdoors.ServiceResolverBackdoor;
-import uk.gov.hmcts.reform.ref.pup.test.util.backdoors.UserResolverBackdoor;
+import uk.gov.hmcts.reform.ref.pup.componenttests.backdoors.ServiceResolverBackdoor;
+import uk.gov.hmcts.reform.ref.pup.componenttests.backdoors.UserResolverBackdoor;
 
 @Configuration
 public class ComponentTestConfiguration {
