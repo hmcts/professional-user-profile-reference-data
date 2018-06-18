@@ -1,7 +1,7 @@
 databaseChangeLog:
 - objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
 - changeSet:
-    id: 1529058994074-1
+    id: 1529325825416-1
     author: alec (generated)
     changes:
     - createTable:
@@ -40,7 +40,7 @@ databaseChangeLog:
             type: UUID
         tableName: Address
 - changeSet:
-    id: 1529058994074-2
+    id: 1529325825416-2
     author: alec (generated)
     changes:
     - createTable:
@@ -52,7 +52,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: AddressType
 - changeSet:
-    id: 1529058994074-3
+    id: 1529325825416-3
     author: alec (generated)
     changes:
     - createTable:
@@ -70,7 +70,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: Organisation
 - changeSet:
-    id: 1529058994074-4
+    id: 1529325825416-4
     author: alec (generated)
     changes:
     - createTable:
@@ -82,7 +82,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: OrganisationType
 - changeSet:
-    id: 1529058994074-5
+    id: 1529325825416-5
     author: alec (generated)
     changes:
     - createTable:
@@ -100,7 +100,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: PaymentAccount
 - changeSet:
-    id: 1529058994074-6
+    id: 1529325825416-6
     author: alec (generated)
     changes:
     - createTable:
@@ -112,7 +112,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: PaymentAccountType
 - changeSet:
-    id: 1529058994074-7
+    id: 1529325825416-7
     author: alec (generated)
     changes:
     - createTable:
@@ -136,7 +136,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: ProfessionalUser
 - changeSet:
-    id: 1529058994074-8
+    id: 1529325825416-8
     author: alec (generated)
     changes:
     - createTable:
@@ -154,7 +154,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: ProfessionalUserAccountAssignment
 - changeSet:
-    id: 1529058994074-9
+    id: 1529325825416-9
     author: alec (generated)
     changes:
     - addPrimaryKey:
@@ -162,7 +162,7 @@ databaseChangeLog:
         constraintName: AddressPK
         tableName: Address
 - changeSet:
-    id: 1529058994074-10
+    id: 1529325825416-10
     author: alec (generated)
     changes:
     - addPrimaryKey:
@@ -170,7 +170,7 @@ databaseChangeLog:
         constraintName: AddressTypePK
         tableName: AddressType
 - changeSet:
-    id: 1529058994074-11
+    id: 1529325825416-11
     author: alec (generated)
     changes:
     - addPrimaryKey:
@@ -178,7 +178,7 @@ databaseChangeLog:
         constraintName: OrganisationPK
         tableName: Organisation
 - changeSet:
-    id: 1529058994074-12
+    id: 1529325825416-12
     author: alec (generated)
     changes:
     - addPrimaryKey:
@@ -186,7 +186,7 @@ databaseChangeLog:
         constraintName: OrganisationTypePK
         tableName: OrganisationType
 - changeSet:
-    id: 1529058994074-13
+    id: 1529325825416-13
     author: alec (generated)
     changes:
     - addPrimaryKey:
@@ -194,7 +194,7 @@ databaseChangeLog:
         constraintName: PaymentAccountPK
         tableName: PaymentAccount
 - changeSet:
-    id: 1529058994074-14
+    id: 1529325825416-14
     author: alec (generated)
     changes:
     - addPrimaryKey:
@@ -202,7 +202,7 @@ databaseChangeLog:
         constraintName: PaymentAccountTypePK
         tableName: PaymentAccountType
 - changeSet:
-    id: 1529058994074-15
+    id: 1529325825416-15
     author: alec (generated)
     changes:
     - addPrimaryKey:
@@ -210,7 +210,7 @@ databaseChangeLog:
         constraintName: ProfessionalUserAccountAssignmentPK
         tableName: ProfessionalUserAccountAssignment
 - changeSet:
-    id: 1529058994074-16
+    id: 1529325825416-16
     author: alec (generated)
     changes:
     - addPrimaryKey:
@@ -218,7 +218,7 @@ databaseChangeLog:
         constraintName: ProfessionalUserPK
         tableName: ProfessionalUser
 - changeSet:
-    id: 1529058994074-17
+    id: 1529325825416-17
     author: alec (generated)
     changes:
     - addForeignKeyConstraint:
@@ -230,7 +230,7 @@ databaseChangeLog:
         referencedColumnNames: userId
         referencedTableName: ProfessionalUser
 - changeSet:
-    id: 1529058994074-18
+    id: 1529325825416-18
     author: alec (generated)
     changes:
     - addForeignKeyConstraint:
@@ -242,7 +242,7 @@ databaseChangeLog:
         referencedColumnNames: uuid
         referencedTableName: Organisation
 - changeSet:
-    id: 1529058994074-19
+    id: 1529325825416-19
     author: alec (generated)
     changes:
     - addForeignKeyConstraint:
@@ -254,7 +254,7 @@ databaseChangeLog:
         referencedColumnNames: uuid
         referencedTableName: Organisation
 - changeSet:
-    id: 1529058994074-20
+    id: 1529325825416-20
     author: alec (generated)
     changes:
     - addForeignKeyConstraint:
@@ -266,7 +266,7 @@ databaseChangeLog:
         referencedColumnNames: name
         referencedTableName: PaymentAccountType
 - changeSet:
-    id: 1529058994074-21
+    id: 1529325825416-21
     author: alec (generated)
     changes:
     - addForeignKeyConstraint:
@@ -278,7 +278,7 @@ databaseChangeLog:
         referencedColumnNames: name
         referencedTableName: OrganisationType
 - changeSet:
-    id: 1529058994074-22
+    id: 1529325825416-22
     author: alec (generated)
     changes:
     - addForeignKeyConstraint:
@@ -290,7 +290,7 @@ databaseChangeLog:
         referencedColumnNames: pbaNumber
         referencedTableName: PaymentAccount
 - changeSet:
-    id: 1529058994074-23
+    id: 1529325825416-23
     author: alec (generated)
     changes:
     - addForeignKeyConstraint:
@@ -301,22 +301,4 @@ databaseChangeLog:
         initiallyDeferred: false
         referencedColumnNames: name
         referencedTableName: AddressType
-- changeSet:
-    id: 1529058994074-24
-    author: alec (generated)
-    changes:
-    - dropSequence:
-        sequenceName: batch_job_execution_seq
-- changeSet:
-    id: 1529058994074-25
-    author: alec (generated)
-    changes:
-    - dropSequence:
-        sequenceName: batch_job_seq
-- changeSet:
-    id: 1529058994074-26
-    author: alec (generated)
-    changes:
-    - dropSequence:
-        sequenceName: batch_step_execution_seq
 
