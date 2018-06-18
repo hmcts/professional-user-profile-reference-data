@@ -42,13 +42,13 @@
    file name: spring-batch-core-4.0.1.RELEASE.jar
    ]]></notes>
         <gav regex="true">org.springframework.batch:spring-batch-core:4.0.1.RELEASE</gav>
-        <cpe>a:pivotal_software:spring_framework</cpe>
+        <cpe>cpe:/a:pivotal_software:spring_framework</cpe>
     </suppress>
     <suppress>
         <notes><![CDATA[
    file name: spring-batch-infrastructure-4.0.1.RELEASE.jar
    ]]></notes>
         <gav regex="true">org.springframework.batch:spring-batch-infrastructure:4.0.1.RELEASE</gav>
-        <cpe>a:pivotal_software:spring_framework</cpe>
+        <cpe>cpe:/a:pivotal_software:spring_framework</cpe>
     </suppress>
 </suppressions>
