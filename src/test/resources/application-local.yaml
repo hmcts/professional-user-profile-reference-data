@@ -7,3 +7,10 @@ spring:
     platform: h2
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+     properties:
+       hiberante:
+#         dialect: org.hibernate.dialect.H2Dialect
+
+azure:
+  blob:
+    connection-string: 'xxx'

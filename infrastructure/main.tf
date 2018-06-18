@@ -35,6 +35,9 @@ module "app" {
     SPRING_DATASOURCE_USERNAME = "${module.db.user_name}"
     SPRING_DATASOURCE_PASSWORD = "${module.db.postgresql_password}"
 
+    #Blob Store
+    AZURE_STORAGE_CONNECTION_STRING = "${azurerm_storage_account.storage.primary_connection_string}"
+
     # idam
     IDAM_API_BASE_URI = "${var.idam_api_url}"
     S2S_BASE_URI = "http://${var.s2s_url}-${local.local_env}.service.core-compute-${local.local_env}.internal"
@@ -139,3 +142,29 @@ resource "azurerm_key_vault_secret" "S2S_TOKEN" {
   vault_uri = "${module.key_vault.key_vault_uri}"
 }
 
+# Blob store test
+resource "azurerm_storage_account" "storage" {
+  name = "puprdstoreblob${var.env}"
+  resource_group_name = "${module.app.resource_group_name}"
+  location = "${var.location}"
+  account_tier = "Standard"
+  account_replication_type = "LRS"
+}
+
+resource "azurerm_storage_container" "storage" {
+  name = "storage"
+  resource_group_name = "${module.app.resource_group_name}"
+  storage_account_name = "${azurerm_storage_account.storage.name}"
+  container_access_type = "private"
+}
+
+resource "azurerm_storage_blob" "storage" {
+  name = "storage.vhd"
+
+  resource_group_name = "${module.app.resource_group_name}"
+  storage_account_name = "${azurerm_storage_account.storage.name}"
+  storage_container_name = "${azurerm_storage_container.storage.name}"
+
+  type = "page"
+  size = 10240
+}
