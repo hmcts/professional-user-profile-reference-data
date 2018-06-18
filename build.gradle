@@ -52,7 +52,6 @@ def versions = [
     hmctsJavaLogging   : '3.0.0',
     springfoxSwagger   : '2.9.0',
     liquibase          : '3.5.3',
-    powermock          : '1.6.5',
     h2                 : '1.4.197',
 ]
 
@@ -76,8 +75,6 @@ dependencies {
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.security:spring-security-test')
-    testCompile("org.powermock:powermock-api-mockito:${versions.powermock}")
-    testCompile("org.powermock:powermock-module-junit4:${versions.powermock}")
     testCompile("com.h2database:h2:${versions.h2}")
 }
 
