@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.ref.pup.services;
+package uk.gov.hmcts.reform.ref.pup.services.file;
 
 import org.springframework.web.multipart.MultipartFile;
 

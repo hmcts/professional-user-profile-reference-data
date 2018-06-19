@@ -4,10 +4,15 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 //@PreAuthorize("hasRole('citizen')")
 public interface ProfessionalUserRepository extends CrudRepository<ProfessionalUser,String> {
+
+    List<ProfessionalUser> findByEmail(String s);
+
 //
 //    /*
 //     * (non-Javadoc)

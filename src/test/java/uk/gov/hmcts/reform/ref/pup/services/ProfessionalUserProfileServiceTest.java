@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
 import uk.gov.hmcts.reform.ref.pup.repository.ProfessionalUserRepository;
+import uk.gov.hmcts.reform.ref.pup.services.domain.ProfessionalUserService;
 
 import java.util.Optional;
 
@@ -18,20 +19,16 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 public class ProfessionalUserProfileServiceTest {
 
-    @TestConfiguration
-    static class ProfessionalUserProfileServiceTestTestContextConfiguration {
-
-        @Bean
-        public ProfessionalUserProfileService professionalUserProfileService() {
-            return new ProfessionalUserProfileService();
-        }
-    }
-
     @MockBean
     private ProfessionalUserRepository professionalUserRepository;
 
+    @Bean
+    public ProfessionalUserService professionalUserProfileService() {
+        return new ProfessionalUserService(professionalUserRepository);
+    }
+
     @Autowired
-    private ProfessionalUserProfileService professionalUserProfileService;
+    private ProfessionalUserService professionalUserProfileService;
 
 
     private final static ProfessionalUser testUser = new ProfessionalUser();

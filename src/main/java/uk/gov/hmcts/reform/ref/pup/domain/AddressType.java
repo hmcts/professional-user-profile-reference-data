@@ -22,5 +22,6 @@ public class AddressType {
     @Getter
     @Setter
     @OneToMany(mappedBy="addressType")
+    @ToString.Exclude
     private Set<Address> addresses;
 }

@@ -1,25 +1,36 @@
-package uk.gov.hmcts.reform.ref.pup.services;
+package uk.gov.hmcts.reform.ref.pup.services.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.ref.pup.repository.ProfessionalUserRepository;
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
 
-import java.util.UUID;
+import java.util.List;
 
 @Service
-public class ProfessionalUserProfileService {
+public class ProfessionalUserService {
 
-    @Autowired
     private ProfessionalUserRepository professionalUserRepository;
 
-//    public ProfessionalUserProfileService(ProfessionalUserRepository professionalUserRepository) {
-//        this.professionalUserRepository = professionalUserRepository;
-//    }
+    @Autowired
+    public ProfessionalUserService(ProfessionalUserRepository professionalUserRepository) {
+        this.professionalUserRepository = professionalUserRepository;
+    }
+
+    public ProfessionalUser createProfessionalUserWithEmail(String email) {
+        List<ProfessionalUser> professionalUsers = professionalUserRepository.findByEmail(email);
+        return professionalUsers.isEmpty() ?
+            createProfessionalUser(
+                ProfessionalUser
+                    .builder()
+                    .userId(email)
+                    .email(email)
+                    .build()
+            )
+            : professionalUsers.get(0);
+    }
 
     public ProfessionalUser createProfessionalUser(final ProfessionalUser professionalUserProfile) {
-        final UUID uuid = UUID.randomUUID();
-//        professionalUserProfile.setProOrgId(uuid.toString());
         return professionalUserRepository.save(professionalUserProfile);
     }
 

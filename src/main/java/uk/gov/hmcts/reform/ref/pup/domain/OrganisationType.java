@@ -25,5 +25,6 @@ public class OrganisationType {
     @Getter
     @Setter
     @OneToMany(mappedBy="organisationType")
+    @ToString.Exclude
     private Set<Organisation> organisations;
 }

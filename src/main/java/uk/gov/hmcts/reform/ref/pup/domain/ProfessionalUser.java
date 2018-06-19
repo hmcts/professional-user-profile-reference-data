@@ -27,6 +27,7 @@ public class ProfessionalUser {
 
     @Getter
     @Setter
+    @Column(unique=true)
     private String email;
 
     @Getter

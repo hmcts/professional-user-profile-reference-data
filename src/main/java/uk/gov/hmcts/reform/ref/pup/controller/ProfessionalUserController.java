@@ -7,7 +7,7 @@
 //import org.springframework.http.ResponseEntity;
 //import org.springframework.web.bind.annotation.*;
 //import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
-//import uk.gov.hmcts.reform.ref.pup.services.ProfessionalUserProfileService;
+//import uk.gov.hmcts.reform.ref.pup.services.domain.ProfessionalUserProfileService;
 //
 //import javax.validation.Valid;
 //import java.util.UUID;
@@ -28,8 +28,8 @@
 //    @ApiResponses(value = {
 //        @ApiResponse(code = 200, message = "Success", response = ProfessionalUser.class)
 //    })
-//    public ResponseEntity<ProfessionalUser> createProfessionalUser(@RequestBody @Valid ProfessionalUser body) {
-//        return ResponseEntity.ok(professionalUserProfileService.createProfessionalUser(body));
+//    public ResponseEntity<ProfessionalUser> createOrganisation(@RequestBody @Valid ProfessionalUser body) {
+//        return ResponseEntity.ok(professionalUserProfileService.createOrganisation(body));
 //    }
 //
 //    @GetMapping(value = "{uuid}")

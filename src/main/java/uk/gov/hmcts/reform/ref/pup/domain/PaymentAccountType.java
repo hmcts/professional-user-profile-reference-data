@@ -25,5 +25,6 @@ public class PaymentAccountType {
     @Getter
     @Setter
     @OneToMany(mappedBy="pbaType")
+    @ToString.Exclude
     private Set<PaymentAccount> paymentAccounts;
 }

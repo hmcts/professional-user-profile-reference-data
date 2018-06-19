@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import uk.gov.hmcts.reform.ref.pup.exception.FileStorageException;
-import uk.gov.hmcts.reform.ref.pup.services.FileStorageClient;
+import uk.gov.hmcts.reform.ref.pup.services.file.FileStorageClient;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;

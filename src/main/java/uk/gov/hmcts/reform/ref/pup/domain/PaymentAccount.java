@@ -25,6 +25,7 @@ public class PaymentAccount {
     @Getter
     @Setter
     @OneToMany(mappedBy="paymentAccount")
+    @ToString.Exclude
     private Set<ProfessionalUserAccountAssignment> accountAssignments;
 
     @Getter

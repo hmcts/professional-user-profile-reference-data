@@ -23,6 +23,7 @@ public class Organisation {
 
     @Getter
     @Setter
+    @Column(unique=true)
     private String name;
 
     @Getter
@@ -33,11 +34,13 @@ public class Organisation {
     @Getter
     @Setter
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "organisation")
+    @ToString.Exclude
     private Set<PaymentAccount> pbas;
 
     @Getter
     @Setter
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "organisation")
+    @ToString.Exclude
     private Set<Address> addresses;
 
 }
