@@ -12,6 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Table(uniqueConstraints=@UniqueConstraint(columnNames="NAME"))
 public class Organisation {
 
     @Id
@@ -23,7 +24,6 @@ public class Organisation {
 
     @Getter
     @Setter
-    @Column(unique=true)
     private String name;
 
     @Getter

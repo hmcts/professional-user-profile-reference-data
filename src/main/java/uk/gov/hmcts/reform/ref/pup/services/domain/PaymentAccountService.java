@@ -6,6 +6,8 @@ import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
 import uk.gov.hmcts.reform.ref.pup.repository.PaymentAccountRepository;
 
+import java.util.List;
+
 @Service
 public class PaymentAccountService {
 
@@ -24,8 +26,13 @@ public class PaymentAccountService {
         final Organisation organisation = organisationService
             .createOrganisationWithJustName(orgName);
 
-        return createPaymentAccount(pbaNumber,organisation);
-    }
+        List<PaymentAccount> paymentAccounts = paymentAccountRepository
+            .findByPbaNumberAndOrganisation(pbaNumber,organisation);
+
+        return paymentAccounts.isEmpty() ?
+            createPaymentAccount(pbaNumber,organisation)
+            : paymentAccounts.get(0);
+        }
 
     public PaymentAccount createPaymentAccount(String pbaNumber, Organisation organisation) {
         return this.paymentAccountRepository.save(

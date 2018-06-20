@@ -2,11 +2,15 @@ package uk.gov.hmcts.reform.ref.pup.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
+import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
 
+import java.util.List;
+
 //@PreAuthorize("hasRole('citizen')")
 public interface PaymentAccountRepository extends CrudRepository<PaymentAccount,String> {
+    List<PaymentAccount> findByPbaNumberAndOrganisation(String pbaNumber, Organisation organisation);
 //
 //    /*
 //     * (non-Javadoc)
