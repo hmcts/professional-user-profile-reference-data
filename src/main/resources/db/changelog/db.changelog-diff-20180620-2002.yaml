@@ -1,7 +1,7 @@
 databaseChangeLog:
 - objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
 - changeSet:
-    id: 1529490823765-1
+    id: 1529521372560-1
     author: alec (generated)
     changes:
     - createTable:
@@ -40,7 +40,7 @@ databaseChangeLog:
             type: UUID
         tableName: Address
 - changeSet:
-    id: 1529490823765-2
+    id: 1529521372560-2
     author: alec (generated)
     changes:
     - createTable:
@@ -55,7 +55,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: AddressType
 - changeSet:
-    id: 1529490823765-3
+    id: 1529521372560-3
     author: alec (generated)
     changes:
     - createTable:
@@ -73,7 +73,7 @@ databaseChangeLog:
             type: UUID
         tableName: Organisation
 - changeSet:
-    id: 1529490823765-4
+    id: 1529521372560-4
     author: alec (generated)
     changes:
     - createTable:
@@ -88,7 +88,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: OrganisationType
 - changeSet:
-    id: 1529490823765-5
+    id: 1529521372560-5
     author: alec (generated)
     changes:
     - createTable:
@@ -109,7 +109,7 @@ databaseChangeLog:
             type: UUID
         tableName: PaymentAccount
 - changeSet:
-    id: 1529490823765-6
+    id: 1529521372560-6
     author: alec (generated)
     changes:
     - createTable:
@@ -124,7 +124,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: PaymentAccountType
 - changeSet:
-    id: 1529490823765-7
+    id: 1529521372560-7
     author: alec (generated)
     changes:
     - createTable:
@@ -151,7 +151,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: ProfessionalUser
 - changeSet:
-    id: 1529490823765-8
+    id: 1529521372560-8
     author: alec (generated)
     changes:
     - createTable:
@@ -169,7 +169,7 @@ databaseChangeLog:
             type: UUID
         tableName: ProfessionalUserAccountAssignment
 - changeSet:
-    id: 1529490823765-9
+    id: 1529521372560-9
     author: alec (generated)
     changes:
     - addPrimaryKey:
@@ -177,7 +177,7 @@ databaseChangeLog:
         constraintName: AddressPK
         tableName: Address
 - changeSet:
-    id: 1529490823765-10
+    id: 1529521372560-10
     author: alec (generated)
     changes:
     - addPrimaryKey:
@@ -185,7 +185,7 @@ databaseChangeLog:
         constraintName: AddressTypePK
         tableName: AddressType
 - changeSet:
-    id: 1529490823765-11
+    id: 1529521372560-11
     author: alec (generated)
     changes:
     - addPrimaryKey:
@@ -193,7 +193,7 @@ databaseChangeLog:
         constraintName: OrganisationPK
         tableName: Organisation
 - changeSet:
-    id: 1529490823765-12
+    id: 1529521372560-12
     author: alec (generated)
     changes:
     - addPrimaryKey:
@@ -201,7 +201,7 @@ databaseChangeLog:
         constraintName: OrganisationTypePK
         tableName: OrganisationType
 - changeSet:
-    id: 1529490823765-13
+    id: 1529521372560-13
     author: alec (generated)
     changes:
     - addPrimaryKey:
@@ -209,7 +209,7 @@ databaseChangeLog:
         constraintName: PaymentAccountPK
         tableName: PaymentAccount
 - changeSet:
-    id: 1529490823765-14
+    id: 1529521372560-14
     author: alec (generated)
     changes:
     - addPrimaryKey:
@@ -217,7 +217,7 @@ databaseChangeLog:
         constraintName: PaymentAccountTypePK
         tableName: PaymentAccountType
 - changeSet:
-    id: 1529490823765-15
+    id: 1529521372560-15
     author: alec (generated)
     changes:
     - addPrimaryKey:
@@ -225,7 +225,7 @@ databaseChangeLog:
         constraintName: ProfessionalUserAccountAssignmentPK
         tableName: ProfessionalUserAccountAssignment
 - changeSet:
-    id: 1529490823765-16
+    id: 1529521372560-16
     author: alec (generated)
     changes:
     - addPrimaryKey:
@@ -233,7 +233,7 @@ databaseChangeLog:
         constraintName: ProfessionalUserPK
         tableName: ProfessionalUser
 - changeSet:
-    id: 1529490823765-17
+    id: 1529521372560-17
     author: alec (generated)
     changes:
     - addUniqueConstraint:
@@ -241,7 +241,7 @@ databaseChangeLog:
         constraintName: UK1kl996uq4n1dg6anwbbxw8iie
         tableName: AddressType
 - changeSet:
-    id: 1529490823765-18
+    id: 1529521372560-18
     author: alec (generated)
     changes:
     - addUniqueConstraint:
@@ -249,15 +249,7 @@ databaseChangeLog:
         constraintName: UK73b57137gl5rqai6t5e9d1qlo
         tableName: ProfessionalUserAccountAssignment
 - changeSet:
-    id: 1529490823765-19
-    author: alec (generated)
-    changes:
-    - addUniqueConstraint:
-        columnNames: userId
-        constraintName: UKapivfokhrsmedqupubbt2w1ne
-        tableName: ProfessionalUser
-- changeSet:
-    id: 1529490823765-20
+    id: 1529521372560-19
     author: alec (generated)
     changes:
     - addUniqueConstraint:
@@ -265,7 +257,7 @@ databaseChangeLog:
         constraintName: UKb1x2mk59eb7m4sqqmbr9tpk6j
         tableName: PaymentAccountType
 - changeSet:
-    id: 1529490823765-21
+    id: 1529521372560-20
     author: alec (generated)
     changes:
     - addUniqueConstraint:
@@ -273,7 +265,15 @@ databaseChangeLog:
         constraintName: UKhg76394qafwn0dhcxvfh178gs
         tableName: OrganisationType
 - changeSet:
-    id: 1529490823765-22
+    id: 1529521372560-21
+    author: alec (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: userId, email
+        constraintName: UKm1fmj66jo3s0ud4a5tkyjli39
+        tableName: ProfessionalUser
+- changeSet:
+    id: 1529521372560-22
     author: alec (generated)
     changes:
     - addUniqueConstraint:
@@ -281,7 +281,7 @@ databaseChangeLog:
         constraintName: UKmwxud3wohi8s5xhufikv371bi
         tableName: Organisation
 - changeSet:
-    id: 1529490823765-23
+    id: 1529521372560-23
     author: alec (generated)
     changes:
     - addUniqueConstraint:
@@ -289,15 +289,7 @@ databaseChangeLog:
         constraintName: UKrhkct0gplll3hmj1oy33mt64f
         tableName: PaymentAccount
 - changeSet:
-    id: 1529490823765-24
-    author: alec (generated)
-    changes:
-    - addUniqueConstraint:
-        columnNames: email
-        constraintName: UKtohh271hu9aicnngdhh86vxi2
-        tableName: ProfessionalUser
-- changeSet:
-    id: 1529490823765-25
+    id: 1529521372560-24
     author: alec (generated)
     changes:
     - addForeignKeyConstraint:
@@ -309,7 +301,7 @@ databaseChangeLog:
         referencedColumnNames: uuid
         referencedTableName: Organisation
 - changeSet:
-    id: 1529490823765-26
+    id: 1529521372560-25
     author: alec (generated)
     changes:
     - addForeignKeyConstraint:
@@ -321,7 +313,7 @@ databaseChangeLog:
         referencedColumnNames: uuid
         referencedTableName: AddressType
 - changeSet:
-    id: 1529490823765-27
+    id: 1529521372560-26
     author: alec (generated)
     changes:
     - addForeignKeyConstraint:
@@ -333,7 +325,7 @@ databaseChangeLog:
         referencedColumnNames: uuid
         referencedTableName: Organisation
 - changeSet:
-    id: 1529490823765-28
+    id: 1529521372560-27
     author: alec (generated)
     changes:
     - addForeignKeyConstraint:
@@ -345,7 +337,7 @@ databaseChangeLog:
         referencedColumnNames: uuid
         referencedTableName: ProfessionalUser
 - changeSet:
-    id: 1529490823765-29
+    id: 1529521372560-28
     author: alec (generated)
     changes:
     - addForeignKeyConstraint:
@@ -357,7 +349,7 @@ databaseChangeLog:
         referencedColumnNames: uuid
         referencedTableName: PaymentAccountType
 - changeSet:
-    id: 1529490823765-30
+    id: 1529521372560-29
     author: alec (generated)
     changes:
     - addForeignKeyConstraint:
@@ -369,7 +361,7 @@ databaseChangeLog:
         referencedColumnNames: uuid
         referencedTableName: OrganisationType
 - changeSet:
-    id: 1529490823765-31
+    id: 1529521372560-30
     author: alec (generated)
     changes:
     - addForeignKeyConstraint:

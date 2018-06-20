@@ -12,7 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Table(uniqueConstraints={@UniqueConstraint(columnNames="USERID"), @UniqueConstraint(columnNames="EMAIL")})
+@Table(uniqueConstraints=@UniqueConstraint(columnNames={"USERID","EMAIL"}))
 public class ProfessionalUser {
 
     @Id

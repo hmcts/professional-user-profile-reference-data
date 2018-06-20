@@ -14,7 +14,7 @@ import java.util.UUID;
 @Service
 public class ProfessionalUserAccountAssignmentService {
 
-    private static final Logger log = LoggerFactory.getLogger(ProfessionalUserAccountAssignmentCsvProcessor.class);
+    private static final Logger log = LoggerFactory.getLogger(ProfessionalUserAccountAssignmentService.class);
 
 
     private ProfessionalUserAccountAssignmentRepository professionalUserAccountAssignmentRepository;
@@ -53,7 +53,6 @@ public class ProfessionalUserAccountAssignmentService {
                 .build()
         )
             : professionalUserAccountAssignmentList.get(0);
-
     }
 
 //    public List<UUID> findDeperactedRowUUID(List<ProfessionalUserAccountAssignmentCsvDTO> professionalUserAccountAssignmentCsvDTOList) {
