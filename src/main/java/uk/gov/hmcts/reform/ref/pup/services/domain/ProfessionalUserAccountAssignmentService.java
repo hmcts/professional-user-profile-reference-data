@@ -56,12 +56,12 @@ public class ProfessionalUserAccountAssignmentService {
 
     }
 
-    public List<UUID> findDeperactedRowUUID(List<ProfessionalUserAccountAssignmentCsvDTO> professionalUserAccountAssignmentCsvDTOList) {
-        professionalUserAccountAssignmentRepository.findAllByPaymentAccount_PbaNumberAndAndUser_Email(professionalUserAccountAssignmentCsvDTOList);
-
-
-        return null;
-    }
+//    public List<UUID> findDeperactedRowUUID(List<ProfessionalUserAccountAssignmentCsvDTO> professionalUserAccountAssignmentCsvDTOList) {
+//        professionalUserAccountAssignmentRepository.findAllByPaymentAccount_PbaNumberAndAndUser_Email(professionalUserAccountAssignmentCsvDTOList);
+//
+//
+//        return null;
+//    }
 
 
 
