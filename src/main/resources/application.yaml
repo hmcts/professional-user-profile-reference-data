@@ -31,7 +31,12 @@ spring:
     enabled: ${ENABLE_DB_MIGRATE:true}
     change-log: classpath:/db/changelog/db.changelog-master.yaml
 
-
+gov:
+  notify:
+    key: ${GOV_NOTIFY_API_KEY:AAAAAAAAAAAAAAAA}
+    template:
+     success: ${GOV_NOTIFY_SUCCESS_TEMPLATE:f68cc640-e5d9-4768-afa7-3fa28a7a7c1b}
+     error: ${GOV_NOTIFY_ERROR_TEMPLATE:f68cc640-e5d9-4768-afa7-3fa28a7a7c1b}
 
 
 management:

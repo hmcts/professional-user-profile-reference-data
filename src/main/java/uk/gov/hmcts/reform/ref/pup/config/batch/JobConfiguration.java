@@ -18,6 +18,7 @@ import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.batch.repeat.RepeatContext;
 import org.springframework.batch.repeat.exception.ExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +28,9 @@ import org.springframework.transaction.PlatformTransactionManager;
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUserAccountAssignment;
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUserAccountAssignmentCsvDTO;
 import uk.gov.hmcts.reform.ref.pup.services.batch.ProfessionalUserAccountAssignmentCsvProcessor;
+import uk.gov.service.notify.NotificationClient;
+import uk.gov.service.notify.NotificationClientException;
+import uk.gov.service.notify.SendEmailResponse;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -49,6 +53,14 @@ public class JobConfiguration {
 
     @Autowired
     private CloudBlobContainer cloudBlobContainer;
+
+    @Autowired
+    private NotificationClient notificationClient;
+
+    @Value("${gov.notify.template.error}")
+    private String errorTemplateId;
+
+    private static final String EMAIL_RECIVER = "simulate-delivered@notifications.service.gov.uk";
 
     private static final Logger log = LoggerFactory.getLogger(JobConfiguration.class);
 
@@ -131,6 +143,22 @@ public class JobConfiguration {
 //                    send an email and move to a reject folder
                     log.info("======================================================");
                     log.info("======================================================");
+
+                    Map<String,String> map = new HashMap<String,String>() {{
+                        put("filename","bob");
+                        put("name","bob");
+                        put("error",throwable.getMessage());
+                    }};
+                    
+                    try {
+                        SendEmailResponse response = notificationClient.sendEmail(
+                            errorTemplateId,
+                            EMAIL_RECIVER,
+                            map,
+                            null);
+                    } catch (NotificationClientException e) {
+                        System.out.println(e.getMessage());
+                    }
 
 //                    CloudAppendBlob blob = cloudBlobContainer.cr("error.log");
 //                    blob.appendText(throwable.getMessage());
