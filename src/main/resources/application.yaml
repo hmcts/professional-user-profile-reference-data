@@ -4,7 +4,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL94Dialect
     database: postgresql
-    show-sql: ${SHOW_SQL:true}
+    show-sql: ${SHOW_SQL:false}
     hibernate:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
@@ -89,7 +89,7 @@ info:
 azure:
   app_insights_key: ${APPINSIGHTS_INSTRUMENTATIONKEY:false}
   storage:
-    connection-string: ${AZURE_STORAGE_CONNECTION_STRING:}
+    connection-string: ${AZURE_STORAGE_CONNECTION_STRING:false}
     file-share-name: ${AZURE_FILE_SHARE_NAME:puprd-test}
     blob-container-reference: ${AZURE_BLOB_CONTAINER_REFERENCE:storage}
 

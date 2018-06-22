@@ -30,8 +30,9 @@ import uk.gov.hmcts.reform.ref.pup.services.batch.ProfessionalUserAccountAssignm
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Configuration
 @ConditionalOnProperty("toggle.uploadCSV")
@@ -53,24 +54,23 @@ public class JobConfiguration {
 
     @Bean
     public MultiResourceItemReader<ProfessionalUserAccountAssignmentCsvDTO> mutiCsvPupaaReader() {
-        Iterator<ListBlobItem> listBlobItems = cloudBlobContainer.listBlobs().iterator();
-
         List<Resource> list = new ArrayList<>();
-        listBlobItems.forEachRemaining(listBlobItem -> {
-            if(listBlobItem.getUri().toString().endsWith(".csv")) {
+
+        for(ListBlobItem blobItem : cloudBlobContainer.listBlobs()) {
+            if (blobItem.getUri().toString().endsWith(".csv")) {
                 try {
-                    list.add(new UrlResource(listBlobItem.getUri()));
+                    list.add(new UrlResource(blobItem.getUri()));
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
             } else {
                 log.info("======================================================");
                 log.info("======================================================");
-                log.info("NOT CSV" + listBlobItem.getUri().toString());
+                log.info("NOT CSV" + blobItem.getUri().toString());
                 log.info("======================================================");
                 log.info("======================================================");
             }
-        });
+        }
 
         log.info("======================================================");
         log.info("======================================================");
@@ -131,7 +131,10 @@ public class JobConfiguration {
 //                    send an email and move to a reject folder
                     log.info("======================================================");
                     log.info("======================================================");
-                }
+
+//                    CloudAppendBlob blob = cloudBlobContainer.cr("error.log");
+//                    blob.appendText(throwable.getMessage());
+               }
             })// move to reject folder (add a error log file too i guess)
             .build();
     }

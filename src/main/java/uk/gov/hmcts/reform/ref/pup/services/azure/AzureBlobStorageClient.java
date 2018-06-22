@@ -4,6 +4,7 @@ import com.microsoft.azure.storage.StorageException;
 import com.microsoft.azure.storage.blob.CloudBlobContainer;
 import com.microsoft.azure.storage.blob.CloudBlockBlob;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +19,7 @@ import java.util.UUID;
 
 @Service(value = "azureBlobStorageClient")
 //@Profile("azureStorage")
+@ConditionalOnProperty("azure.storage.connection-string")
 public class AzureBlobStorageClient implements FileStorageClient {
 
     @Autowired
