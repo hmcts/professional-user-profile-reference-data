@@ -134,7 +134,7 @@ public class JobConfiguration {
 
 //                    CloudAppendBlob blob = cloudBlobContainer.cr("error.log");
 //                    blob.appendText(throwable.getMessage());
-               }
+                }
             })// move to reject folder (add a error log file too i guess)
             .build();
     }
