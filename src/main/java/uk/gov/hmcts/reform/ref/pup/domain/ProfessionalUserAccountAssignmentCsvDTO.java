@@ -15,7 +15,7 @@ public class ProfessionalUserAccountAssignmentCsvDTO {
 
     @Getter
     @Setter
-    private String orgName; 
+    private String orgName;
 
     @Getter
     @Setter
