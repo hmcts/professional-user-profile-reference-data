@@ -10,7 +10,7 @@ src/main/resources/META-INF/build-info.properties
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-### Intellij User-specific stuff:
+###### Intellij User-specific stuff:
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/dictionaries
@@ -75,4 +75,9 @@ gradle-app.setting
 
 # End of https://www.gitignore.io/api/gradle
 
+###### Eclipse User-specific stuff:
 
+/.classpath
+/.eclipse-pmd
+/.project
+/.settings/
