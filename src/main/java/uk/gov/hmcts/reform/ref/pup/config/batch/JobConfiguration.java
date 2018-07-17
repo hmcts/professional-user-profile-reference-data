@@ -56,7 +56,7 @@ public class JobConfiguration {
     public MultiResourceItemReader<ProfessionalUserAccountAssignmentCsvDTO> mutiCsvPupaaReader() {
         List<Resource> list = new ArrayList<>();
 
-        for(ListBlobItem blobItem : cloudBlobContainer.listBlobs()) {
+        for (ListBlobItem blobItem : cloudBlobContainer.listBlobs()) {
             if (blobItem.getUri().toString().endsWith(".csv")) {
                 try {
                     list.add(new UrlResource(blobItem.getUri()));
