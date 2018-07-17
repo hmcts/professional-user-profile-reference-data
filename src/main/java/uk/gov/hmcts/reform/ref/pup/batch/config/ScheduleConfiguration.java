@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.ref.pup.config.batch;
+package uk.gov.hmcts.reform.ref.pup.batch.config;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;

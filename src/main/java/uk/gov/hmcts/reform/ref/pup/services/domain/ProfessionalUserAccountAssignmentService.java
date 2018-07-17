@@ -1,15 +1,17 @@
 package uk.gov.hmcts.reform.ref.pup.services.domain;
 
+import uk.gov.hmcts.reform.ref.pup.batch.domain.ProfessionalUserAccountAssignmentCsvDTO;
+import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
+import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
+import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUserAccountAssignment;
+import uk.gov.hmcts.reform.ref.pup.repository.ProfessionalUserAccountAssignmentRepository;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import uk.gov.hmcts.reform.ref.pup.domain.*;
-import uk.gov.hmcts.reform.ref.pup.repository.ProfessionalUserAccountAssignmentRepository;
-import uk.gov.hmcts.reform.ref.pup.services.batch.ProfessionalUserAccountAssignmentCsvProcessor;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class ProfessionalUserAccountAssignmentService {

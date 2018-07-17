@@ -1,7 +1,7 @@
-package uk.gov.hmcts.reform.ref.pup.services.batch;
+package uk.gov.hmcts.reform.ref.pup.batch.services;
 
+import uk.gov.hmcts.reform.ref.pup.batch.domain.ProfessionalUserAccountAssignmentCsvDTO;
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUserAccountAssignment;
-import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUserAccountAssignmentCsvDTO;
 import uk.gov.hmcts.reform.ref.pup.services.domain.ProfessionalUserAccountAssignmentService;
 
 import org.springframework.batch.item.ItemProcessor;

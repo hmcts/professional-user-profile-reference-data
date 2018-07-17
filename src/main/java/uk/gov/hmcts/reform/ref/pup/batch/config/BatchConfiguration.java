@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.ref.pup.config.batch;
+package uk.gov.hmcts.reform.ref.pup.batch.config;
 
 import uk.gov.hmcts.reform.ref.pup.exception.AppConfigurationException;
 
