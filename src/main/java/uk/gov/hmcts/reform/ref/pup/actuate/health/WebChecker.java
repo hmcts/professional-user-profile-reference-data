@@ -1,12 +1,12 @@
 package uk.gov.hmcts.reform.ref.pup.actuate.health;
 
+import uk.gov.hmcts.reform.ref.pup.actuate.health.model.HealthCheckResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.web.client.RestTemplate;
-import uk.gov.hmcts.reform.ref.pup.actuate.health.model.HealthCheckResponse;
-import uk.gov.hmcts.reform.ref.pup.actuate.health.model.HealthCheckResponse;
 
 import static net.logstash.logback.argument.StructuredArguments.keyValue;
 
@@ -29,7 +29,6 @@ public class WebChecker {
         return (getStatus()) ? healthBuilder.up().build() : healthBuilder.down().build();
     }
 
-
     private boolean getStatus() {
         try {
             final HealthCheckResponse healthCheckResponse = restTemplate.getForObject(url + "/health", HealthCheckResponse.class);
@@ -39,10 +38,5 @@ public class WebChecker {
             return false;
         }
     }
-
-
-
-
-
 
 }
