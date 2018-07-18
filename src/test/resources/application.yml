@@ -6,6 +6,5 @@ spring:
     platform: h2
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
-azure:
-  storage:
-    connection-string: 'xxx'
+toggle:
+  uploadCSV: false
