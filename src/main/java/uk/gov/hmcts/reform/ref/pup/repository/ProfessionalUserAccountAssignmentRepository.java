@@ -9,8 +9,8 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 import java.util.UUID;
 
-public interface ProfessionalUserAccountAssignmentRepository extends CrudRepository<ProfessionalUserAccountAssignment,UUID> {
+public interface ProfessionalUserAccountAssignmentRepository extends CrudRepository<ProfessionalUserAccountAssignment, UUID> {
 
-    List<ProfessionalUserAccountAssignment> findAllByPaymentAccountAndUser(PaymentAccount paymentAccount,
-                                                                           ProfessionalUser user);
+    List<ProfessionalUserAccountAssignment> findAllByPaymentAccountAndUser(PaymentAccount paymentAccount, ProfessionalUser user);
+    
 }

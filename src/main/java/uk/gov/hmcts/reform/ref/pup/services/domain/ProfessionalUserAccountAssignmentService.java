@@ -4,6 +4,7 @@ import uk.gov.hmcts.reform.ref.pup.batch.domain.ProfessionalUserAccountAssignmen
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUserAccountAssignment;
+import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
 import uk.gov.hmcts.reform.ref.pup.repository.ProfessionalUserAccountAssignmentRepository;
 
 import org.slf4j.Logger;
@@ -36,34 +37,23 @@ public class ProfessionalUserAccountAssignmentService {
 
 
 
-    public ProfessionalUserAccountAssignment createProfessionalUserAccountWithDTO(ProfessionalUserAccountAssignmentCsvDTO professionalUserAccountAssignmentCsvDTO) {
+    public ProfessionalUserAccountAssignment createProfessionalUserAccountWithDTO(ProfessionalUserAccountAssignmentCsvDTO professionalUserAccountAssignmentCsvDTO) throws ApplicationException {
         final String orgName = professionalUserAccountAssignmentCsvDTO.getOrgName();
         final String pbaNumber = professionalUserAccountAssignmentCsvDTO.getPbaNumber();
         final String userEmail = professionalUserAccountAssignmentCsvDTO.getUserEmail();
 
-        final PaymentAccount paymentAccount = paymentAccountService.createPaymentAccountWithPbaNumberAndOrgName(pbaNumber,orgName);
+        final PaymentAccount paymentAccount = paymentAccountService.createPaymentAccountWithPbaNumberAndOrgName(pbaNumber, orgName);
         final ProfessionalUser professionalUser = professionalUserService.createProfessionalUserWithEmail(userEmail);
 
         List<ProfessionalUserAccountAssignment> professionalUserAccountAssignmentList =
             professionalUserAccountAssignmentRepository.findAllByPaymentAccountAndUser(paymentAccount,professionalUser);
 
-        return professionalUserAccountAssignmentList.isEmpty() ? professionalUserAccountAssignmentRepository.save(
-            ProfessionalUserAccountAssignment
-                .builder()
-                .paymentAccount(paymentAccount)
-                .user(professionalUser)
-                .build()
-        )
+        ProfessionalUserAccountAssignment professionalUserAccountAssignment = new ProfessionalUserAccountAssignment();
+        professionalUserAccountAssignment.setPaymentAccount(paymentAccount);
+        professionalUserAccountAssignment.setUser(professionalUser);
+                
+        return professionalUserAccountAssignmentList.isEmpty() ? professionalUserAccountAssignmentRepository.save(professionalUserAccountAssignment)
             : professionalUserAccountAssignmentList.get(0);
     }
-
-//    public List<UUID> findDeperactedRowUUID(List<ProfessionalUserAccountAssignmentCsvDTO> professionalUserAccountAssignmentCsvDTOList) {
-//        professionalUserAccountAssignmentRepository.findAllByPaymentAccount_PbaNumberAndAndUser_Email(professionalUserAccountAssignmentCsvDTOList);
-//
-//
-//        return null;
-//    }
-
-
 
 }

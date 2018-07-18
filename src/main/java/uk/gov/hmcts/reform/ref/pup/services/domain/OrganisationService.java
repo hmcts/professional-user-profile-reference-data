@@ -1,35 +1,39 @@
 package uk.gov.hmcts.reform.ref.pup.services.domain;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
-import uk.gov.hmcts.reform.ref.pup.domain.OrganisationType;
-import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
+import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
 import uk.gov.hmcts.reform.ref.pup.repository.OrganisationRepository;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 import java.util.UUID;
 
+import javax.transaction.Transactional;
+
 @Service
+@Transactional
 public class OrganisationService {
 
-    private OrganisationRepository organisationRepository;
+    private final OrganisationRepository organisationRepository;
 
     @Autowired
     public OrganisationService(OrganisationRepository organisationRepository) {
         this.organisationRepository = organisationRepository;
     }
 
-    public Organisation createOrganisationWithJustName(String name) {
-        List<Organisation> organisations = organisationRepository.findByName(name);
-        return organisations.isEmpty() ?
-                createOrganisation(
-                    Organisation.builder()
-                    .name(name)
-//                    .organisationType(OrganisationType.builder().name("UNKNOWN").build())
-                    .build()
-                )
-            : organisations.get(0);
+    public Organisation createOrganisationWithJustName(String name) throws ApplicationException {
+
+        Optional<Organisation> organisationByName = organisationRepository.findOneByName(name);
+        if (organisationByName.isPresent()) {
+            throw new ApplicationException("message");
+        }
+
+        Organisation organisation = new Organisation();
+        organisation.setName(name);
+
+        return createOrganisation(organisation);
     }
 
     public Organisation createOrganisation(final Organisation organisation) {

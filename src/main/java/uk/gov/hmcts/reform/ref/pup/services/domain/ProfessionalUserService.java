@@ -1,33 +1,38 @@
 package uk.gov.hmcts.reform.ref.pup.services.domain;
 
+import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
+import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
+import uk.gov.hmcts.reform.ref.pup.repository.ProfessionalUserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import uk.gov.hmcts.reform.ref.pup.repository.ProfessionalUserRepository;
-import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
 
-import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 @Service
+@Transactional
 public class ProfessionalUserService {
 
-    private ProfessionalUserRepository professionalUserRepository;
+    private final ProfessionalUserRepository professionalUserRepository;
 
     @Autowired
     public ProfessionalUserService(ProfessionalUserRepository professionalUserRepository) {
         this.professionalUserRepository = professionalUserRepository;
     }
 
-    public ProfessionalUser createProfessionalUserWithEmail(String email) {
-        List<ProfessionalUser> professionalUsers = professionalUserRepository.findByEmail(email);
-        return professionalUsers.isEmpty() ?
-            createProfessionalUser(
-                ProfessionalUser
-                    .builder()
-                    .userId(email)
-                    .email(email)
-                    .build()
-            )
-            : professionalUsers.get(0);
+    public ProfessionalUser createProfessionalUserWithEmail(String email) throws ApplicationException {
+        Optional<ProfessionalUser> professionalUsers = professionalUserRepository.findOneByEmail(email);
+        if (professionalUsers.isPresent()) {
+            throw new ApplicationException("message");
+        }
+        
+        ProfessionalUser professionalUser = new ProfessionalUser();
+        professionalUser.setUserId(email);
+        professionalUser.setEmail(email);
+        
+        return createProfessionalUser(professionalUser);
     }
 
     public ProfessionalUser createProfessionalUser(final ProfessionalUser professionalUserProfile) {
@@ -35,10 +40,11 @@ public class ProfessionalUserService {
     }
 
     public ProfessionalUser retrieveProfessionalUser(String userId) {
-        return professionalUserRepository.findById(userId).orElse(null);
+        return professionalUserRepository.findOneByUserId(userId).orElse(null);
     }
 
     public void deleteProfessionalUser(String userId) {
-        professionalUserRepository.deleteById(userId);
+        
+        professionalUserRepository.deleteByUserId(userId);
     }
 }
