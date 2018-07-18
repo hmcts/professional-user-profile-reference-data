@@ -49,9 +49,9 @@ apply from: 'liquibase.gradle'
 
 def versions = [
     postgresql         : '42.2.2',
-    springBoot         : '2.0.1.RELEASE',
+    springBoot         : '2.0.3.RELEASE',
     hmctsJavaLogging   : '3.0.0',
-    springfoxSwagger   : '2.9.0',
+    springfoxSwagger   : '2.9.2',
     liquibase          : '3.5.3',
     h2                 : '1.4.197',
 ]

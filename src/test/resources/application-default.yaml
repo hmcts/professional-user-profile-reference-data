@@ -1,0 +1,11 @@
+spring:
+  database:
+    driverClassName: org.h2.Driver
+  datasource:
+    url: jdbc:h2:mem:test_mem
+    platform: h2
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+azure:
+  storage:
+    connection-string: 'xxx'
