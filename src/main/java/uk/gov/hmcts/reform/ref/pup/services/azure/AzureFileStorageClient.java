@@ -1,23 +1,26 @@
 package uk.gov.hmcts.reform.ref.pup.services.azure;
 
-import com.microsoft.azure.storage.StorageException;
-import com.microsoft.azure.storage.file.CloudFile;
-import com.microsoft.azure.storage.file.CloudFileShare;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import uk.gov.hmcts.reform.ref.pup.exception.FileStorageException;
 import uk.gov.hmcts.reform.ref.pup.services.file.FileStorageClient;
 
-import javax.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.microsoft.azure.storage.StorageException;
+import com.microsoft.azure.storage.file.CloudFile;
+import com.microsoft.azure.storage.file.CloudFileShare;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.util.UUID;
 
+import javax.annotation.PostConstruct;
+
 @Service(value = "azureFileStorageClient")
-@Profile("azureStorage")
+@ConditionalOnProperty("azure.storage.connection-string")
 public class AzureFileStorageClient implements FileStorageClient {
 
     @Autowired
