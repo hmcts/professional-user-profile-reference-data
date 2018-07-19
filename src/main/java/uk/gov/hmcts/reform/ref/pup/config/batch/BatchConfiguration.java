@@ -1,5 +1,7 @@
 package uk.gov.hmcts.reform.ref.pup.config.batch;
 
+import uk.gov.hmcts.reform.ref.pup.exception.AppConfigurationException;
+
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.launch.support.SimpleJobLauncher;
@@ -11,18 +13,16 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
-import uk.gov.hmcts.reform.ref.pup.exception.AppConfigurationException;
 
 import javax.sql.DataSource;
 
 @Configuration
 @EnableBatchProcessing
 @EnableConfigurationProperties(BatchProperties.class)
-public class BatchConfiguration {
+public class BatchConfiguration { 
 
     @Bean
-    public JobRepository jobRepository(DataSource dataSource,
-         @Qualifier("transactionManager") PlatformTransactionManager transactionManager) {
+    public JobRepository jobRepository(DataSource dataSource, @Qualifier("transactionManager") PlatformTransactionManager transactionManager) {
 
         try {
             JobRepositoryFactoryBean factory = new JobRepositoryFactoryBean();
