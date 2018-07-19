@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.ref.pup.domain;
+package uk.gov.hmcts.reform.ref.pup.batch.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

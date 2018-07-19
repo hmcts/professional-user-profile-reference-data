@@ -1,8 +1,8 @@
-package uk.gov.hmcts.reform.ref.pup.config.batch;
+package uk.gov.hmcts.reform.ref.pup.batch.config;
 
+import uk.gov.hmcts.reform.ref.pup.batch.domain.ProfessionalUserAccountAssignmentCsvDTO;
+import uk.gov.hmcts.reform.ref.pup.batch.services.ProfessionalUserAccountAssignmentCsvProcessor;
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUserAccountAssignment;
-import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUserAccountAssignmentCsvDTO;
-import uk.gov.hmcts.reform.ref.pup.services.batch.ProfessionalUserAccountAssignmentCsvProcessor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
