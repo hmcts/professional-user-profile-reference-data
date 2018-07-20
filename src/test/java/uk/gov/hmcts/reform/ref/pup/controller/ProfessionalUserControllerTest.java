@@ -103,7 +103,7 @@ public class ProfessionalUserControllerTest {
     }
 
     @Test
-    public void getProfessionalUserShouldReturnTheUserIfTheServiceReturnEmpty() throws Exception {
+    public void getProfessionalUserShouldReturnNotFoundIfTheServiceReturnEmpty() throws Exception {
         
         when(professionalUserService.retrieve("1")).thenReturn(Optional.empty());   
         

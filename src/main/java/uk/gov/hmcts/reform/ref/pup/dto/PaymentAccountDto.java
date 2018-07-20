@@ -1,10 +1,10 @@
 package uk.gov.hmcts.reform.ref.pup.dto;
 
-import lombok.Value;
+import lombok.Data;
 
 import java.util.UUID;
 
-@Value
+@Data
 public class PaymentAccountDto {
 
     private UUID uuId;

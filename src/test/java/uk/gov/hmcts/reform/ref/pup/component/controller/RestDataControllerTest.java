@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.ref.pup.controller;
+package uk.gov.hmcts.reform.ref.pup.component.controller;
 
 import org.junit.After;
 import org.junit.Before;
