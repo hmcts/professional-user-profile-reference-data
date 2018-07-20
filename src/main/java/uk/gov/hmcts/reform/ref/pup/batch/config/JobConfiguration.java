@@ -1,8 +1,8 @@
 package uk.gov.hmcts.reform.ref.pup.batch.config;
 
-import uk.gov.hmcts.reform.ref.pup.batch.domain.ProfessionalUserAccountAssignmentCsvDTO;
+import uk.gov.hmcts.reform.ref.pup.batch.model.ProfessionalUserAccountAssignmentCsvModel;
 import uk.gov.hmcts.reform.ref.pup.batch.services.ProfessionalUserAccountAssignmentCsvProcessor;
-import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUserAccountAssignment;
+import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +53,7 @@ public class JobConfiguration {
     private static final Logger log = LoggerFactory.getLogger(JobConfiguration.class);
 
     @Bean
-    public MultiResourceItemReader<ProfessionalUserAccountAssignmentCsvDTO> mutiCsvPupaaReader() {
+    public MultiResourceItemReader<ProfessionalUserAccountAssignmentCsvModel> mutiCsvPupaaReader() {
         List<Resource> list = new ArrayList<>();
 
         for (ListBlobItem blobItem : cloudBlobContainer.listBlobs()) {
@@ -83,7 +83,7 @@ public class JobConfiguration {
 
         Resource[] resources = list.toArray(new Resource[0]);
 
-        MultiResourceItemReader<ProfessionalUserAccountAssignmentCsvDTO> reader = new MultiResourceItemReader<>();
+        MultiResourceItemReader<ProfessionalUserAccountAssignmentCsvModel> reader = new MultiResourceItemReader<>();
 
         reader.setResources(resources);
         reader.setDelegate(singleCsvPupaaReader());
@@ -91,15 +91,15 @@ public class JobConfiguration {
     }
 
     @Bean
-    public FlatFileItemReader<ProfessionalUserAccountAssignmentCsvDTO> singleCsvPupaaReader() {
+    public FlatFileItemReader<ProfessionalUserAccountAssignmentCsvModel> singleCsvPupaaReader() {
 
-        FlatFileItemReader<ProfessionalUserAccountAssignmentCsvDTO> reader = new FlatFileItemReader<>();
-        reader.setLineMapper(new DefaultLineMapper<ProfessionalUserAccountAssignmentCsvDTO>() {{
+        FlatFileItemReader<ProfessionalUserAccountAssignmentCsvModel> reader = new FlatFileItemReader<>();
+        reader.setLineMapper(new DefaultLineMapper<ProfessionalUserAccountAssignmentCsvModel>() {{
             setLineTokenizer(new DelimitedLineTokenizer() {{
                 setNames("orgName", "pbaNumber", "userEmail");
             }});
-            setFieldSetMapper(new BeanWrapperFieldSetMapper<ProfessionalUserAccountAssignmentCsvDTO>() {{
-                setTargetType(ProfessionalUserAccountAssignmentCsvDTO.class);
+            setFieldSetMapper(new BeanWrapperFieldSetMapper<ProfessionalUserAccountAssignmentCsvModel>() {{
+                setTargetType(ProfessionalUserAccountAssignmentCsvModel.class);
             }});
         }});
         return reader;
@@ -107,7 +107,7 @@ public class JobConfiguration {
 
 
     @Bean
-    ItemProcessor<ProfessionalUserAccountAssignmentCsvDTO, ProfessionalUserAccountAssignment> professionalUserAccountAssignmentCsvProcessor() {
+    ItemProcessor<ProfessionalUserAccountAssignmentCsvModel, ProfessionalUser> professionalUserAccountAssignmentCsvProcessor() {
         return new ProfessionalUserAccountAssignmentCsvProcessor();
     }
 
@@ -116,7 +116,7 @@ public class JobConfiguration {
     protected Step csvFileToDatabaseStep() {
         return stepBuilderFactory.get("csvFileToDatabaseStep")
             .transactionManager(transactionManager)
-            .<ProfessionalUserAccountAssignmentCsvDTO, ProfessionalUserAccountAssignment>chunk(1)
+            .<ProfessionalUserAccountAssignmentCsvModel, ProfessionalUser>chunk(1)
 //            get list of uri's
 //            one by one do the next steps
             .reader(mutiCsvPupaaReader())

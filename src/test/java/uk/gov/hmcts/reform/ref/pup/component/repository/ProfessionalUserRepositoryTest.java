@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.ref.pup.it.repository;
+package uk.gov.hmcts.reform.ref.pup.component.repository;
 
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
 import uk.gov.hmcts.reform.ref.pup.repository.ProfessionalUserRepository;
