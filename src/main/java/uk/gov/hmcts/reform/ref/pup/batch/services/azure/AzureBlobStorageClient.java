@@ -1,7 +1,7 @@
-package uk.gov.hmcts.reform.ref.pup.services.azure;
+package uk.gov.hmcts.reform.ref.pup.batch.services.azure;
 
-import uk.gov.hmcts.reform.ref.pup.exception.FileStorageException;
-import uk.gov.hmcts.reform.ref.pup.services.file.FileStorageClient;
+import uk.gov.hmcts.reform.ref.pup.batch.exception.FileStorageException;
+import uk.gov.hmcts.reform.ref.pup.batch.services.file.FileStorageClient;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.microsoft.azure.storage.StorageException;
-import com.microsoft.azure.storage.file.CloudFile;
-import com.microsoft.azure.storage.file.CloudFileShare;
+import com.microsoft.azure.storage.blob.CloudBlobContainer;
+import com.microsoft.azure.storage.blob.CloudBlockBlob;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -19,23 +19,22 @@ import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 
-@Service(value = "azureFileStorageClient")
+@Service(value = "azureBlobStorageClient")
 @ConditionalOnProperty("azure.storage.connection-string")
-public class AzureFileStorageClient implements FileStorageClient {
+public class AzureBlobStorageClient implements FileStorageClient {
 
     @Autowired
-    private CloudFileShare cloudFileShare;
+    private CloudBlobContainer cloudBlobContainer;
 
     @PostConstruct
     void init() throws StorageException {
-        cloudFileShare.createIfNotExists();
+        cloudBlobContainer.createIfNotExists();
     }
 
     @Override
     public void uploadFile(UUID uuid, MultipartFile multipartFile) {
         try {
-            CloudFile cloudFile = getCloudFile(uuid);
-            cloudFile.upload(multipartFile.getInputStream(), multipartFile.getSize());
+            getCloudFile(uuid).upload(multipartFile.getInputStream(), multipartFile.getSize());
         } catch (URISyntaxException | StorageException | IOException e) {
             throw new FileStorageException(e);
         }
@@ -44,8 +43,7 @@ public class AzureFileStorageClient implements FileStorageClient {
     @Override
     public void streamFileContent(UUID uuid, OutputStream outputStream) {
         try {
-            CloudFile cloudFile = getCloudFile(uuid);
-            cloudFile.download(outputStream);
+            getCloudFile(uuid).download(outputStream);
         } catch (URISyntaxException | StorageException e) {
             throw new FileStorageException(e);
         }
@@ -54,14 +52,13 @@ public class AzureFileStorageClient implements FileStorageClient {
     @Override
     public void deleteFile(UUID uuid) {
         try {
-            CloudFile cloudFile = getCloudFile(uuid);
-            cloudFile.delete();
+            getCloudFile(uuid).delete();
         } catch (URISyntaxException | StorageException e) {
             throw new FileStorageException(e);
         }
     }
 
-    private CloudFile getCloudFile(UUID uuid) throws StorageException, URISyntaxException {
-        return cloudFileShare.getRootDirectoryReference().getFileReference(uuid.toString());
+    private CloudBlockBlob getCloudFile(UUID uuid) throws StorageException, URISyntaxException {
+        return cloudBlobContainer.getBlockBlobReference(uuid.toString());
     }
 }
