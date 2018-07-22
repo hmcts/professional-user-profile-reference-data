@@ -48,7 +48,7 @@ dependencyCheck {
 apply from: 'liquibase.gradle'
 
 def versions = [
-    postgresql         : '42.2.2',
+    postgresql         : '42.2.4',
     hmctsJavaLogging   : '3.0.0',
     springfoxSwagger   : '2.9.2',
     liquibase          : '3.5.3',

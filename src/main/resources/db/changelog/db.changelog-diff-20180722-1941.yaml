@@ -1,0 +1,413 @@
+databaseChangeLog:
+- changeSet:
+    id: 1532284911352-1
+    author: agyt (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: uuid
+            type: UUID
+        - column:
+            name: address_line1
+            type: VARCHAR(255)
+        - column:
+            name: address_line2
+            type: VARCHAR(255)
+        - column:
+            name: address_line3
+            type: VARCHAR(255)
+        - column:
+            name: city
+            type: VARCHAR(255)
+        - column:
+            name: country
+            type: VARCHAR(255)
+        - column:
+            name: county
+            type: VARCHAR(255)
+        - column:
+            name: postcode
+            type: VARCHAR(255)
+        - column:
+            name: address_type_uuid
+            type: UUID
+        - column:
+            name: organisation_uuid
+            type: UUID
+        tableName: address
+- changeSet:
+    id: 1532284911352-2
+    author: agyt (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: uuid
+            type: UUID
+        - column:
+            name: name
+            type: VARCHAR(255)
+        tableName: address_type
+- changeSet:
+    id: 1532284911352-3
+    author: agyt (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: uuid
+            type: UUID
+        - column:
+            name: name
+            type: VARCHAR(255)
+        - column:
+            name: organisation_type_uuid
+            type: UUID
+        tableName: organisation
+- changeSet:
+    id: 1532284911352-4
+    author: agyt (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: uuid
+            type: UUID
+        - column:
+            name: name
+            type: VARCHAR(255)
+        tableName: organisation_type
+- changeSet:
+    id: 1532284911352-5
+    author: agyt (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: uuid
+            type: UUID
+        - column:
+            name: pba_number
+            type: VARCHAR(255)
+        - column:
+            name: organisation_uuid
+            type: UUID
+        - column:
+            name: pba_type_uuid
+            type: UUID
+        tableName: payment_account
+- changeSet:
+    id: 1532284911352-6
+    author: agyt (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: payment_account_uuid
+            type: UUID
+        - column:
+            constraints:
+              nullable: false
+            name: professional_user_uuid
+            type: UUID
+        tableName: payment_account_professional_user
+- changeSet:
+    id: 1532284911352-7
+    author: agyt (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: uuid
+            type: UUID
+        - column:
+            name: name
+            type: VARCHAR(255)
+        tableName: payment_account_type
+- changeSet:
+    id: 1532284911352-8
+    author: agyt (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: uuid
+            type: UUID
+        - column:
+            name: email
+            type: VARCHAR(255)
+        - column:
+            name: first_name
+            type: VARCHAR(255)
+        - column:
+            name: phone_number
+            type: VARCHAR(255)
+        - column:
+            name: surname
+            type: VARCHAR(255)
+        - column:
+            name: user_id
+            type: VARCHAR(255)
+        tableName: professional_user
+- changeSet:
+    id: 1532284911352-9
+    author: agyt (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: professional_user_uuid
+            type: UUID
+        - column:
+            constraints:
+              nullable: false
+            name: account_assignments_uuid
+            type: UUID
+        tableName: professional_user_account_assignments
+- changeSet:
+    id: 1532284911352-10
+    author: agyt (generated)
+    changes:
+    - addPrimaryKey:
+        columnNames: payment_account_uuid, professional_user_uuid
+        tableName: payment_account_professional_user
+- changeSet:
+    id: 1532284911352-11
+    author: agyt (generated)
+    changes:
+    - addPrimaryKey:
+        columnNames: professional_user_uuid, account_assignments_uuid
+        tableName: professional_user_account_assignments
+- changeSet:
+    id: 1532284911352-12
+    author: agyt (generated)
+    changes:
+    - addPrimaryKey:
+        columnNames: uuid
+        constraintName: addressPK
+        tableName: address
+- changeSet:
+    id: 1532284911352-13
+    author: agyt (generated)
+    changes:
+    - addPrimaryKey:
+        columnNames: uuid
+        constraintName: address_typePK
+        tableName: address_type
+- changeSet:
+    id: 1532284911352-14
+    author: agyt (generated)
+    changes:
+    - addPrimaryKey:
+        columnNames: uuid
+        constraintName: organisationPK
+        tableName: organisation
+- changeSet:
+    id: 1532284911352-15
+    author: agyt (generated)
+    changes:
+    - addPrimaryKey:
+        columnNames: uuid
+        constraintName: organisation_typePK
+        tableName: organisation_type
+- changeSet:
+    id: 1532284911352-16
+    author: agyt (generated)
+    changes:
+    - addPrimaryKey:
+        columnNames: uuid
+        constraintName: payment_accountPK
+        tableName: payment_account
+- changeSet:
+    id: 1532284911352-17
+    author: agyt (generated)
+    changes:
+    - addPrimaryKey:
+        columnNames: uuid
+        constraintName: payment_account_typePK
+        tableName: payment_account_type
+- changeSet:
+    id: 1532284911352-18
+    author: agyt (generated)
+    changes:
+    - addPrimaryKey:
+        columnNames: uuid
+        constraintName: professional_userPK
+        tableName: professional_user
+- changeSet:
+    id: 1532284911352-19
+    author: agyt (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: name
+        constraintName: UK4cj3idr72jukvc49m5dgo9jmo
+        tableName: organisation
+- changeSet:
+    id: 1532284911352-20
+    author: agyt (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: name
+        constraintName: UK5gkbb6lj4dgngpl2jj4s2ju0y
+        tableName: payment_account_type
+- changeSet:
+    id: 1532284911352-21
+    author: agyt (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: name
+        constraintName: UKfnmwikam9hv97dlg3ujye9kbq
+        tableName: organisation_type
+- changeSet:
+    id: 1532284911352-22
+    author: agyt (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: user_id, email
+        constraintName: UKkec0meedl7784khbhuv1xu199
+        tableName: professional_user
+- changeSet:
+    id: 1532284911352-23
+    author: agyt (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: pba_number
+        constraintName: UKm7wt51ormb2bvbo562q0bnmm6
+        tableName: payment_account
+- changeSet:
+    id: 1532284911352-24
+    author: agyt (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: name
+        constraintName: UKrkfxa9waujg49ekmffyyaviem
+        tableName: address_type
+- changeSet:
+    id: 1532284911352-25
+    author: agyt (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: account_assignments_uuid
+        baseTableName: professional_user_account_assignments
+        constraintName: FK93o37d1v4nnpnbwrf0nyndwvn
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: uuid
+        referencedTableName: payment_account
+- changeSet:
+    id: 1532284911352-26
+    author: agyt (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: organisation_uuid
+        baseTableName: payment_account
+        constraintName: FKa1em1kyvpmtw4nqky1svydmmx
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: uuid
+        referencedTableName: organisation
+- changeSet:
+    id: 1532284911352-27
+    author: agyt (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: payment_account_uuid
+        baseTableName: payment_account_professional_user
+        constraintName: FKd59d1k55r5x7wgfx051laag79
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: uuid
+        referencedTableName: payment_account
+- changeSet:
+    id: 1532284911352-28
+    author: agyt (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: pba_type_uuid
+        baseTableName: payment_account
+        constraintName: FKe8tcvtvj27s673b24cxb8gh62
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: uuid
+        referencedTableName: payment_account_type
+- changeSet:
+    id: 1532284911352-29
+    author: agyt (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: professional_user_uuid
+        baseTableName: payment_account_professional_user
+        constraintName: FKevqgusir0olr9f6mkcykb5rk3
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: uuid
+        referencedTableName: professional_user
+- changeSet:
+    id: 1532284911352-30
+    author: agyt (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: organisation_uuid
+        baseTableName: address
+        constraintName: FKlnfpss0gqiw8hg1r0lr79eiy9
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: uuid
+        referencedTableName: organisation
+- changeSet:
+    id: 1532284911352-31
+    author: agyt (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: professional_user_uuid
+        baseTableName: professional_user_account_assignments
+        constraintName: FKnoycwk8uylqvhxiswt4hyatg6
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: uuid
+        referencedTableName: professional_user
+- changeSet:
+    id: 1532284911352-32
+    author: agyt (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: address_type_uuid
+        baseTableName: address
+        constraintName: FKsate6ouw4h2b90x62ngl0gaou
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: uuid
+        referencedTableName: address_type
+- changeSet:
+    id: 1532284911352-33
+    author: agyt (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: organisation_type_uuid
+        baseTableName: organisation
+        constraintName: FKt67fm9jqe0awslluy91uikapy
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: uuid
+        referencedTableName: organisation_type
+
+

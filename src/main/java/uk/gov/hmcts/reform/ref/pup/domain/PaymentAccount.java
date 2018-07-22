@@ -10,8 +10,8 @@ import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -30,8 +30,8 @@ public class PaymentAccount {
     @ManyToOne
     private PaymentAccountType pbaType;
 
-    @OneToMany(mappedBy = "paymentAccount")
-    private Set<ProfessionalUserAccountAssignment> accountAssignments;
+    @ManyToMany
+    private Set<ProfessionalUser> professionalUser;
 
     @ManyToOne
     private Organisation organisation;

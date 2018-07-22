@@ -5,6 +5,8 @@ import org.junit.Test;
 import org.springframework.boot.actuate.health.Status;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+
+import uk.gov.hmcts.reform.ref.pup.actuate.health.WebChecker;
 import uk.gov.hmcts.reform.ref.pup.actuate.health.model.HealthCheckResponse;
 
 import static org.mockito.Mockito.mock;

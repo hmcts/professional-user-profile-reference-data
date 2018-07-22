@@ -1,8 +1,9 @@
-package uk.gov.hmcts.reform.ref.pup.services.domain;
+package uk.gov.hmcts.reform.ref.pup.services.impl;
 
 import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
 import uk.gov.hmcts.reform.ref.pup.repository.OrganisationRepository;
+import uk.gov.hmcts.reform.ref.pup.services.OrganisationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,37 +15,31 @@ import javax.transaction.Transactional;
 
 @Service
 @Transactional
-public class OrganisationService {
+public class OrganisationServiceImpl implements OrganisationService {
 
     private final OrganisationRepository organisationRepository;
 
     @Autowired
-    public OrganisationService(OrganisationRepository organisationRepository) {
+    public OrganisationServiceImpl(OrganisationRepository organisationRepository) {
         this.organisationRepository = organisationRepository;
     }
 
-    public Organisation createOrganisationWithJustName(String name) throws ApplicationException {
-
-        Optional<Organisation> organisationByName = organisationRepository.findOneByName(name);
+    @Override
+    public Organisation create(final Organisation organisation) throws ApplicationException {
+        Optional<Organisation> organisationByName = organisationRepository.findOneByName(organisation.getName());
         if (organisationByName.isPresent()) {
             throw new ApplicationException("message");
         }
-
-        Organisation organisation = new Organisation();
-        organisation.setName(name);
-
-        return createOrganisation(organisation);
-    }
-
-    public Organisation createOrganisation(final Organisation organisation) {
         return organisationRepository.save(organisation);
     }
 
-    public Organisation retrieveOrganisation(UUID uuid) {
-        return organisationRepository.findById(uuid).orElse(null);
+    @Override
+    public Optional<Organisation> retrieve(UUID uuid) throws ApplicationException {
+        return organisationRepository.findById(uuid);
     }
 
-    public void deleteProfessionalUser(UUID uuid) {
+    @Override
+    public void delete(UUID uuid) throws ApplicationException {
         organisationRepository.deleteById(uuid);
     }
 }

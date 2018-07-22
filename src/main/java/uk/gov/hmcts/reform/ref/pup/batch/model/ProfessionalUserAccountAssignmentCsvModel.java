@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.ref.pup.batch.domain;
+package uk.gov.hmcts.reform.ref.pup.batch.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class ProfessionalUserAccountAssignmentCsvDTO {
+public class ProfessionalUserAccountAssignmentCsvModel {
 
     @Getter
     @Setter

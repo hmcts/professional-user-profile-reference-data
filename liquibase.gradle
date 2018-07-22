@@ -19,7 +19,7 @@ task liquibaseDiffChangelog(type: JavaExec) {
     main = "liquibase.integration.commandline.Main"
 
     args "--changeLogFile=" + "$projectDir/src/main/resources/db/changelog/db.changelog-diff-" + buildTimestamp() + ".yaml"
-    args "--referenceUrl=hibernate:spring:uk.gov.hmcts.reform.ref.pup.domain?dialect=org.hibernate.dialect.PostgreSQL94Dialect"
+    args "--referenceUrl=hibernate:spring:uk.gov.hmcts.reform.ref.pup.domain?dialect=org.hibernate.dialect.PostgreSQL94Dialect&hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
     args "--username=" + liquibaseProps.getProperty('username')
     args "--password=" + liquibaseProps.getProperty('password')
     args "--url=" + liquibaseProps.getProperty('url')

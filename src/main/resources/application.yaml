@@ -5,9 +5,6 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQL94Dialect
     database: postgresql
     show-sql: ${SHOW_SQL:false}
-    hibernate:
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
         temp:
@@ -30,9 +27,6 @@ spring:
   liquibase:
     enabled: ${ENABLE_DB_MIGRATE:true}
     change-log: classpath:/db/changelog/db.changelog-master.yaml
-
-
-
 
 management:
   endpoints:

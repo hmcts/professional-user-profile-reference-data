@@ -10,7 +10,7 @@ import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -34,7 +34,7 @@ public class ProfessionalUser {
 
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "user")
-    private Set<ProfessionalUserAccountAssignment> accountAssignments;
+    @ManyToMany
+    private Set<PaymentAccount> accountAssignments;
 
 }
