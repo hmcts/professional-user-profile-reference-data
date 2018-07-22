@@ -5,9 +5,7 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class PaymentAccountDto {
-
-    private UUID uuId;
+public class PaymentAccountRequest {
 
     private String pbaNumber;
 

@@ -1,7 +1,7 @@
-package uk.gov.hmcts.reform.ref.pup.services.file;
+package uk.gov.hmcts.reform.ref.pup.batch.services.file;
 
 
-import uk.gov.hmcts.reform.ref.pup.services.azure.AzureBlobStorageClient;
+import uk.gov.hmcts.reform.ref.pup.batch.services.azure.AzureBlobStorageClient;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

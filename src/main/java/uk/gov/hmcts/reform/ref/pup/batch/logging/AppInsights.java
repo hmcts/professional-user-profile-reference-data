@@ -1,12 +1,14 @@
-package uk.gov.hmcts.reform.ref.pup.config.logging;
+package uk.gov.hmcts.reform.ref.pup.batch.logging;
 
-import com.microsoft.applicationinsights.TelemetryClient;
+import uk.gov.hmcts.reform.logging.appinsights.AbstractAppInsights;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
-import uk.gov.hmcts.reform.logging.appinsights.AbstractAppInsights;
+
+import com.microsoft.applicationinsights.TelemetryClient;
 
 @Component
 @ConditionalOnProperty("azure.app_insights_key")

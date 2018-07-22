@@ -1,6 +1,6 @@
 package uk.gov.hmcts.reform.ref.pup.batch.config;
 
-import uk.gov.hmcts.reform.ref.pup.exception.AppConfigurationException;
+import uk.gov.hmcts.reform.ref.pup.batch.exception.AppConfigurationException;
 
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.launch.JobLauncher;

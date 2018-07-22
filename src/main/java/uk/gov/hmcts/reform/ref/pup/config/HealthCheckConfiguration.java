@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.ref.pup.config.healthcheck;
+package uk.gov.hmcts.reform.ref.pup.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.autoconfigure.system.DiskSpaceHealthIndicatorProperties;

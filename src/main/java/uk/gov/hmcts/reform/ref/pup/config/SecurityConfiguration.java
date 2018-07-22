@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.ref.pup.config.security;
+package uk.gov.hmcts.reform.ref.pup.config;
 
 import uk.gov.hmcts.reform.auth.checker.core.RequestAuthorizer;
 import uk.gov.hmcts.reform.auth.checker.core.service.Service;
