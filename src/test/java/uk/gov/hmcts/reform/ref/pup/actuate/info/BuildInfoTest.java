@@ -1,7 +1,5 @@
 package uk.gov.hmcts.reform.ref.pup.actuate.info;
 
-import uk.gov.hmcts.reform.ref.pup.actuate.info.BuildInfo;
-
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.springframework.boot.actuate.info.Info;
