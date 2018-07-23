@@ -2,6 +2,7 @@ package uk.gov.hmcts.reform.ref.pup.services.impl;
 
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
+import uk.gov.hmcts.reform.ref.pup.dto.ProfessionalUserCreation;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
 import uk.gov.hmcts.reform.ref.pup.repository.PaymentAccountRepository;
 import uk.gov.hmcts.reform.ref.pup.repository.ProfessionalUserRepository;
@@ -22,6 +23,7 @@ import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -41,12 +43,14 @@ public class ProfessionalUserProfileServiceImplTest {
     @Captor
     ArgumentCaptor<ProfessionalUser> professionalUserCaptor;
 
+    private ProfessionalUserCreation testUserRequest;
     private ProfessionalUser testUser;
     private PaymentAccount testPaymentAccount;
 
     @Before
     public void setUp() {
 
+        testUserRequest = createFakeProfessionalUserRequest();
         testUser = createFakeProfessionalUser();
         testPaymentAccount = createFakePaymentAccount();
     }
@@ -69,6 +73,17 @@ public class ProfessionalUserProfileServiceImplTest {
         return firstTestUser;
     }
     
+    private ProfessionalUserCreation createFakeProfessionalUserRequest() {
+        ProfessionalUserCreation firstTestUser = new ProfessionalUserCreation();
+        firstTestUser.setEmail("DUMMY@DUMMY.com");
+        firstTestUser.setFirstName("DUMMY");
+        firstTestUser.setPhoneNumber("DUMMY");
+        firstTestUser.setSurname("DUMMY");
+        firstTestUser.setUserId("DUMMY");
+        return firstTestUser;
+    }
+    
+    
     private ProfessionalUser createFakeProfessionalUserWithSameEmail() {
         ProfessionalUser foolTestUser = new ProfessionalUser();
         foolTestUser.setEmail("DUMMY@DUMMY.com");
@@ -81,11 +96,16 @@ public class ProfessionalUserProfileServiceImplTest {
 
     @Test
     public void create() throws ApplicationException {
-        when(professionalUserRepository.save(testUser)).thenReturn(testUser);
+        when(professionalUserRepository.save(any())).thenAnswer(i -> i.getArgument(0));
 
-        ProfessionalUser created = professionalUserService.create(testUser);
-
-        assertThat(testUser, equalTo(created));
+        ProfessionalUser created = professionalUserService.create(testUserRequest);
+        
+        assertThat(created.getEmail(), equalTo(testUserRequest.getEmail()));
+        assertThat(created.getFirstName(), equalTo(testUserRequest.getFirstName()));
+        assertThat(created.getPhoneNumber(), equalTo(testUserRequest.getPhoneNumber()));
+        assertThat(created.getSurname(), equalTo(testUserRequest.getSurname()));
+        assertThat(created.getUserId(), equalTo(testUserRequest.getUserId()));
+        
     }
     
     @Test(expected = ApplicationException.class)
@@ -93,7 +113,7 @@ public class ProfessionalUserProfileServiceImplTest {
         when(professionalUserRepository.findOneByEmail(testUser.getEmail())).thenReturn(Optional.of(createFakeProfessionalUserWithSameEmail()));
         when(professionalUserRepository.save(testUser)).thenReturn(testUser);
         
-        professionalUserService.create(testUser);
+        professionalUserService.create(testUserRequest);
     }
 
     @Test

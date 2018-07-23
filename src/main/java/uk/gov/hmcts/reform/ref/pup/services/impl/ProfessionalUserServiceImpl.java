@@ -2,6 +2,7 @@ package uk.gov.hmcts.reform.ref.pup.services.impl;
 
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
+import uk.gov.hmcts.reform.ref.pup.dto.ProfessionalUserCreation;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
 import uk.gov.hmcts.reform.ref.pup.repository.PaymentAccountRepository;
 import uk.gov.hmcts.reform.ref.pup.repository.ProfessionalUserRepository;
@@ -30,12 +31,19 @@ public class ProfessionalUserServiceImpl implements ProfessionalUserService {
     }
 
     @Override
-    public ProfessionalUser create(final ProfessionalUser professionalUser) throws ApplicationException {
+    public ProfessionalUser create(final ProfessionalUserCreation professionalUserInput) throws ApplicationException {
         
-        Optional<ProfessionalUser> professionalUsers = professionalUserRepository.findOneByEmail(professionalUser.getEmail());
+        Optional<ProfessionalUser> professionalUsers = professionalUserRepository.findOneByEmail(professionalUserInput.getEmail());
         if (professionalUsers.isPresent()) {
             throw new ApplicationException("message");
         }
+        
+        ProfessionalUser professionalUser = new ProfessionalUser();
+        professionalUser.setEmail(professionalUserInput.getEmail());
+        professionalUser.setFirstName(professionalUserInput.getFirstName());
+        professionalUser.setPhoneNumber(professionalUserInput.getPhoneNumber());
+        professionalUser.setSurname(professionalUserInput.getSurname());
+        professionalUser.setUserId(professionalUserInput.getUserId());
         
         return professionalUserRepository.save(professionalUser);
     }

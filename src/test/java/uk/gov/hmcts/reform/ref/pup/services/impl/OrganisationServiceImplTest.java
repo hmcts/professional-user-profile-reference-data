@@ -2,6 +2,7 @@ package uk.gov.hmcts.reform.ref.pup.services.impl;
 
 import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
 import uk.gov.hmcts.reform.ref.pup.domain.OrganisationType;
+import uk.gov.hmcts.reform.ref.pup.dto.OrganisationCreation;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
 import uk.gov.hmcts.reform.ref.pup.repository.OrganisationRepository;
 
@@ -18,6 +19,7 @@ import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.only;
 
 @RunWith(SpringRunner.class)
@@ -30,13 +32,21 @@ public class OrganisationServiceImplTest {
     private OrganisationServiceImpl organisationService;
 
     private Organisation testOrganisation;
+    private OrganisationCreation testOrganisationRequest;
 
     @Before
     public void setUp() {
 
         testOrganisation = createFakeOrganisation();
+        testOrganisationRequest = createFakeOrganisationRequest();
     }
 
+    private OrganisationCreation createFakeOrganisationRequest() {
+        OrganisationCreation firstTestOrganisationRequest = new OrganisationCreation();
+        firstTestOrganisationRequest.setName("DUMMY");
+        return firstTestOrganisationRequest;
+    }
+    
     private Organisation createFakeOrganisation() {
         Organisation firstTestOrganisation = new Organisation();
         firstTestOrganisation.setName("DUMMY");
@@ -55,11 +65,11 @@ public class OrganisationServiceImplTest {
 
     @Test
     public void create() throws ApplicationException {
-        Mockito.when(organisationRepository.save(testOrganisation)).thenReturn(testOrganisation);
+        Mockito.when(organisationRepository.save(any())).thenReturn(testOrganisation);
 
-        Organisation created = organisationService.create(testOrganisation);
+        Organisation created = organisationService.create(testOrganisationRequest);
 
-        assertThat(testOrganisation, equalTo(created));
+        assertThat(created.getName(), equalTo(testOrganisationRequest.getName()));
     }
     
     @Test(expected = ApplicationException.class)
@@ -67,7 +77,7 @@ public class OrganisationServiceImplTest {
         Mockito.when(organisationRepository.findOneByName(testOrganisation.getName())).thenReturn(Optional.of(createFakeOrganisationWithSamName()));
         Mockito.when(organisationRepository.save(testOrganisation)).thenReturn(testOrganisation);
         
-        organisationService.create(testOrganisation);
+        organisationService.create(testOrganisationRequest);
     }
 
     @Test

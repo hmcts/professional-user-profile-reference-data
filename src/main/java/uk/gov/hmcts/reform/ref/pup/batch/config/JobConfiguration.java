@@ -1,11 +1,9 @@
 package uk.gov.hmcts.reform.ref.pup.batch.config;
 
 import uk.gov.hmcts.reform.ref.pup.batch.model.ProfessionalUserAccountAssignmentCsvModel;
-import uk.gov.hmcts.reform.ref.pup.batch.services.ProfessionalUserAccountAssignmentCsvProcessor;
+import uk.gov.hmcts.reform.ref.pup.batch.processes.ProfessionalUserAccountAssignmentCsvProcessor;
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -27,6 +25,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import lombok.extern.slf4j.Slf4j;
+
 import com.microsoft.azure.storage.blob.CloudBlobContainer;
 import com.microsoft.azure.storage.blob.ListBlobItem;
 
@@ -34,6 +34,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Configuration
 @ConditionalOnProperty("toggle.uploadCSV")
 public class JobConfiguration {
@@ -49,8 +50,6 @@ public class JobConfiguration {
 
     @Autowired
     private CloudBlobContainer cloudBlobContainer;
-
-    private static final Logger log = LoggerFactory.getLogger(JobConfiguration.class);
 
     @Bean
     public MultiResourceItemReader<ProfessionalUserAccountAssignmentCsvModel> mutiCsvPupaaReader() {
@@ -72,15 +71,6 @@ public class JobConfiguration {
             }
         }
 
-        log.info("======================================================");
-        log.info("======================================================");
-        log.info("======================================================");
-        list.forEach(resource -> log.info("ALECTRONIC" + resource.getFilename()));
-        log.info("======================================================");
-        log.info("======================================================");
-        log.info("======================================================");
-        log.info("======================================================");
-
         Resource[] resources = list.toArray(new Resource[0]);
 
         MultiResourceItemReader<ProfessionalUserAccountAssignmentCsvModel> reader = new MultiResourceItemReader<>();
@@ -93,15 +83,20 @@ public class JobConfiguration {
     @Bean
     public FlatFileItemReader<ProfessionalUserAccountAssignmentCsvModel> singleCsvPupaaReader() {
 
+        DelimitedLineTokenizer tokenizer = new DelimitedLineTokenizer();
+        tokenizer.setNames("orgName", "pbaNumber", "userEmail");
+        
+        BeanWrapperFieldSetMapper<ProfessionalUserAccountAssignmentCsvModel> fieldSetMapper = new BeanWrapperFieldSetMapper<ProfessionalUserAccountAssignmentCsvModel>();
+        fieldSetMapper.setTargetType(ProfessionalUserAccountAssignmentCsvModel.class);
+        
+        
+        DefaultLineMapper<ProfessionalUserAccountAssignmentCsvModel> defaultLineMapper = new DefaultLineMapper<ProfessionalUserAccountAssignmentCsvModel>();
+        defaultLineMapper.setLineTokenizer(tokenizer);
+        defaultLineMapper.setFieldSetMapper(fieldSetMapper);
+        
         FlatFileItemReader<ProfessionalUserAccountAssignmentCsvModel> reader = new FlatFileItemReader<>();
-        reader.setLineMapper(new DefaultLineMapper<ProfessionalUserAccountAssignmentCsvModel>() {{
-            setLineTokenizer(new DelimitedLineTokenizer() {{
-                setNames("orgName", "pbaNumber", "userEmail");
-            }});
-            setFieldSetMapper(new BeanWrapperFieldSetMapper<ProfessionalUserAccountAssignmentCsvModel>() {{
-                setTargetType(ProfessionalUserAccountAssignmentCsvModel.class);
-            }});
-        }});
+        reader.setLineMapper(defaultLineMapper);
+        
         return reader;
     }
 
@@ -117,28 +112,23 @@ public class JobConfiguration {
         return stepBuilderFactory.get("csvFileToDatabaseStep")
             .transactionManager(transactionManager)
             .<ProfessionalUserAccountAssignmentCsvModel, ProfessionalUser>chunk(1)
-//            get list of uri's
-//            one by one do the next steps
             .reader(mutiCsvPupaaReader())
             .processor(professionalUserAccountAssignmentCsvProcessor())
-            .exceptionHandler(new ExceptionHandler() {
-                @Override
-                public void handleException(RepeatContext context, Throwable throwable) throws Throwable {
-                    log.info("======================================================");
-                    log.info("======================================================");
-                    log.error("SOMETHING WENT WRONG");
-                    log.error(throwable.getMessage());
-//                    send an email and move to a reject folder
-                    log.info("======================================================");
-                    log.info("======================================================");
-
-//                    CloudAppendBlob blob = cloudBlobContainer.cr("error.log");
-//                    blob.appendText(throwable.getMessage());
-                }
-            })// move to reject folder (add a error log file too i guess)
+            .exceptionHandler(exceptionHandler())// move to reject folder (add a error log file too i guess)
             .build();
     }
 
+    @Bean
+    protected ExceptionHandler exceptionHandler() {
+        return new ExceptionHandler() {
+            @Override
+            public void handleException(RepeatContext context, Throwable throwable) throws Throwable {
+                log.error(throwable.getMessage());
+            }
+        };
+    }
+    
+    
     @Bean
     Job csvFileToDatabaseJob() {
         return jobBuilderFactory

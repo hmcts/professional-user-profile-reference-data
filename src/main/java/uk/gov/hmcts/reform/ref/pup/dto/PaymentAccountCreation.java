@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class PaymentAccountRequest {
+public class PaymentAccountCreation {
 
     private String pbaNumber;
 

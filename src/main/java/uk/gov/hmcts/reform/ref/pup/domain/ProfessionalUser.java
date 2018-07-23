@@ -14,6 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+
 @Data
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "userId", "email" }))

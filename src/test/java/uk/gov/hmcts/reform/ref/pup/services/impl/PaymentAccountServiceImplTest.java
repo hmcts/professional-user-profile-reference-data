@@ -3,6 +3,7 @@ package uk.gov.hmcts.reform.ref.pup.services.impl;
 import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
 import uk.gov.hmcts.reform.ref.pup.domain.OrganisationType;
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
+import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountCreation;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
 import uk.gov.hmcts.reform.ref.pup.repository.PaymentAccountRepository;
 import uk.gov.hmcts.reform.ref.pup.services.OrganisationService;
@@ -36,7 +37,8 @@ public class PaymentAccountServiceImplTest {
     @InjectMocks
     private PaymentAccountServiceImpl paymentAccountService;
 
-    private String dummyPbaNumber;
+    private PaymentAccountCreation paymentAccountRequest;
+    private PaymentAccount paymentAccount;
     
     private Organisation testOrganisation;
 
@@ -44,7 +46,8 @@ public class PaymentAccountServiceImplTest {
     public void setUp() {
 
         testOrganisation = createFakeOrganisation();
-        dummyPbaNumber = "DUMMY";
+        paymentAccount = createFakePaymentAccount();
+        paymentAccountRequest = createFakePaymentAccountRequest();
     }
     
     private Organisation createFakeOrganisation() {
@@ -54,23 +57,31 @@ public class PaymentAccountServiceImplTest {
         fakeTestOrganisation.setUuid(UUID.randomUUID());
         return fakeTestOrganisation;
     }
-
-    private PaymentAccount createFakePaymentAccount(String pbaNumber) {
-        PaymentAccount paymentAccount = new PaymentAccount();
-        paymentAccount.setPbaNumber(pbaNumber);
-        paymentAccount.setOrganisation(createFakeOrganisation());
+    
+    private PaymentAccountCreation createFakePaymentAccountRequest() {
+        PaymentAccountCreation paymentAccount = new PaymentAccountCreation();
+        paymentAccount.setPbaNumber("DUMMY");
+        paymentAccount.setOrganisationId(testOrganisation.getUuid());
         return paymentAccount;
     }
+
+    private PaymentAccount createFakePaymentAccount() {
+        PaymentAccount paymentAccount = new PaymentAccount();
+        paymentAccount.setPbaNumber("DUMMY");
+        paymentAccount.setOrganisation(testOrganisation);
+        return paymentAccount;
+    }
+    
 
     @Test
     public void create() throws ApplicationException {
         when(paymentAccountRepository.save(any())).thenAnswer(i -> i.getArgument(0));
         when(organisationService.retrieve(testOrganisation.getUuid())).thenReturn(Optional.of(testOrganisation));
         
-        PaymentAccount created = paymentAccountService.create(dummyPbaNumber, testOrganisation.getUuid());
+        PaymentAccount created = paymentAccountService.create(paymentAccountRequest);
 
         assertThat(created.getOrganisation(), equalTo(testOrganisation));
-        assertThat(created.getPbaNumber(), equalTo(dummyPbaNumber));
+        assertThat(created.getPbaNumber(), equalTo(paymentAccountRequest.getPbaNumber()));
     }
     
     @Test(expected = ApplicationException.class)
@@ -78,24 +89,24 @@ public class PaymentAccountServiceImplTest {
         when(paymentAccountRepository.save(any())).thenAnswer(i -> i.getArgument(0));
         when(organisationService.retrieve(testOrganisation.getUuid())).thenReturn(Optional.empty());
         
-        paymentAccountService.create(dummyPbaNumber, testOrganisation.getUuid());
+        paymentAccountService.create(paymentAccountRequest);
     }
 
     @Test
     public void retrieve() throws ApplicationException {
-        when(paymentAccountRepository.findByPbaNumber(dummyPbaNumber)).thenAnswer(i -> Optional.of(createFakePaymentAccount(i.getArgument(0))));
+        when(paymentAccountRepository.findByPbaNumber(paymentAccountRequest.getPbaNumber())).thenReturn(Optional.ofNullable(paymentAccount));
 
-        Optional<PaymentAccount> retrieve = paymentAccountService.retrieve(dummyPbaNumber);
+        Optional<PaymentAccount> retrieve = paymentAccountService.retrieve(paymentAccountRequest.getPbaNumber());
 
-        assertThat(retrieve.get().getPbaNumber(), equalTo(dummyPbaNumber));
+        assertThat(retrieve.get().getPbaNumber(), equalTo(paymentAccountRequest.getPbaNumber()));
     }
 
     @Test
     public void delete() throws ApplicationException {
 
-        paymentAccountService.delete(dummyPbaNumber);
+        paymentAccountService.delete(paymentAccountRequest.getPbaNumber());
 
-        verify(paymentAccountRepository, only()).deleteByPbaNumber(dummyPbaNumber);
+        verify(paymentAccountRepository, only()).deleteByPbaNumber(paymentAccountRequest.getPbaNumber());
     }
     
 }

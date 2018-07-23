@@ -1,6 +1,7 @@
 package uk.gov.hmcts.reform.ref.pup.controller;
 
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
+import uk.gov.hmcts.reform.ref.pup.dto.ProfessionalUserCreation;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
 import uk.gov.hmcts.reform.ref.pup.services.ProfessionalUserService;
 
@@ -39,7 +40,7 @@ public class ProfessionalUserController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success", response = ProfessionalUser.class)
     })
-    public ResponseEntity<ProfessionalUser> createProfessionalUser(@RequestBody @Valid ProfessionalUser professionalUser) throws ApplicationException {
+    public ResponseEntity<ProfessionalUser> createProfessionalUser(@RequestBody @Valid ProfessionalUserCreation professionalUser) throws ApplicationException {
         return ResponseEntity.ok(professionalUserService.create(professionalUser));
     }
 
