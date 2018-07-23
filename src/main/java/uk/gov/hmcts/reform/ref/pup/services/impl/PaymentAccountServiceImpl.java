@@ -2,6 +2,7 @@ package uk.gov.hmcts.reform.ref.pup.services.impl;
 
 import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
+import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountRequest;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
 import uk.gov.hmcts.reform.ref.pup.repository.PaymentAccountRepository;
 import uk.gov.hmcts.reform.ref.pup.services.OrganisationService;
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import javax.transaction.Transactional;
 
@@ -30,14 +30,14 @@ public class PaymentAccountServiceImpl implements PaymentAccountService {
     }
 
     @Override
-    public PaymentAccount create(String pbaNumber, UUID organisationId) throws ApplicationException {
+    public PaymentAccount create(PaymentAccountRequest paymentAccountRequest) throws ApplicationException {
         
-        Organisation organisation = organisationService.retrieve(organisationId)
+        Organisation organisation = organisationService.retrieve(paymentAccountRequest.getOrganisationId())
                                                        .orElseThrow(() -> new ApplicationException("meesage"));
 
         PaymentAccount paymentAccount = new PaymentAccount();
         
-        paymentAccount.setPbaNumber(pbaNumber);
+        paymentAccount.setPbaNumber(paymentAccountRequest.getPbaNumber());
         paymentAccount.setOrganisation(organisation);
         
         return paymentAccountRepository.save(paymentAccount);

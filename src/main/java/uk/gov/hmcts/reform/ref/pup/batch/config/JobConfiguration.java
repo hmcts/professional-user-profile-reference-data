@@ -1,7 +1,7 @@
 package uk.gov.hmcts.reform.ref.pup.batch.config;
 
 import uk.gov.hmcts.reform.ref.pup.batch.model.ProfessionalUserAccountAssignmentCsvModel;
-import uk.gov.hmcts.reform.ref.pup.batch.services.ProfessionalUserAccountAssignmentCsvProcessor;
+import uk.gov.hmcts.reform.ref.pup.batch.processes.ProfessionalUserAccountAssignmentCsvProcessor;
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
 
 import org.springframework.batch.core.Job;

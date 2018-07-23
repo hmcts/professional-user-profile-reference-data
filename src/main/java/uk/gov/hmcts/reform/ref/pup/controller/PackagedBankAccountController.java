@@ -42,7 +42,7 @@ public class PackagedBankAccountController {
             @ApiResponse(code = 200, message = "Success", response = ProfessionalUser.class) 
     })
     public ResponseEntity<PaymentAccount> createPaymentAccount(@RequestBody @Valid PaymentAccountRequest paymentAccount) throws ApplicationException {
-        return ResponseEntity.ok(paymentAccountService.create(paymentAccount.getPbaNumber(), paymentAccount.getOrganisationId()));
+        return ResponseEntity.ok(paymentAccountService.create(paymentAccount));
     }
 
     @GetMapping(value = "{uuid}")

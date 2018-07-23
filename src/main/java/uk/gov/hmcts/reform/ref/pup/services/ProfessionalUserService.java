@@ -1,6 +1,7 @@
 package uk.gov.hmcts.reform.ref.pup.services;
 
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
+import uk.gov.hmcts.reform.ref.pup.dto.ProfessionalUserRequest;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
 
 import java.util.Optional;
@@ -8,7 +9,7 @@ import java.util.UUID;
 
 public interface ProfessionalUserService {
 
-    ProfessionalUser create(ProfessionalUser professionalUser) throws ApplicationException;
+    ProfessionalUser create(ProfessionalUserRequest professionalUser) throws ApplicationException;
 
     Optional<ProfessionalUser> retrieve(String userId) throws ApplicationException;
 

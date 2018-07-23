@@ -1,6 +1,7 @@
 package uk.gov.hmcts.reform.ref.pup.controller;
 
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
+import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountRequest;
 import uk.gov.hmcts.reform.ref.pup.services.PaymentAccountService;
 
 import org.junit.Before;
@@ -44,7 +45,7 @@ public class PackagedBankAccountControllerTest {
     protected PackagedBankAccountController packagedBankAccountController;
     
     @Captor
-    ArgumentCaptor<String> pbaNumberCaptor;
+    ArgumentCaptor<PaymentAccountRequest> paymentAccountCaptor;
     
     @Captor
     ArgumentCaptor<String> paymentAccountIdCaptor;
@@ -76,7 +77,7 @@ public class PackagedBankAccountControllerTest {
     @Test
     public void createPaymentAccountShouldCallCreateFormPaymentAccountService() throws Exception {
         
-        when(paymentAccountService.create(any(),any())).thenReturn(firstTestPaymentAccount);
+        when(paymentAccountService.create(any())).thenReturn(firstTestPaymentAccount);
         
         mvc.perform(post("/pup/pba").with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -84,9 +85,9 @@ public class PackagedBankAccountControllerTest {
             .andExpect(status().isOk())
             .andDo(print());
         
-        verify(paymentAccountService, only()).create(pbaNumberCaptor.capture(), organisationIdCaptor.capture());
-        assertThat(pbaNumberCaptor.getValue(), equalTo("DUMMY"));
-        assertThat(organisationIdCaptor.getValue().toString(), equalTo("c6c561cd-8f68-474e-89d3-13fece9b66f8"));
+        verify(paymentAccountService, only()).create(paymentAccountCaptor.capture());
+        assertThat(paymentAccountCaptor.getValue().getPbaNumber(), equalTo("DUMMY"));
+        assertThat(paymentAccountCaptor.getValue().getOrganisationId().toString(), equalTo("c6c561cd-8f68-474e-89d3-13fece9b66f8"));
         
     }
     
