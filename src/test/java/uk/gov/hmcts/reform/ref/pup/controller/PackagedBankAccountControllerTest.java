@@ -1,7 +1,7 @@
 package uk.gov.hmcts.reform.ref.pup.controller;
 
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
-import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountRequest;
+import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountCreation;
 import uk.gov.hmcts.reform.ref.pup.services.PaymentAccountService;
 
 import org.junit.Before;
@@ -45,7 +45,7 @@ public class PackagedBankAccountControllerTest {
     protected PackagedBankAccountController packagedBankAccountController;
     
     @Captor
-    ArgumentCaptor<PaymentAccountRequest> paymentAccountCaptor;
+    ArgumentCaptor<PaymentAccountCreation> paymentAccountCaptor;
     
     @Captor
     ArgumentCaptor<String> paymentAccountIdCaptor;

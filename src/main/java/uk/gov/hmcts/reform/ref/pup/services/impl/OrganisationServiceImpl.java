@@ -1,7 +1,7 @@
 package uk.gov.hmcts.reform.ref.pup.services.impl;
 
 import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
-import uk.gov.hmcts.reform.ref.pup.dto.OrganisationRequest;
+import uk.gov.hmcts.reform.ref.pup.dto.OrganisationCreation;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
 import uk.gov.hmcts.reform.ref.pup.repository.OrganisationRepository;
 import uk.gov.hmcts.reform.ref.pup.services.OrganisationService;
@@ -26,7 +26,7 @@ public class OrganisationServiceImpl implements OrganisationService {
     }
 
     @Override
-    public Organisation create(final OrganisationRequest organisationInput) throws ApplicationException {
+    public Organisation create(final OrganisationCreation organisationInput) throws ApplicationException {
         Optional<Organisation> organisationByName = organisationRepository.findOneByName(organisationInput.getName());
         if (organisationByName.isPresent()) {
             throw new ApplicationException("message");

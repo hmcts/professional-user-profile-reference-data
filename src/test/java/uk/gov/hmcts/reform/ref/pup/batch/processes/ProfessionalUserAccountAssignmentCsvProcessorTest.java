@@ -5,9 +5,9 @@ import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
 import uk.gov.hmcts.reform.ref.pup.domain.OrganisationType;
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
-import uk.gov.hmcts.reform.ref.pup.dto.OrganisationRequest;
-import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountRequest;
-import uk.gov.hmcts.reform.ref.pup.dto.ProfessionalUserRequest;
+import uk.gov.hmcts.reform.ref.pup.dto.OrganisationCreation;
+import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountCreation;
+import uk.gov.hmcts.reform.ref.pup.dto.ProfessionalUserCreation;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
 import uk.gov.hmcts.reform.ref.pup.services.OrganisationService;
 import uk.gov.hmcts.reform.ref.pup.services.PaymentAccountService;
@@ -54,15 +54,15 @@ public class ProfessionalUserAccountAssignmentCsvProcessorTest {
     private PaymentAccount testPaymentAccount;
     
     @Captor
-    ArgumentCaptor<PaymentAccountRequest> paymentAccountRequestCaptor;
+    ArgumentCaptor<PaymentAccountCreation> paymentAccountRequestCaptor;
     @Captor
     ArgumentCaptor<String> userIdCaptor;
     @Captor
-    ArgumentCaptor<UUID> organisationUUIDCaptor;
+    ArgumentCaptor<UUID> organisationUuidCaptor;
     @Captor
-    ArgumentCaptor<ProfessionalUserRequest> professionalUserRequestCaptor;
+    ArgumentCaptor<ProfessionalUserCreation> professionalUserRequestCaptor;
     @Captor
-    ArgumentCaptor<OrganisationRequest> organisationRequestCaptor;
+    ArgumentCaptor<OrganisationCreation> organisationRequestCaptor;
     
     private ProfessionalUserAccountAssignmentCsvModel testProfessionalUserAccountAssignmentCsvModel;
 
@@ -124,7 +124,7 @@ public class ProfessionalUserAccountAssignmentCsvProcessorTest {
         
         verify(organisationService, only()).create(organisationRequestCaptor.capture());
         verify(professionalUserService).create(professionalUserRequestCaptor.capture());
-        verify(professionalUserService).assignPaymentAccount(userIdCaptor.capture(), organisationUUIDCaptor.capture());
+        verify(professionalUserService).assignPaymentAccount(userIdCaptor.capture(), organisationUuidCaptor.capture());
         verify(paymentAccountService, only()).create(paymentAccountRequestCaptor.capture());
         
         assertThat(organisationRequestCaptor.getValue().getName(), equalTo(testProfessionalUserAccountAssignmentCsvModel.getOrgName()));

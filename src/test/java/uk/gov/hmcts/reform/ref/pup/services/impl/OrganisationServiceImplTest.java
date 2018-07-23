@@ -2,7 +2,7 @@ package uk.gov.hmcts.reform.ref.pup.services.impl;
 
 import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
 import uk.gov.hmcts.reform.ref.pup.domain.OrganisationType;
-import uk.gov.hmcts.reform.ref.pup.dto.OrganisationRequest;
+import uk.gov.hmcts.reform.ref.pup.dto.OrganisationCreation;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
 import uk.gov.hmcts.reform.ref.pup.repository.OrganisationRepository;
 
@@ -32,7 +32,7 @@ public class OrganisationServiceImplTest {
     private OrganisationServiceImpl organisationService;
 
     private Organisation testOrganisation;
-    private OrganisationRequest testOrganisationRequest;
+    private OrganisationCreation testOrganisationRequest;
 
     @Before
     public void setUp() {
@@ -41,8 +41,8 @@ public class OrganisationServiceImplTest {
         testOrganisationRequest = createFakeOrganisationRequest();
     }
 
-    private OrganisationRequest createFakeOrganisationRequest() {
-        OrganisationRequest firstTestOrganisationRequest = new OrganisationRequest();
+    private OrganisationCreation createFakeOrganisationRequest() {
+        OrganisationCreation firstTestOrganisationRequest = new OrganisationCreation();
         firstTestOrganisationRequest.setName("DUMMY");
         return firstTestOrganisationRequest;
     }

@@ -1,7 +1,7 @@
 package uk.gov.hmcts.reform.ref.pup.controller;
 
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
-import uk.gov.hmcts.reform.ref.pup.dto.ProfessionalUserRequest;
+import uk.gov.hmcts.reform.ref.pup.dto.ProfessionalUserCreation;
 import uk.gov.hmcts.reform.ref.pup.services.ProfessionalUserService;
 
 import org.junit.Before;
@@ -47,7 +47,7 @@ public class ProfessionalUserControllerTest {
     ArgumentCaptor<String> userIdCaptor;
     
     @Captor
-    ArgumentCaptor<ProfessionalUserRequest> professionalUserCaptor;
+    ArgumentCaptor<ProfessionalUserCreation> professionalUserCaptor;
     
     private MockMvc mvc;
 

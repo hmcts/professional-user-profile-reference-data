@@ -2,7 +2,7 @@ package uk.gov.hmcts.reform.ref.pup.services.impl;
 
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
-import uk.gov.hmcts.reform.ref.pup.dto.ProfessionalUserRequest;
+import uk.gov.hmcts.reform.ref.pup.dto.ProfessionalUserCreation;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
 import uk.gov.hmcts.reform.ref.pup.repository.PaymentAccountRepository;
 import uk.gov.hmcts.reform.ref.pup.repository.ProfessionalUserRepository;
@@ -31,19 +31,19 @@ public class ProfessionalUserServiceImpl implements ProfessionalUserService {
     }
 
     @Override
-    public ProfessionalUser create(final ProfessionalUserRequest professionalUserRequest) throws ApplicationException {
+    public ProfessionalUser create(final ProfessionalUserCreation professionalUserInput) throws ApplicationException {
         
-        Optional<ProfessionalUser> professionalUsers = professionalUserRepository.findOneByEmail(professionalUserRequest.getEmail());
+        Optional<ProfessionalUser> professionalUsers = professionalUserRepository.findOneByEmail(professionalUserInput.getEmail());
         if (professionalUsers.isPresent()) {
             throw new ApplicationException("message");
         }
         
         ProfessionalUser professionalUser = new ProfessionalUser();
-        professionalUser.setEmail(professionalUserRequest.getEmail());
-        professionalUser.setFirstName(professionalUserRequest.getFirstName());
-        professionalUser.setPhoneNumber(professionalUserRequest.getPhoneNumber());
-        professionalUser.setSurname(professionalUserRequest.getSurname());
-        professionalUser.setUserId(professionalUserRequest.getUserId());
+        professionalUser.setEmail(professionalUserInput.getEmail());
+        professionalUser.setFirstName(professionalUserInput.getFirstName());
+        professionalUser.setPhoneNumber(professionalUserInput.getPhoneNumber());
+        professionalUser.setSurname(professionalUserInput.getSurname());
+        professionalUser.setUserId(professionalUserInput.getUserId());
         
         return professionalUserRepository.save(professionalUser);
     }

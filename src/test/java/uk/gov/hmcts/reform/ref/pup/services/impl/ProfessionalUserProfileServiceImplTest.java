@@ -2,7 +2,7 @@ package uk.gov.hmcts.reform.ref.pup.services.impl;
 
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
-import uk.gov.hmcts.reform.ref.pup.dto.ProfessionalUserRequest;
+import uk.gov.hmcts.reform.ref.pup.dto.ProfessionalUserCreation;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
 import uk.gov.hmcts.reform.ref.pup.repository.PaymentAccountRepository;
 import uk.gov.hmcts.reform.ref.pup.repository.ProfessionalUserRepository;
@@ -43,7 +43,7 @@ public class ProfessionalUserProfileServiceImplTest {
     @Captor
     ArgumentCaptor<ProfessionalUser> professionalUserCaptor;
 
-    private ProfessionalUserRequest testUserRequest;
+    private ProfessionalUserCreation testUserRequest;
     private ProfessionalUser testUser;
     private PaymentAccount testPaymentAccount;
 
@@ -73,8 +73,8 @@ public class ProfessionalUserProfileServiceImplTest {
         return firstTestUser;
     }
     
-    private ProfessionalUserRequest createFakeProfessionalUserRequest() {
-        ProfessionalUserRequest firstTestUser = new ProfessionalUserRequest();
+    private ProfessionalUserCreation createFakeProfessionalUserRequest() {
+        ProfessionalUserCreation firstTestUser = new ProfessionalUserCreation();
         firstTestUser.setEmail("DUMMY@DUMMY.com");
         firstTestUser.setFirstName("DUMMY");
         firstTestUser.setPhoneNumber("DUMMY");

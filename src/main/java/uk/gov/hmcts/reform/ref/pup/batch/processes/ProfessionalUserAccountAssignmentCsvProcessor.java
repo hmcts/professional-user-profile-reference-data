@@ -4,9 +4,9 @@ import uk.gov.hmcts.reform.ref.pup.batch.model.ProfessionalUserAccountAssignment
 import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
-import uk.gov.hmcts.reform.ref.pup.dto.OrganisationRequest;
-import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountRequest;
-import uk.gov.hmcts.reform.ref.pup.dto.ProfessionalUserRequest;
+import uk.gov.hmcts.reform.ref.pup.dto.OrganisationCreation;
+import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountCreation;
+import uk.gov.hmcts.reform.ref.pup.dto.ProfessionalUserCreation;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
 import uk.gov.hmcts.reform.ref.pup.services.OrganisationService;
 import uk.gov.hmcts.reform.ref.pup.services.PaymentAccountService;
@@ -34,16 +34,16 @@ public class ProfessionalUserAccountAssignmentCsvProcessor implements ItemProces
         final String pbaNumber = professionalUserAccountAssignmentCsvModel.getPbaNumber();
         final String userEmail = professionalUserAccountAssignmentCsvModel.getUserEmail();
        
-        OrganisationRequest organisationRequest = new OrganisationRequest();
+        OrganisationCreation organisationRequest = new OrganisationCreation();
         organisationRequest.setName(orgName);
         Organisation organisation = organisationService.create(organisationRequest);
         
-        ProfessionalUserRequest professionalUserRequest = new ProfessionalUserRequest();
+        ProfessionalUserCreation professionalUserRequest = new ProfessionalUserCreation();
         professionalUserRequest.setUserId(userEmail);
         professionalUserRequest.setEmail(userEmail);
         ProfessionalUser create = professionalUserService.create(professionalUserRequest);
         
-        PaymentAccountRequest paymentAccountRequest = new PaymentAccountRequest();
+        PaymentAccountCreation paymentAccountRequest = new PaymentAccountCreation();
         paymentAccountRequest.setOrganisationId(organisation.getUuid());
         paymentAccountRequest.setPbaNumber(pbaNumber);
         PaymentAccount paymentAccount = paymentAccountService.create(paymentAccountRequest);

@@ -3,7 +3,7 @@ package uk.gov.hmcts.reform.ref.pup.services.impl;
 import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
 import uk.gov.hmcts.reform.ref.pup.domain.OrganisationType;
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
-import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountRequest;
+import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountCreation;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
 import uk.gov.hmcts.reform.ref.pup.repository.PaymentAccountRepository;
 import uk.gov.hmcts.reform.ref.pup.services.OrganisationService;
@@ -37,7 +37,7 @@ public class PaymentAccountServiceImplTest {
     @InjectMocks
     private PaymentAccountServiceImpl paymentAccountService;
 
-    private PaymentAccountRequest paymentAccountRequest;
+    private PaymentAccountCreation paymentAccountRequest;
     private PaymentAccount paymentAccount;
     
     private Organisation testOrganisation;
@@ -58,8 +58,8 @@ public class PaymentAccountServiceImplTest {
         return fakeTestOrganisation;
     }
     
-    private PaymentAccountRequest createFakePaymentAccountRequest() {
-        PaymentAccountRequest paymentAccount = new PaymentAccountRequest();
+    private PaymentAccountCreation createFakePaymentAccountRequest() {
+        PaymentAccountCreation paymentAccount = new PaymentAccountCreation();
         paymentAccount.setPbaNumber("DUMMY");
         paymentAccount.setOrganisationId(testOrganisation.getUuid());
         return paymentAccount;

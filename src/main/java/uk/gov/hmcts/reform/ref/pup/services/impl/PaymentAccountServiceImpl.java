@@ -2,7 +2,7 @@ package uk.gov.hmcts.reform.ref.pup.services.impl;
 
 import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
-import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountRequest;
+import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountCreation;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
 import uk.gov.hmcts.reform.ref.pup.repository.PaymentAccountRepository;
 import uk.gov.hmcts.reform.ref.pup.services.OrganisationService;
@@ -30,14 +30,14 @@ public class PaymentAccountServiceImpl implements PaymentAccountService {
     }
 
     @Override
-    public PaymentAccount create(PaymentAccountRequest paymentAccountRequest) throws ApplicationException {
+    public PaymentAccount create(PaymentAccountCreation paymentAccountInput) throws ApplicationException {
         
-        Organisation organisation = organisationService.retrieve(paymentAccountRequest.getOrganisationId())
+        Organisation organisation = organisationService.retrieve(paymentAccountInput.getOrganisationId())
                                                        .orElseThrow(() -> new ApplicationException("meesage"));
 
         PaymentAccount paymentAccount = new PaymentAccount();
         
-        paymentAccount.setPbaNumber(paymentAccountRequest.getPbaNumber());
+        paymentAccount.setPbaNumber(paymentAccountInput.getPbaNumber());
         paymentAccount.setOrganisation(organisation);
         
         return paymentAccountRepository.save(paymentAccount);
