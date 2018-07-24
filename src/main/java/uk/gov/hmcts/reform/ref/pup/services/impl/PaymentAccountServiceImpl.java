@@ -4,6 +4,7 @@ import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
 import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountCreation;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
+import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException.ApplicationErrorCode;
 import uk.gov.hmcts.reform.ref.pup.repository.PaymentAccountRepository;
 import uk.gov.hmcts.reform.ref.pup.services.OrganisationService;
 import uk.gov.hmcts.reform.ref.pup.services.PaymentAccountService;
@@ -33,7 +34,7 @@ public class PaymentAccountServiceImpl implements PaymentAccountService {
     public PaymentAccount create(PaymentAccountCreation paymentAccountInput) throws ApplicationException {
         
         Organisation organisation = organisationService.retrieve(paymentAccountInput.getOrganisationId())
-                                                       .orElseThrow(() -> new ApplicationException("meesage"));
+                                                       .orElseThrow(() -> new ApplicationException(ApplicationErrorCode.PAYMENT_ACCOUNT_ID_DOES_NOT_EXIST));
 
         PaymentAccount paymentAccount = new PaymentAccount();
         

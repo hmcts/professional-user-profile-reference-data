@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import lombok.Data;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -36,6 +37,6 @@ public class ProfessionalUser {
     private String phoneNumber;
 
     @ManyToMany
-    private Set<PaymentAccount> accountAssignments;
+    private Set<PaymentAccount> accountAssignments = new HashSet<>();
 
 }

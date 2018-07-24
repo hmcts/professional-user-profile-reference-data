@@ -4,6 +4,7 @@ import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
 import uk.gov.hmcts.reform.ref.pup.dto.ProfessionalUserCreation;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
+import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException.ApplicationErrorCode;
 import uk.gov.hmcts.reform.ref.pup.repository.PaymentAccountRepository;
 import uk.gov.hmcts.reform.ref.pup.repository.ProfessionalUserRepository;
 
@@ -23,13 +24,14 @@ import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
-public class ProfessionalUserProfileServiceImplTest {
+public class ProfessionalUserServiceImplTest {
 
     @Mock
     private ProfessionalUserRepository professionalUserRepository;
@@ -148,22 +150,32 @@ public class ProfessionalUserProfileServiceImplTest {
         assertThat(accountAssignments.size(), equalTo(1));
         assertThat(accountAssignments.iterator().next().getUuid(), equalTo(testPaymentAccount.getUuid()));
     }
-    
-    @Test(expected = ApplicationException.class)
+
+    @Test
     public void assignPaymentAccount_withAnInexistantProfessionalUserShouldReturnAnException() throws ApplicationException {
         
         when(professionalUserRepository.findOneByUserId(testUser.getUserId())).thenReturn(Optional.empty());
         
-        professionalUserService.assignPaymentAccount(testUser.getUserId(), testPaymentAccount.getUuid());
+        try {
+            professionalUserService.assignPaymentAccount(testUser.getUserId(), testPaymentAccount.getUuid());
+            fail();
+        } catch (ApplicationException e) {
+            assertThat(e.getApplicationErrorCode(), equalTo(ApplicationErrorCode.PROFESSIONAL_USER_ID_DOES_NOT_EXIST));
+        }
     }
 
-    @Test(expected = ApplicationException.class)
+    @Test
     public void assignPaymentAccount_withAnInexistantPaymentAccountShouldReturnAnException() throws ApplicationException {
 
         when(professionalUserRepository.findOneByUserId(testUser.getUserId())).thenReturn(Optional.of(testUser));
         when(paymentAccountRepository.findById(testPaymentAccount.getUuid())).thenReturn(Optional.empty());
         
-        professionalUserService.assignPaymentAccount(testUser.getUserId(), testPaymentAccount.getUuid());
+        try {
+            professionalUserService.assignPaymentAccount(testUser.getUserId(), testPaymentAccount.getUuid());
+            fail();
+        } catch (ApplicationException e) {
+            assertThat(e.getApplicationErrorCode(), equalTo(ApplicationErrorCode.PAYMENT_ACCOUNT_ID_DOES_NOT_EXIST));
+        }
     }
     
     @Test
@@ -184,24 +196,32 @@ public class ProfessionalUserProfileServiceImplTest {
         Set<PaymentAccount> accountAssignments = professionalUserCaptor.getValue().getAccountAssignments();
         assertThat(accountAssignments.size(), equalTo(0));
     }
-    
-    @Test(expected = ApplicationException.class)
+
+    @Test
     public void unassignPaymentAccount_withAnInexistantProfessionalUserShouldReturnAnException() throws ApplicationException {
 
         when(professionalUserRepository.findOneByUserId(testUser.getUserId())).thenReturn(Optional.empty());
         
-        professionalUserService.unassignPaymentAccount(testUser.getUserId(), testPaymentAccount.getUuid());
+        try {
+            professionalUserService.unassignPaymentAccount(testUser.getUserId(), testPaymentAccount.getUuid());
+            fail();
+        } catch (ApplicationException e) {
+            assertThat(e.getApplicationErrorCode(), equalTo(ApplicationErrorCode.PROFESSIONAL_USER_ID_DOES_NOT_EXIST));
+        }
     }
     
-    
-    @Test(expected = ApplicationException.class)
+    @Test
     public void unassignPaymentAccount_withAnInexistantPaymentAccountShouldReturnAnException() throws ApplicationException {
 
         when(professionalUserRepository.findOneByUserId(testUser.getUserId())).thenReturn(Optional.of(testUser));
         when(paymentAccountRepository.findById(testPaymentAccount.getUuid())).thenReturn(Optional.empty());
         
-        professionalUserService.unassignPaymentAccount(testUser.getUserId(), testPaymentAccount.getUuid());
-        
+        try {
+            professionalUserService.unassignPaymentAccount(testUser.getUserId(), testPaymentAccount.getUuid());
+            fail();
+        } catch (ApplicationException e) {
+            assertThat(e.getApplicationErrorCode(), equalTo(ApplicationErrorCode.PAYMENT_ACCOUNT_ID_DOES_NOT_EXIST));
+        }
     }
     
 }

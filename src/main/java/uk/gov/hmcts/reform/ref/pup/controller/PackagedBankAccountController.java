@@ -1,7 +1,6 @@
 package uk.gov.hmcts.reform.ref.pup.controller;
 
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
-import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
 import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountCreation;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
 import uk.gov.hmcts.reform.ref.pup.services.PaymentAccountService;
@@ -39,7 +38,7 @@ public class PackagedBankAccountController {
     @PostMapping
     @ApiOperation("Create Payment Account.")
     @ApiResponses(value = { 
-            @ApiResponse(code = 200, message = "Success", response = ProfessionalUser.class) 
+            @ApiResponse(code = 200, message = "Success", response = PaymentAccount.class) 
     })
     public ResponseEntity<PaymentAccount> createPaymentAccount(@RequestBody @Valid PaymentAccountCreation paymentAccount) throws ApplicationException {
         return ResponseEntity.ok(paymentAccountService.create(paymentAccount));
@@ -48,7 +47,7 @@ public class PackagedBankAccountController {
     @GetMapping(value = "{uuid}")
     @ApiOperation("Retrieve Payment Account.")
     @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Success", response = ProfessionalUser.class)
+        @ApiResponse(code = 200, message = "Success", response = PaymentAccount.class)
     })
     public ResponseEntity<PaymentAccount> getProfessionalUser(@PathVariable String uuid) throws ApplicationException {
         

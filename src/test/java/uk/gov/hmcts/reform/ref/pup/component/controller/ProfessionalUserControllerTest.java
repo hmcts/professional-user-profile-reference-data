@@ -36,12 +36,14 @@ public class ProfessionalUserControllerTest {
     protected WebApplicationContext webApplicationContext;
     
     private MockMvc mvc;
+    
+    private String firstTestUserJson;
 
     @Before
     public void setUp() throws Exception {
         mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
         
-        String firstTestUserJson = "{\"userId\":\"1\",\"firstName\":\"Alexis\",\"surname\":\"GAYTE\",\"email\":\"alexis.gayte@gmail.com\",\"phoneNumber\":\"+447591715204\"}";
+        firstTestUserJson = "{\"userId\":\"1\",\"firstName\":\"Alexis\",\"surname\":\"GAYTE\",\"email\":\"alexis.gayte@gmail.com\",\"phoneNumber\":\"+447591715204\"}";
         
         mvc.perform(post("/pup/professionalUsers").with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -80,6 +82,16 @@ public class ProfessionalUserControllerTest {
         
         mvc.perform(get("/pup/professionalUsers/1").with(user("user")))
             .andExpect(status().isNotFound())
+            .andDo(print());
+    }
+    
+    @Test
+    public void createProfessionalUser_forAUserAlreadyExistantShouldReturn() throws Exception {
+        
+        mvc.perform(post("/pup/professionalUsers").with(user("user"))
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(firstTestUserJson))
+            .andExpect(status().isOk())
             .andDo(print());
     }
 }

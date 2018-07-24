@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import lombok.Data;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -32,9 +33,9 @@ public class Organisation {
     private OrganisationType organisationType;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "organisation")
-    private Set<PaymentAccount> pbas;
+    private Set<PaymentAccount> pbas = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "organisation")
-    private Set<Address> addresses;
+    private Set<Address> addresses = new HashSet<>();
 
 }
