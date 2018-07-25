@@ -67,7 +67,7 @@ public class OrganisationControllerTest {
         
         firstTestOrganisation = createFakeOrganisationDto();
         firstTestOrganisationJson = "{\"name\":\"Solicitor Ltd\"}";
-        firstTestAddressJson = "{\"addressLine1\":\"address 1\"}";
+        firstTestAddressJson = "{\"addressLine1\":\"address 1\",\"addressLine2\":\"address 2\",\"addressLine3\":\"address 3\",\"city\":\"london\",\"county\":\"UK\",\"country\":\"UK\",\"postcode\":\"N112AS\"}";
         
     }
 
