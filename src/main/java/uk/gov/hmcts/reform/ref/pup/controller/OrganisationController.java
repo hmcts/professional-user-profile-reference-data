@@ -1,10 +1,10 @@
 package uk.gov.hmcts.reform.ref.pup.controller;
 
-import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
+import uk.gov.hmcts.reform.ref.pup.adaptor.OrganisationServiceAdaptor;
 import uk.gov.hmcts.reform.ref.pup.dto.AddressCreation;
 import uk.gov.hmcts.reform.ref.pup.dto.OrganisationCreation;
+import uk.gov.hmcts.reform.ref.pup.dto.OrganisationDto;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
-import uk.gov.hmcts.reform.ref.pup.services.OrganisationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,30 +29,30 @@ import javax.validation.Valid;
 @RequestMapping("pup/organisation")
 public class OrganisationController {
 
-    private static final ResponseEntity<Organisation> NOT_FOUND_RESPONSE = ResponseEntity.notFound().build();
-    private final OrganisationService organisationService;
+    private static final ResponseEntity<OrganisationDto> NOT_FOUND_RESPONSE = ResponseEntity.notFound().build();
+    private final OrganisationServiceAdaptor organisationService;
 
     @Autowired
-    public OrganisationController(OrganisationService organisationService) {
+    public OrganisationController(OrganisationServiceAdaptor organisationService) {
         this.organisationService = organisationService;
     }
 
     @PostMapping
     @ApiOperation("Create Organisation.")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success", response = Organisation.class)
+            @ApiResponse(code = 200, message = "Success", response = OrganisationDto.class)
     })
-    public ResponseEntity<Organisation> createOrganisation(@RequestBody @Valid OrganisationCreation organisation) throws ApplicationException {
+    public ResponseEntity<OrganisationDto> createOrganisation(@RequestBody @Valid OrganisationCreation organisation) throws ApplicationException {
         return ResponseEntity.ok(organisationService.create(organisation));
     }
 
     @GetMapping(value = "{organisationUuid}")
     @ApiOperation("Retrieve Organisation.")
     @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Success", response = Organisation.class)
+        @ApiResponse(code = 200, message = "Success", response = OrganisationDto.class)
     })
-    public ResponseEntity<Organisation> getOrganisation(@PathVariable String organisationUuid) throws ApplicationException {
-        Optional<Organisation> organisation = organisationService.retrieve(UUID.fromString(organisationUuid));
+    public ResponseEntity<OrganisationDto> getOrganisation(@PathVariable String organisationUuid) throws ApplicationException {
+        Optional<OrganisationDto> organisation = organisationService.retrieve(UUID.fromString(organisationUuid));
         if (!organisation.isPresent()) {
             return NOT_FOUND_RESPONSE;
         }
@@ -65,7 +65,7 @@ public class OrganisationController {
     @ApiResponses(value = {
         @ApiResponse(code = 204, message = "No Content")
     })
-    public ResponseEntity<Organisation> deleteOrganisation(@PathVariable String organisationUuid) throws ApplicationException {
+    public ResponseEntity<OrganisationDto> deleteOrganisation(@PathVariable String organisationUuid) throws ApplicationException {
         organisationService.delete(UUID.fromString(organisationUuid));
         return ResponseEntity.noContent().build();
     }
@@ -73,9 +73,9 @@ public class OrganisationController {
     @PostMapping("{organisationUuid}/address")
     @ApiOperation("Create Address.")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success", response = Organisation.class)
+            @ApiResponse(code = 200, message = "Success", response = OrganisationDto.class)
     })
-    public ResponseEntity<Organisation> addOrganisationAddress(
+    public ResponseEntity<OrganisationDto> addOrganisationAddress(
             @PathVariable String organisationUuid,
             @RequestBody @Valid AddressCreation address) throws ApplicationException {
         

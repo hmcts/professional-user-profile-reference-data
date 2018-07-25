@@ -1,9 +1,10 @@
 package uk.gov.hmcts.reform.ref.pup.controller;
 
+import uk.gov.hmcts.reform.ref.pup.adaptor.ProfessionalUserServiceAdaptor;
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
 import uk.gov.hmcts.reform.ref.pup.dto.ProfessionalUserCreation;
+import uk.gov.hmcts.reform.ref.pup.dto.ProfessionalUserDto;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
-import uk.gov.hmcts.reform.ref.pup.services.ProfessionalUserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,20 +28,20 @@ import javax.validation.Valid;
 @RequestMapping("pup/professionalUsers")
 public class ProfessionalUserController {
 
-    private static final ResponseEntity<ProfessionalUser> NOT_FOUND_RESPONSE = ResponseEntity.notFound().build();
-    private final ProfessionalUserService professionalUserService;
+    private static final ResponseEntity<ProfessionalUserDto> NOT_FOUND_RESPONSE = ResponseEntity.notFound().build();
+    private final ProfessionalUserServiceAdaptor professionalUserService;
 
     @Autowired
-    public ProfessionalUserController(ProfessionalUserService professionalUserService) {
+    public ProfessionalUserController(ProfessionalUserServiceAdaptor professionalUserService) {
         this.professionalUserService = professionalUserService;
     }
 
     @PostMapping
     @ApiOperation("Create Professional User.")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success", response = ProfessionalUser.class)
+            @ApiResponse(code = 200, message = "Success", response = ProfessionalUserDto.class)
     })
-    public ResponseEntity<ProfessionalUser> createProfessionalUser(@RequestBody @Valid ProfessionalUserCreation professionalUser) throws ApplicationException {
+    public ResponseEntity<ProfessionalUserDto> createProfessionalUser(@RequestBody @Valid ProfessionalUserCreation professionalUser) throws ApplicationException {
         return ResponseEntity.ok(professionalUserService.create(professionalUser));
     }
 
@@ -49,8 +50,8 @@ public class ProfessionalUserController {
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Success", response = ProfessionalUser.class)
     })
-    public ResponseEntity<ProfessionalUser> getProfessionalUser(@PathVariable String userId) throws ApplicationException {
-        Optional<ProfessionalUser> professionalUser = professionalUserService.retrieve(userId);
+    public ResponseEntity<ProfessionalUserDto> getProfessionalUser(@PathVariable String userId) throws ApplicationException {
+        Optional<ProfessionalUserDto> professionalUser = professionalUserService.retrieve(userId);
         if (!professionalUser.isPresent()) {
             return NOT_FOUND_RESPONSE;
         }
@@ -63,7 +64,7 @@ public class ProfessionalUserController {
     @ApiResponses(value = {
         @ApiResponse(code = 204, message = "No Content")
     })
-    public ResponseEntity<ProfessionalUser> deleteProfessionalUser(@PathVariable String userId) throws ApplicationException {
+    public ResponseEntity<ProfessionalUserDto> deleteProfessionalUser(@PathVariable String userId) throws ApplicationException {
         professionalUserService.delete(userId);
         return ResponseEntity.noContent().build();
     }
