@@ -4,6 +4,7 @@ import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
 import uk.gov.hmcts.reform.ref.pup.dto.ProfessionalUserCreation;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
+import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException.ApplicationErrorCode;
 import uk.gov.hmcts.reform.ref.pup.repository.PaymentAccountRepository;
 import uk.gov.hmcts.reform.ref.pup.repository.ProfessionalUserRepository;
 import uk.gov.hmcts.reform.ref.pup.services.ProfessionalUserService;
@@ -35,7 +36,7 @@ public class ProfessionalUserServiceImpl implements ProfessionalUserService {
         
         Optional<ProfessionalUser> professionalUsers = professionalUserRepository.findOneByEmail(professionalUserInput.getEmail());
         if (professionalUsers.isPresent()) {
-            throw new ApplicationException("message");
+            throw new ApplicationException(ApplicationErrorCode.PROFESSIONAL_USER_ID_IN_USE);
         }
         
         ProfessionalUser professionalUser = new ProfessionalUser();
@@ -61,10 +62,10 @@ public class ProfessionalUserServiceImpl implements ProfessionalUserService {
     @Override
     public void assignPaymentAccount(String userId, UUID paymentAccountId) throws ApplicationException {
         ProfessionalUser professionalUser = professionalUserRepository.findOneByUserId(userId)
-                                                                      .orElseThrow(() -> new ApplicationException("message"));
+                                                                      .orElseThrow(() -> new ApplicationException(ApplicationErrorCode.PROFESSIONAL_USER_ID_DOES_NOT_EXIST));
         
         PaymentAccount paymentAccount = paymentAccountRepository.findById(paymentAccountId)
-                                                                    .orElseThrow(() -> new ApplicationException("message"));
+                                                                    .orElseThrow(() -> new ApplicationException(ApplicationErrorCode.PAYMENT_ACCOUNT_ID_DOES_NOT_EXIST));
         
         
         professionalUser.getAccountAssignments().add(paymentAccount);
@@ -75,10 +76,10 @@ public class ProfessionalUserServiceImpl implements ProfessionalUserService {
     @Override
     public void unassignPaymentAccount(String userId, UUID paymentAccountId) throws ApplicationException {
         ProfessionalUser professionalUser = professionalUserRepository.findOneByUserId(userId)
-                                                                      .orElseThrow(() -> new ApplicationException("message"));
+                                                                      .orElseThrow(() -> new ApplicationException(ApplicationErrorCode.PROFESSIONAL_USER_ID_DOES_NOT_EXIST));
         
         PaymentAccount paymentAccount = paymentAccountRepository.findById(paymentAccountId)
-                                                                    .orElseThrow(() -> new ApplicationException("message"));
+                                                                    .orElseThrow(() -> new ApplicationException(ApplicationErrorCode.PAYMENT_ACCOUNT_ID_DOES_NOT_EXIST));
         
         
         professionalUser.getAccountAssignments().remove(paymentAccount);

@@ -1,10 +1,9 @@
 package uk.gov.hmcts.reform.ref.pup.controller;
 
-import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
-import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
+import uk.gov.hmcts.reform.ref.pup.adaptor.PaymentAccountServiceAdaptor;
 import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountCreation;
+import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountDto;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
-import uk.gov.hmcts.reform.ref.pup.services.PaymentAccountService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,34 +27,34 @@ import javax.validation.Valid;
 @RequestMapping("pup/pba")
 public class PackagedBankAccountController {
 
-    private static final ResponseEntity<PaymentAccount> NOT_FOUND_RESPONSE = ResponseEntity.notFound().build();
-    private final PaymentAccountService paymentAccountService;
+    private static final ResponseEntity<PaymentAccountDto> NOT_FOUND_RESPONSE = ResponseEntity.notFound().build();
+    private final PaymentAccountServiceAdaptor paymentAccountService;
 
     @Autowired
-    public PackagedBankAccountController(PaymentAccountService paymentAccountService) {
+    public PackagedBankAccountController(PaymentAccountServiceAdaptor paymentAccountService) {
         this.paymentAccountService = paymentAccountService;
     }
 
     @PostMapping
     @ApiOperation("Create Payment Account.")
     @ApiResponses(value = { 
-            @ApiResponse(code = 200, message = "Success", response = ProfessionalUser.class) 
+            @ApiResponse(code = 200, message = "Success", response = PaymentAccountDto.class) 
     })
-    public ResponseEntity<PaymentAccount> createPaymentAccount(@RequestBody @Valid PaymentAccountCreation paymentAccount) throws ApplicationException {
+    public ResponseEntity<PaymentAccountDto> createPaymentAccount(@RequestBody @Valid PaymentAccountCreation paymentAccount) throws ApplicationException {
         return ResponseEntity.ok(paymentAccountService.create(paymentAccount));
     }
 
     @GetMapping(value = "{uuid}")
     @ApiOperation("Retrieve Payment Account.")
     @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Success", response = ProfessionalUser.class)
+        @ApiResponse(code = 200, message = "Success", response = PaymentAccountDto.class)
     })
-    public ResponseEntity<PaymentAccount> getProfessionalUser(@PathVariable String uuid) throws ApplicationException {
+    public ResponseEntity<PaymentAccountDto> getProfessionalUser(@PathVariable String uuid) throws ApplicationException {
         
-        Optional<PaymentAccount> paymentAccount = paymentAccountService.retrieve(uuid);
+        Optional<PaymentAccountDto> paymentAccount = paymentAccountService.retrieve(uuid);
         
         if (!paymentAccount.isPresent()) {
-            return  NOT_FOUND_RESPONSE;
+            return NOT_FOUND_RESPONSE;
         }
 
         return ResponseEntity.ok(paymentAccount.get());
@@ -66,7 +65,7 @@ public class PackagedBankAccountController {
     @ApiResponses(value = {
         @ApiResponse(code = 204, message = "No Content")
     })
-    public ResponseEntity<PaymentAccount> deletePaymentAccount(@PathVariable String uuid) throws ApplicationException {
+    public ResponseEntity<PaymentAccountDto> deletePaymentAccount(@PathVariable String uuid) throws ApplicationException {
         
         paymentAccountService.delete(uuid);
         return ResponseEntity.noContent().build();
