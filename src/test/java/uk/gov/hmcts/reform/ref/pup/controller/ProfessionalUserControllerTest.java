@@ -1,8 +1,8 @@
 package uk.gov.hmcts.reform.ref.pup.controller;
 
-import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
+import uk.gov.hmcts.reform.ref.pup.adaptor.ProfessionalUserServiceAdaptor;
 import uk.gov.hmcts.reform.ref.pup.dto.ProfessionalUserCreation;
-import uk.gov.hmcts.reform.ref.pup.services.ProfessionalUserService;
+import uk.gov.hmcts.reform.ref.pup.dto.ProfessionalUserDto;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ProfessionalUserControllerTest {
 
     @Mock
-    protected ProfessionalUserService professionalUserService;
+    protected ProfessionalUserServiceAdaptor professionalUserService;
     
     @InjectMocks
     protected ProfessionalUserController professionalUserController;
@@ -51,7 +51,7 @@ public class ProfessionalUserControllerTest {
     
     private MockMvc mvc;
 
-    private ProfessionalUser firstTestUser;
+    private ProfessionalUserDto firstTestUserDto;
     private String firstTestUserJson;
     
     @Before
@@ -59,26 +59,25 @@ public class ProfessionalUserControllerTest {
         
         mvc = MockMvcBuilders.standaloneSetup(professionalUserController).build();
         
-        firstTestUser = createFakeProfessionalUser();
+        firstTestUserDto = createFakeProfessionalUserDto();
         firstTestUserJson = "{\"userId\":\"1\",\"firstName\":\"DUMMY\",\"surname\":\"DUMMY\",\"email\":\"DUMMY@DUMMY.com\",\"phoneNumber\":\"DUMMY\"}";
         
     }
 
-    private ProfessionalUser createFakeProfessionalUser() {
-        ProfessionalUser firstTestUser = new ProfessionalUser();
-        firstTestUser.setEmail("DUMMY@DUMMY.com");
-        firstTestUser.setFirstName("DUMMY");
-        firstTestUser.setPhoneNumber("DUMMY");
-        firstTestUser.setSurname("DUMMY");
-        firstTestUser.setUserId("1");
-        return firstTestUser;
+    private ProfessionalUserDto createFakeProfessionalUserDto() {
+        return ProfessionalUserDto.builder()
+                    .email("DUMMY@DUMMY.com")
+                    .firstName("DUMMY")
+                    .phoneNumber("DUMMY")
+                    .surname("DUMMY")
+                    .userId("1").build();
     }
 
     
     @Test
     public void createProfessionalUserShouldCallCreateFormProfessionalUserService() throws Exception {
         
-        when(professionalUserService.create(any())).thenReturn(firstTestUser);
+        when(professionalUserService.create(any())).thenReturn(firstTestUserDto);
         
         mvc.perform(post("/pup/professionalUsers").with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -94,7 +93,7 @@ public class ProfessionalUserControllerTest {
     @Test
     public void getProfessionalUserShouldReturnTheUser() throws Exception {
 
-        when(professionalUserService.retrieve("1")).thenReturn(Optional.of(firstTestUser));
+        when(professionalUserService.retrieve("1")).thenReturn(Optional.of(firstTestUserDto));
 
         mvc.perform(get("/pup/professionalUsers/1").with(user("user")))
             .andExpect(status().isOk())

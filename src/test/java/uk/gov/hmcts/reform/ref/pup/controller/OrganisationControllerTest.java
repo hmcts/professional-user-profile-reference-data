@@ -1,9 +1,9 @@
 package uk.gov.hmcts.reform.ref.pup.controller;
 
-import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
+import uk.gov.hmcts.reform.ref.pup.adaptor.OrganisationServiceAdaptor;
 import uk.gov.hmcts.reform.ref.pup.dto.AddressCreation;
 import uk.gov.hmcts.reform.ref.pup.dto.OrganisationCreation;
-import uk.gov.hmcts.reform.ref.pup.services.OrganisationService;
+import uk.gov.hmcts.reform.ref.pup.dto.OrganisationDto;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -40,7 +40,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class OrganisationControllerTest {
 
     @Mock
-    protected OrganisationService organisationService;
+    protected OrganisationServiceAdaptor organisationService;
     
     @InjectMocks
     protected OrganisationController organisationController;
@@ -56,7 +56,7 @@ public class OrganisationControllerTest {
     
     private MockMvc mvc;
 
-    private Organisation firstTestOrganisation;
+    private OrganisationDto firstTestOrganisation;
     private String firstTestOrganisationJson;
     private String firstTestAddressJson;
     
@@ -65,17 +65,17 @@ public class OrganisationControllerTest {
         
         mvc = MockMvcBuilders.standaloneSetup(organisationController).build();
         
-        firstTestOrganisation = createFakeOrganisation();
+        firstTestOrganisation = createFakeOrganisationDto();
         firstTestOrganisationJson = "{\"name\":\"Solicitor Ltd\"}";
         firstTestAddressJson = "{\"addressLine1\":\"address 1\"}";
         
     }
 
-    private Organisation createFakeOrganisation() {
-        Organisation organisation = new Organisation();
-        organisation.setName("DUMMY");
+    private OrganisationDto createFakeOrganisationDto() {
+        return OrganisationDto.builder()
+                        .name("DUMMY")
+                        .build();
        
-        return organisation;
     }
 
     @Test
