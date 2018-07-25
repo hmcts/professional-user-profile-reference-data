@@ -3,6 +3,7 @@ package uk.gov.hmcts.reform.ref.pup.domain;
 import org.hibernate.annotations.GenericGenerator;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.UUID;
 
@@ -13,6 +14,7 @@ import javax.persistence.ManyToOne;
 
 @Entity
 @Data
+@EqualsAndHashCode(of = "uuid")
 public class Address {
 
     @Id

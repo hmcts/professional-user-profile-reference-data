@@ -83,8 +83,6 @@ dependencies {
 
 def coverageExclusionList = [
     '**uk/gov/hmcts/reform/ref/pup/Application*',
-    '**uk/gov/hmcts/reform/ref/pup/domain/*',
-    '**uk/gov/hmcts/reform/ref/pup/dto/*',
     '**uk/gov/hmcts/reform/ref/pup/exception/*',
     '**uk/gov/hmcts/reform/ref/pup/config/**/*',
     '**uk/gov/hmcts/reform/ref/pup/batch/config/*',
