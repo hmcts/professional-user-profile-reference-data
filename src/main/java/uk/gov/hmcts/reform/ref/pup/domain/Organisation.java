@@ -3,6 +3,7 @@ package uk.gov.hmcts.reform.ref.pup.domain;
 import org.hibernate.annotations.GenericGenerator;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,6 +20,7 @@ import javax.persistence.UniqueConstraint;
 
 @Data
 @Entity
+@EqualsAndHashCode(of = "uuid")
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 public class Organisation {
 
