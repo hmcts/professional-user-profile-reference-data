@@ -110,7 +110,7 @@ public class OrganisationControllerTest {
                     .contentType(MediaType.APPLICATION_JSON_UTF8)
                     .content(firstTestAddressJson))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("pbaNumber", is("DUMMY")))
+            .andExpect(jsonPath("name", is("Solicitor Ltd")))
             .andDo(print());
     }
 
