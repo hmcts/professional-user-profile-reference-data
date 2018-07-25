@@ -87,7 +87,9 @@ def coverageExclusionList = [
     '**uk/gov/hmcts/reform/ref/pup/dto/*',
     '**uk/gov/hmcts/reform/ref/pup/domain/*',
     '**uk/gov/hmcts/reform/ref/pup/config/**/*',
+    '**uk/gov/hmcts/reform/ref/pup/batch/exception/*',
     '**uk/gov/hmcts/reform/ref/pup/batch/config/*',
+    '**uk/gov/hmcts/reform/ref/pup/batch/model/*',
     '**uk/gov/hmcts/reform/ref/pup/actuate/health/IdamHealth*',
     '**uk/gov/hmcts/reform/ref/pup/actuate/health/S2SHealth*',
 ]
