@@ -94,4 +94,7 @@ public class ProfessionalUserControllerTest {
             .andExpect(status().isBadRequest())
             .andDo(print());
     }
+    
+
+    
 }

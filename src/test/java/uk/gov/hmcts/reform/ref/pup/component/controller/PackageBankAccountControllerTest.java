@@ -95,7 +95,7 @@ public class PackageBankAccountControllerTest {
     }
     
     @Test
-    public void deleteOrganisation_forAOrganisationShouldReturnNoContentAndTheUserShouldNotBeRequestable() throws Exception {
+    public void deletePaymentAccount_forAPaymentAccountShouldReturnNoContentAndTheUserShouldNotBeRequestable() throws Exception {
         
         mvc.perform(delete("/pup/pba/{uuid}", pbaNUmber).with(user("user")))
             .andExpect(status().isNoContent())
