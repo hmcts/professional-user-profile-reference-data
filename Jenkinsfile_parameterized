@@ -21,7 +21,7 @@ def component = "pup"
 def channel = '#pui-pipeline'
 
 List<LinkedHashMap<String, Object>> secrets = [
-    secret('s2s-token', 'S2S_TOKEN')
+//    secret('s2s-token', 'S2S_TOKEN')
 ]
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
