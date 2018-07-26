@@ -7,7 +7,7 @@ variable "component" {
 }
 
 variable "team_name" {
-  default = "evidence"
+  default = "pui"
 }
 
 variable "app_language" {
