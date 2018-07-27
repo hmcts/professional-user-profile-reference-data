@@ -1,0 +1,9 @@
+databaseChangeLog:
+- changeSet:
+    id: 1532712385193-1
+    author: agyt (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: user_id
+        constraintName: UKm3ghc2iwt52g51oa9bf30nkol
+        tableName: professional_user
