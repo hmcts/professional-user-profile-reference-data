@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.ref.pup.services.impl;
+package uk.gov.hmcts.reform.ref.pup.service.impl;
 
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;

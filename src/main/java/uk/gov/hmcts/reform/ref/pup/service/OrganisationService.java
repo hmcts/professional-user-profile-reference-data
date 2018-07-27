@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.ref.pup.services;
+package uk.gov.hmcts.reform.ref.pup.service;
 
 import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
 import uk.gov.hmcts.reform.ref.pup.dto.AddressCreation;

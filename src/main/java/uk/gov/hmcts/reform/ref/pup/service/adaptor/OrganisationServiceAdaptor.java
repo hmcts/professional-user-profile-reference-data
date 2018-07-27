@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.ref.pup.adaptor;
+package uk.gov.hmcts.reform.ref.pup.service.adaptor;
 
 import uk.gov.hmcts.reform.ref.pup.converter.OrganisationConverter;
 import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
@@ -6,7 +6,7 @@ import uk.gov.hmcts.reform.ref.pup.dto.AddressCreation;
 import uk.gov.hmcts.reform.ref.pup.dto.OrganisationCreation;
 import uk.gov.hmcts.reform.ref.pup.dto.OrganisationDto;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
-import uk.gov.hmcts.reform.ref.pup.services.OrganisationService;
+import uk.gov.hmcts.reform.ref.pup.service.OrganisationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

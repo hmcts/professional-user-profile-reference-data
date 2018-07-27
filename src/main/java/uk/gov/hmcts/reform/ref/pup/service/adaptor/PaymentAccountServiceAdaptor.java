@@ -1,11 +1,11 @@
-package uk.gov.hmcts.reform.ref.pup.adaptor;
+package uk.gov.hmcts.reform.ref.pup.service.adaptor;
 
 import uk.gov.hmcts.reform.ref.pup.converter.PaymentAccountConverter;
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
 import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountCreation;
 import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountDto;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
-import uk.gov.hmcts.reform.ref.pup.services.PaymentAccountService;
+import uk.gov.hmcts.reform.ref.pup.service.PaymentAccountService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

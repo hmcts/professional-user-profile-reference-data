@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.ref.pup.services.impl;
+package uk.gov.hmcts.reform.ref.pup.service.impl;
 
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
@@ -7,7 +7,7 @@ import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException.ApplicationErrorCode;
 import uk.gov.hmcts.reform.ref.pup.repository.PaymentAccountRepository;
 import uk.gov.hmcts.reform.ref.pup.repository.ProfessionalUserRepository;
-import uk.gov.hmcts.reform.ref.pup.services.ProfessionalUserService;
+import uk.gov.hmcts.reform.ref.pup.service.ProfessionalUserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

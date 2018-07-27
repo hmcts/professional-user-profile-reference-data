@@ -1,9 +1,9 @@
 package uk.gov.hmcts.reform.ref.pup.controller;
 
-import uk.gov.hmcts.reform.ref.pup.adaptor.PaymentAccountServiceAdaptor;
 import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountCreation;
 import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountDto;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
+import uk.gov.hmcts.reform.ref.pup.service.adaptor.PaymentAccountServiceAdaptor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
