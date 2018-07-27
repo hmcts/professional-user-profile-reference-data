@@ -1,6 +1,7 @@
 package uk.gov.hmcts.reform.ref.pup.batch.processes;
 
 import uk.gov.hmcts.reform.ref.pup.batch.model.ProfessionalUserAccountAssignmentCsvModel;
+import uk.gov.hmcts.reform.ref.pup.batch.process.ProfessionalUserAccountAssignmentCsvProcessor;
 import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
 import uk.gov.hmcts.reform.ref.pup.domain.OrganisationType;
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
@@ -9,9 +10,9 @@ import uk.gov.hmcts.reform.ref.pup.dto.OrganisationCreation;
 import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountCreation;
 import uk.gov.hmcts.reform.ref.pup.dto.ProfessionalUserCreation;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
-import uk.gov.hmcts.reform.ref.pup.services.OrganisationService;
-import uk.gov.hmcts.reform.ref.pup.services.PaymentAccountService;
-import uk.gov.hmcts.reform.ref.pup.services.ProfessionalUserService;
+import uk.gov.hmcts.reform.ref.pup.service.OrganisationService;
+import uk.gov.hmcts.reform.ref.pup.service.PaymentAccountService;
+import uk.gov.hmcts.reform.ref.pup.service.ProfessionalUserService;
 
 import org.junit.Before;
 import org.junit.Test;

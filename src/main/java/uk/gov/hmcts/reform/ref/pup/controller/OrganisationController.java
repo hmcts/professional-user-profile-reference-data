@@ -1,10 +1,10 @@
 package uk.gov.hmcts.reform.ref.pup.controller;
 
-import uk.gov.hmcts.reform.ref.pup.adaptor.OrganisationServiceAdaptor;
 import uk.gov.hmcts.reform.ref.pup.dto.AddressCreation;
 import uk.gov.hmcts.reform.ref.pup.dto.OrganisationCreation;
 import uk.gov.hmcts.reform.ref.pup.dto.OrganisationDto;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
+import uk.gov.hmcts.reform.ref.pup.service.adaptor.OrganisationServiceAdaptor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

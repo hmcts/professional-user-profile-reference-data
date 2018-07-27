@@ -1,8 +1,8 @@
 package uk.gov.hmcts.reform.ref.pup.controller;
 
-import uk.gov.hmcts.reform.ref.pup.adaptor.ProfessionalUserServiceAdaptor;
 import uk.gov.hmcts.reform.ref.pup.dto.ProfessionalUserCreation;
 import uk.gov.hmcts.reform.ref.pup.dto.ProfessionalUserDto;
+import uk.gov.hmcts.reform.ref.pup.service.adaptor.ProfessionalUserServiceAdaptor;
 
 import org.junit.Before;
 import org.junit.Test;
