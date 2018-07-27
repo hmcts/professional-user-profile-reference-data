@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.ref.pup.batch.logging;
+package uk.gov.hmcts.reform.ref.pup.config;
 
 import uk.gov.hmcts.reform.logging.appinsights.AbstractAppInsights;
 
