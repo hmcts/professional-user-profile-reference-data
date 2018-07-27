@@ -173,8 +173,3 @@ resource "azurerm_storage_blob" "storage" {
   type = "page"
   size = 10240
 }
-
-
-provider "vault" {
-  address = "https://vault.reform.hmcts.net:6200"
-}
