@@ -5,7 +5,6 @@ import uk.gov.hmcts.reform.ref.pup.repository.ProfessionalUserRepository;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +52,7 @@ public class ProfessionalUserRepositoryTest {
         secondTestUser.setFirstName("alexis");
         secondTestUser.setPhoneNumber("00711223");
         secondTestUser.setSurname("gayte");
-        firstTestUser.setUserId("02");
+        secondTestUser.setUserId("02");
        
         professionalUserRepository.save(secondTestUser);
         
@@ -89,13 +88,12 @@ public class ProfessionalUserRepositoryTest {
         assertThat("alexis.gayte@hmcts.net", equalTo(findByEmail.get().getEmail()));
     }
 
-    @Ignore
+
     @Test(expected = DataIntegrityViolationException.class)
     public void modelCheck_ShouldNotBeAbleToCreateToUserWithTheSameUserId() throws Exception {
         
         ProfessionalUser testUser = createFakeProfessionalUser();
         testUser.setUserId(firstTestUser.getUserId());
-        testUser.setEmail(firstTestUser.getEmail());
         
         professionalUserRepository.save(testUser);
         

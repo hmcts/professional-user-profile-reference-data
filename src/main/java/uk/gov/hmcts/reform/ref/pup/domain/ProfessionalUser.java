@@ -15,7 +15,7 @@ import javax.persistence.UniqueConstraint;
 @Getter
 @Setter
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "userId", "email" }))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "userId" }))
 public class ProfessionalUser extends AbstractDomain {
 
     private String userId;
