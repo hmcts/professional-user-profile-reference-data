@@ -175,3 +175,6 @@ resource "azurerm_storage_blob" "storage" {
 }
 
 
+provider "vault" {
+  address = "https://vault.reform.hmcts.net:6200"
+}
