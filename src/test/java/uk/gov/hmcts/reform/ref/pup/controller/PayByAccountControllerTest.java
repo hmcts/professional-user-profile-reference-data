@@ -36,13 +36,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @RunWith(SpringRunner.class)
-public class PackagedBankAccountControllerTest {
+public class PayByAccountControllerTest {
 
     @Mock
     protected PaymentAccountServiceAdaptor paymentAccountServiceAdaptor;
     
     @InjectMocks
-    protected PackagedBankAccountController packagedBankAccountController;
+    protected PayByAccountController packagedBankAccountController;
     
     @Captor
     ArgumentCaptor<PaymentAccountCreation> paymentAccountCaptor;

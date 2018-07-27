@@ -25,13 +25,13 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("pup/pba")
-public class PackagedBankAccountController {
+public class PayByAccountController {
 
     private static final ResponseEntity<PaymentAccountDto> NOT_FOUND_RESPONSE = ResponseEntity.notFound().build();
     private final PaymentAccountServiceAdaptor paymentAccountService;
 
     @Autowired
-    public PackagedBankAccountController(PaymentAccountServiceAdaptor paymentAccountService) {
+    public PayByAccountController(PaymentAccountServiceAdaptor paymentAccountService) {
         this.paymentAccountService = paymentAccountService;
     }
 
