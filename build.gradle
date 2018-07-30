@@ -55,6 +55,7 @@ def versions = [
     lombok             : '1.18.0',
     azure              : '7.0.0',
     hmctsAuth          : '2.1.3',
+    hmctsProxy         :  '2.0.0',
     h2                 : '1.4.197',
 ]
 
@@ -73,6 +74,7 @@ dependencies {
     compile("uk.gov.hmcts.reform:java-logging-httpcomponents:${versions.hmctsJavaLogging}")
     compile("uk.gov.hmcts.reform:java-logging-appinsights:${versions.hmctsJavaLogging}")
     compile("uk.gov.hmcts.reform.auth:auth-checker-lib:${versions.hmctsAuth}")
+    compile("uk.gov.hmcts.reform:http-proxy-spring-boot-autoconfigure:${versions.hmctsProxy}")
     compile("org.projectlombok:lombok:${versions.lombok}")
     runtime('org.springframework.boot:spring-boot-devtools')
 
