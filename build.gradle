@@ -74,7 +74,7 @@ dependencies {
     compile("uk.gov.hmcts.reform:java-logging-httpcomponents:${versions.hmctsJavaLogging}")
     compile("uk.gov.hmcts.reform:java-logging-appinsights:${versions.hmctsJavaLogging}")
     compile("uk.gov.hmcts.reform.auth:auth-checker-lib:${versions.hmctsAuth}")
-    compile("uk.gov.hmcts.reform:http-proxy-spring-boot-autoconfigure:${versions.hmctsProxy}")
+//    compile("uk.gov.hmcts.reform:http-proxy-spring-boot-autoconfigure:${versions.hmctsProxy}")
     compile("org.projectlombok:lombok:${versions.lombok}")
     runtime('org.springframework.boot:spring-boot-devtools')
 
