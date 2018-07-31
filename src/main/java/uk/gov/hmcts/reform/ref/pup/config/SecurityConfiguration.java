@@ -2,8 +2,8 @@ package uk.gov.hmcts.reform.ref.pup.config;
 
 import uk.gov.hmcts.reform.auth.checker.core.RequestAuthorizer;
 import uk.gov.hmcts.reform.auth.checker.core.service.Service;
-import uk.gov.hmcts.reform.auth.checker.core.user.User;
-import uk.gov.hmcts.reform.auth.checker.spring.serviceanduser.AuthCheckerServiceAndUserFilter;
+import uk.gov.hmcts.reform.ref.pup.auth.AuthCheckerServiceAndUserWithEmailFilter;
+import uk.gov.hmcts.reform.ref.pup.auth.UserWithEmail;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -20,14 +20,15 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
-    private final AuthCheckerServiceAndUserFilter serviceAndUserFilter;
+    private final AuthCheckerServiceAndUserWithEmailFilter serviceAndUserFilter;
+    
 
     @Autowired
-    public SecurityConfiguration(final RequestAuthorizer<User> userRequestAuthorizer,
+    public SecurityConfiguration(final RequestAuthorizer<UserWithEmail> userRequestAuthorizer,
                                  final RequestAuthorizer<Service> serviceRequestAuthorizer,
                                  final AuthenticationManager authenticationManager) {
 
-        this.serviceAndUserFilter = new AuthCheckerServiceAndUserFilter(serviceRequestAuthorizer, userRequestAuthorizer);
+        this.serviceAndUserFilter = new AuthCheckerServiceAndUserWithEmailFilter(serviceRequestAuthorizer, userRequestAuthorizer);
         this.serviceAndUserFilter.setAuthenticationManager(authenticationManager);
     }
 
