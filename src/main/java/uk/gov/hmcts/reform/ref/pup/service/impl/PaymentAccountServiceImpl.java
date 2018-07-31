@@ -2,16 +2,20 @@ package uk.gov.hmcts.reform.ref.pup.service.impl;
 
 import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
+import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
 import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountCreation;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException.ApplicationErrorCode;
 import uk.gov.hmcts.reform.ref.pup.repository.PaymentAccountRepository;
 import uk.gov.hmcts.reform.ref.pup.service.OrganisationService;
 import uk.gov.hmcts.reform.ref.pup.service.PaymentAccountService;
+import uk.gov.hmcts.reform.ref.pup.service.ProfessionalUserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -23,11 +27,14 @@ public class PaymentAccountServiceImpl implements PaymentAccountService {
     private final PaymentAccountRepository paymentAccountRepository;
 
     private final OrganisationService organisationService;
-
+    
+    private final ProfessionalUserService professionalUserService;
+    
     @Autowired
-    public PaymentAccountServiceImpl(PaymentAccountRepository paymentAccountRepository, OrganisationService organisationService) {
+    public PaymentAccountServiceImpl(PaymentAccountRepository paymentAccountRepository, OrganisationService organisationService, ProfessionalUserService professionalUserService) {
         this.paymentAccountRepository = paymentAccountRepository;
         this.organisationService = organisationService;
+        this.professionalUserService = professionalUserService;
     }
 
     @Override
@@ -53,5 +60,14 @@ public class PaymentAccountServiceImpl implements PaymentAccountService {
     @Override
     public void delete(String pbaNumber) {
         paymentAccountRepository.deleteByPbaNumber(pbaNumber);
+    }
+    
+    @Override
+    public List<PaymentAccount> retrieveForUser(String userId) throws ApplicationException {
+        
+        ProfessionalUser professionalUser = professionalUserService.retrieve(userId)
+                .orElseThrow(() -> new ApplicationException(ApplicationErrorCode.PROFESSIONAL_USER_ID_DOES_NOT_EXIST));
+
+        return new ArrayList<>(professionalUser.getAccountAssignments());
     }
 }
