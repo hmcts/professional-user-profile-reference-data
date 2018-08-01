@@ -10,7 +10,9 @@ import uk.gov.hmcts.reform.ref.pup.service.PaymentAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -42,5 +44,11 @@ public class PaymentAccountServiceAdaptor {
 
     public void delete(String pbaNumber) throws ApplicationException {
         paymentAccountService.delete(pbaNumber);
+    }
+
+    public List<PaymentAccountDto> findByUserEmail(String email) {
+        return paymentAccountService.findByUserEmail(email).stream()
+            .map( paymentAccount -> paymentAccountConverter.apply(paymentAccount))
+            .collect(Collectors.toList());
     }
 }

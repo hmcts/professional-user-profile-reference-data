@@ -3,15 +3,17 @@ package uk.gov.hmcts.reform.ref.pup.auth;
 import lombok.Data;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
 @Data
+@NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserWithEmailTokenDetails {
 
-    private final String id;
-    private final String email;
-    private final Set<String> roles;
+    private String id;
+    private String email;
+    private Set<String> roles;
 
 }

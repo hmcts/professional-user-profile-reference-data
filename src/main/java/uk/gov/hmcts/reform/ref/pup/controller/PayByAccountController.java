@@ -1,5 +1,8 @@
 package uk.gov.hmcts.reform.ref.pup.controller;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import uk.gov.hmcts.reform.ref.pup.auth.ServiceAndUserWithEmailDetails;
 import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountCreation;
 import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountDto;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
@@ -19,6 +22,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
+import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -37,8 +42,8 @@ public class PayByAccountController {
 
     @PostMapping
     @ApiOperation("Create Payment Account.")
-    @ApiResponses(value = { 
-            @ApiResponse(code = 200, message = "Success", response = PaymentAccountDto.class) 
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success", response = PaymentAccountDto.class)
     })
     public ResponseEntity<PaymentAccountDto> createPaymentAccount(@RequestBody @Valid PaymentAccountCreation paymentAccount) throws ApplicationException {
         return ResponseEntity.ok(paymentAccountService.create(paymentAccount));
@@ -50,9 +55,9 @@ public class PayByAccountController {
         @ApiResponse(code = 200, message = "Success", response = PaymentAccountDto.class)
     })
     public ResponseEntity<PaymentAccountDto> getProfessionalUser(@PathVariable String uuid) throws ApplicationException {
-        
+
         Optional<PaymentAccountDto> paymentAccount = paymentAccountService.retrieve(uuid);
-        
+
         if (!paymentAccount.isPresent()) {
             return NOT_FOUND_RESPONSE;
         }
@@ -66,9 +71,23 @@ public class PayByAccountController {
         @ApiResponse(code = 204, message = "No Content")
     })
     public ResponseEntity<PaymentAccountDto> deletePaymentAccount(@PathVariable String uuid) throws ApplicationException {
-        
+
         paymentAccountService.delete(uuid);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "mine")
+    @ApiOperation("Get PBAs for authenticated user")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "No Content")
+    })
+    public ResponseEntity<List<PaymentAccountDto>> findMine(Authentication authentication) throws ApplicationException {
+        if (authentication.getPrincipal() instanceof ServiceAndUserWithEmailDetails) {
+            ServiceAndUserWithEmailDetails userDetails = (ServiceAndUserWithEmailDetails) authentication.getPrincipal();
+            return ResponseEntity.ok(paymentAccountService.findByUserEmail(userDetails.getEmail()));
+        } else {
+            return ResponseEntity.noContent().build();
+        }
     }
 
 //    post a link user and pba
