@@ -3,6 +3,7 @@ package uk.gov.hmcts.reform.ref.pup.service.impl;
 import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
+import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountAssignment;
 import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountCreation;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException.ApplicationErrorCode;
@@ -69,5 +70,42 @@ public class PaymentAccountServiceImpl implements PaymentAccountService {
                 .orElseThrow(() -> new ApplicationException(ApplicationErrorCode.PROFESSIONAL_USER_ID_DOES_NOT_EXIST));
 
         return new ArrayList<>(professionalUser.getAccountAssignments());
+    }
+
+    @Override
+    public Optional<PaymentAccount> assign(String pbaNumber, PaymentAccountAssignment paymentAccountAssignment) throws ApplicationException {
+           
+        PaymentAccount paymentAccount = retrieve(pbaNumber)
+                .orElseThrow(() -> new ApplicationException(ApplicationErrorCode.PAYMENT_ACCOUNT_ID_DOES_NOT_EXIST));
+        
+        ProfessionalUser professionalUser = professionalUserService.retrieve(paymentAccountAssignment.getUserId())
+                .orElseThrow(() -> new ApplicationException(ApplicationErrorCode.PROFESSIONAL_USER_ID_DOES_NOT_EXIST));
+        
+        if (paymentAccount.getProfessionalUser().contains(professionalUser)) {
+            throw new ApplicationException(ApplicationErrorCode.PAYMENT_ACCOUNT_ALREADY_ASSIGNED);
+        }
+        
+        paymentAccount.getProfessionalUser().add(professionalUser);
+        
+        return Optional.of(paymentAccountRepository.save(paymentAccount));
+    }
+
+    @Override
+    public Optional<PaymentAccount> unassign(String pbaNumber, PaymentAccountAssignment paymentAccountAssignment) throws ApplicationException {
+
+        PaymentAccount paymentAccount = retrieve(pbaNumber)
+                .orElseThrow(() -> new ApplicationException(ApplicationErrorCode.PAYMENT_ACCOUNT_ID_DOES_NOT_EXIST));
+        
+        ProfessionalUser professionalUser = professionalUserService.retrieve(paymentAccountAssignment.getUserId())
+                .orElseThrow(() -> new ApplicationException(ApplicationErrorCode.PROFESSIONAL_USER_ID_DOES_NOT_EXIST));
+        
+        if (!paymentAccount.getProfessionalUser().contains(professionalUser)) {
+            throw new ApplicationException(ApplicationErrorCode.PAYMENT_ACCOUNT_IS_NOT_ASSIGNED);
+        }
+        
+        paymentAccount.getProfessionalUser().remove(professionalUser);
+        
+        return Optional.of(paymentAccountRepository.save(paymentAccount));
+        
     }
 }

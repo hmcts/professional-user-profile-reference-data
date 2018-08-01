@@ -2,6 +2,7 @@ package uk.gov.hmcts.reform.ref.pup.service.adaptor;
 
 import uk.gov.hmcts.reform.ref.pup.converter.PaymentAccountConverter;
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
+import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountAssignment;
 import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountCreation;
 import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountDto;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
@@ -51,5 +52,23 @@ public class PaymentAccountServiceAdaptor {
         return retrieve.stream().map(paymentAccountConverter)
                                 .collect(Collectors.toList());
         
+    }
+
+    public Optional<PaymentAccountDto> assign(String pbaNumber, PaymentAccountAssignment paymentAccountAssignment) throws ApplicationException {
+        Optional<PaymentAccount> retrieve = paymentAccountService.assign(pbaNumber, paymentAccountAssignment);
+        if (retrieve.isPresent()) {
+            return Optional.of(paymentAccountConverter.apply(retrieve.get()));
+        } else {
+            return Optional.empty();
+        }
+    }
+    
+    public Optional<PaymentAccountDto> unassign(String pbaNumber, PaymentAccountAssignment paymentAccountAssignment) throws ApplicationException {
+        Optional<PaymentAccount> retrieve = paymentAccountService.unassign(pbaNumber, paymentAccountAssignment);
+        if (retrieve.isPresent()) {
+            return Optional.of(paymentAccountConverter.apply(retrieve.get()));
+        } else {
+            return Optional.empty();
+        }
     }
 }

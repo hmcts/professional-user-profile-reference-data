@@ -1,6 +1,7 @@
 package uk.gov.hmcts.reform.ref.pup.controller;
 
 import uk.gov.hmcts.reform.auth.checker.spring.serviceanduser.ServiceAndUserDetails;
+import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountAssignment;
 import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountCreation;
 import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountDto;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
@@ -39,7 +40,7 @@ public class PayByAccountController {
     }
 
     @PostMapping
-    @ApiOperation("Create Payment Account.")
+    @ApiOperation("Create payment account.")
     @ApiResponses(value = { 
             @ApiResponse(code = 200, message = "Success", response = PaymentAccountDto.class) 
     })
@@ -48,7 +49,7 @@ public class PayByAccountController {
     }
 
     @GetMapping(value = "{uuid}")
-    @ApiOperation("Retrieve Payment Account.")
+    @ApiOperation("Retrieve payment account.")
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Success", response = PaymentAccountDto.class)
     })
@@ -64,18 +65,18 @@ public class PayByAccountController {
     }
 
     @DeleteMapping(value = "{uuid}")
-    @ApiOperation("Delete Payment Account.")
+    @ApiOperation("Delete payment account.")
     @ApiResponses(value = {
         @ApiResponse(code = 204, message = "No Content")
     })
-    public ResponseEntity<PaymentAccountDto> deletePaymentAccount(@PathVariable String uuid) throws ApplicationException {
+    public ResponseEntity<Void> deletePaymentAccount(@PathVariable String uuid) throws ApplicationException {
         
         paymentAccountService.delete(uuid);
         return ResponseEntity.noContent().build();
     }
     
     @GetMapping(value = "mine")
-    @ApiOperation("Retrieve My Payment Account.")
+    @ApiOperation("Retrieve my payment account.")
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Success", response = PaymentAccountDto.class)
     })
@@ -85,6 +86,37 @@ public class PayByAccountController {
         return ResponseEntity.ok(paymentAccount);
     }
 
-//    post a link user and pba
-//    delete user and pba link
+    @PostMapping(value = "{uuid}/assign")
+    @ApiOperation("Assign a payment account.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 204, message = "No Content")
+    })
+    public ResponseEntity<PaymentAccountDto> assignPaymentAccounts(
+            @PathVariable String uuid,
+            @RequestBody @Valid PaymentAccountAssignment paymentAccountAssignment) throws ApplicationException {
+        
+        Optional<PaymentAccountDto> paymentAccount = paymentAccountService.assign(uuid, paymentAccountAssignment);
+        if (!paymentAccount.isPresent()) {
+            return NOT_FOUND_RESPONSE;
+        }
+
+        return ResponseEntity.ok(paymentAccount.get());
+    }
+
+    @PostMapping(value = "{uuid}/unassign")
+    @ApiOperation("Unassign a payment account.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 204, message = "No Content")
+    })
+    public ResponseEntity<PaymentAccountDto> unassignPaymentAccounts(
+            @PathVariable String uuid,
+            @RequestBody @Valid PaymentAccountAssignment paymentAccountAssignment) throws ApplicationException {
+        
+        Optional<PaymentAccountDto> paymentAccount = paymentAccountService.unassign(uuid, paymentAccountAssignment);
+        if (!paymentAccount.isPresent()) {
+            return NOT_FOUND_RESPONSE;
+        }
+
+        return ResponseEntity.ok(paymentAccount.get());
+    }
 }

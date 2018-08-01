@@ -1,6 +1,7 @@
 package uk.gov.hmcts.reform.ref.pup.service;
 
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
+import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountAssignment;
 import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountCreation;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
 
@@ -17,4 +18,8 @@ public interface PaymentAccountService {
 
     List<PaymentAccount> retrieveForUser(String userId) throws ApplicationException;
 
+    Optional<PaymentAccount> assign(String pbaNumber, PaymentAccountAssignment paymentAccountAssignment) throws ApplicationException;
+
+    Optional<PaymentAccount> unassign(String pbaNumber, PaymentAccountAssignment paymentAccountAssignment) throws ApplicationException;
+    
 }

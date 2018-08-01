@@ -28,5 +28,5 @@ public class PaymentAccount extends AbstractDomain {
 
     @ManyToOne
     private Organisation organisation;
-
+    
 }
