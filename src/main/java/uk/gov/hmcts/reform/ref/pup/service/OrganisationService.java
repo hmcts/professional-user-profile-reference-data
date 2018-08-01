@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public interface OrganisationService {
 
-    Organisation create(OrganisationCreation organisation) throws ApplicationException;
+    Organisation findOrCreate(OrganisationCreation organisation) throws ApplicationException;
 
     Optional<Organisation> retrieve(UUID organisationUuid) throws ApplicationException;
 

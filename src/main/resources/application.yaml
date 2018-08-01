@@ -23,7 +23,7 @@ spring:
     initialize-schema: always
     job:
       enabled: ${ENABLE_CRON:true}
-      csvUpload: ${TTL_CRON_EXPRESSION:"*/60 * * * * *"}
+      csvUpload: ${TTL_CRON_EXPRESSION:"*/10 * * * * *"}
   liquibase:
     enabled: ${ENABLE_DB_MIGRATE:true}
     change-log: classpath:/db/changelog/db.changelog-master.yaml

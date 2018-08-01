@@ -2,7 +2,7 @@ package uk.gov.hmcts.reform.ref.pup.exception;
 
 import java.util.Objects;
 
-public class ApplicationException extends Exception {
+public class ApplicationException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 

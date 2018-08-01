@@ -18,7 +18,7 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 public class ProfessionalUserServiceAdaptor {
-    
+
     private final ProfessionalUserService professionalUserService;
     private final ProfessionalUserConverter professionalUserConverter;
 
@@ -27,9 +27,9 @@ public class ProfessionalUserServiceAdaptor {
         this.professionalUserService = professionalUserService;
         this.professionalUserConverter = professionalUserConverter;
     }
-    
+
     public ProfessionalUserDto create(ProfessionalUserCreation professionalUser) throws ApplicationException {
-        return professionalUserConverter.apply(professionalUserService.create(professionalUser));
+        return professionalUserConverter.apply(professionalUserService.findOrCreate(professionalUser));
     }
 
     public Optional<ProfessionalUserDto> retrieve(String userId) throws ApplicationException {

@@ -19,7 +19,7 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 public class OrganisationServiceAdaptor {
-    
+
     private final OrganisationService organisationService;
     private final OrganisationConverter organisationConverter;
 
@@ -28,9 +28,9 @@ public class OrganisationServiceAdaptor {
         this.organisationService = organisationService;
         this.organisationConverter = organisationConverter;
     }
-    
+
     public OrganisationDto create(OrganisationCreation organisation) throws ApplicationException {
-        return organisationConverter.apply(organisationService.create(organisation));
+        return organisationConverter.apply(organisationService.findOrCreate(organisation));
     }
 
     public Optional<OrganisationDto> retrieve(UUID organisationUuid) throws ApplicationException {
