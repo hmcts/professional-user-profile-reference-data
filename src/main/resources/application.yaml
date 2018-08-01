@@ -71,8 +71,8 @@ auth:
 
 
 authorization:
-  idam-roles-whitelist: ${IDAM_ROLES_WHITELIST:solicitor,citizen}
-  s2s-names-whitelist: ${S2S_NAMES_WHITELIST:sscs,divorce,ccd,em_gw}
+  idam-roles-whitelist: ${IDAM_ROLES_WHITELIST:solicitor,citizen,caseworker-probate,caseworker-cmc,caseworker-sscs,caseworker-divorce,caseworker}
+  s2s-names-whitelist: ${S2S_NAMES_WHITELIST:sscs,divorce,ccd,em_gw,jui_webapp,pui_webapp}
 
 info:
   app:
