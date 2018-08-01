@@ -128,11 +128,11 @@ variable "enable_s2s_healthcheck" {
 // Whitelists
 ////////////////////////////////////////////////
 variable "s2s_names_whitelist" {
-  default = "em_api,em_gw,ccd_gw,ccd_data,sscs,divorce_document_upload,divorce_document_generator,probate_backend,finrem_backend"
+  default = "em_api,em_gw,ccd_gw,ccd_data,sscs,divorce_document_upload,divorce_document_generator,probate_backend,finrem_backend,jui_webapp,pui_webapp"
 }
 
 variable "case_worker_roles" {
-  default = "caseworker-probate,caseworker-cmc,caseworker-sscs,caseworker-divorce"
+  default = "caseworker-probate,caseworker-cmc,caseworker-sscs,caseworker-divorce,caseworker"
 }
 ////////////////////////////////////////////////
 // Addtional
