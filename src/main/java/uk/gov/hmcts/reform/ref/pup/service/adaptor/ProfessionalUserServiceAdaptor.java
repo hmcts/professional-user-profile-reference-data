@@ -11,14 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import javax.transaction.Transactional;
 
 @Service
 @Transactional
 public class ProfessionalUserServiceAdaptor {
-    
+
     private final ProfessionalUserService professionalUserService;
     private final ProfessionalUserConverter professionalUserConverter;
 
@@ -27,7 +26,7 @@ public class ProfessionalUserServiceAdaptor {
         this.professionalUserService = professionalUserService;
         this.professionalUserConverter = professionalUserConverter;
     }
-    
+
     public ProfessionalUserDto create(ProfessionalUserCreation professionalUser) throws ApplicationException {
         return professionalUserConverter.apply(professionalUserService.create(professionalUser));
     }
@@ -44,13 +43,4 @@ public class ProfessionalUserServiceAdaptor {
     public void delete(String userId) throws ApplicationException {
         professionalUserService.delete(userId);
     }
-
-    public void assignPaymentAccount(String userId, UUID paymentAccountId) throws ApplicationException {
-        professionalUserService.assignPaymentAccount(userId, paymentAccountId);
-    }
-
-    public void unassignPaymentAccount(String userId, UUID paymentAccountId) throws ApplicationException {
-        professionalUserService.unassignPaymentAccount(userId, paymentAccountId);
-    }
-
 }

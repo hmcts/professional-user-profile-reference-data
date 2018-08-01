@@ -5,7 +5,6 @@ import uk.gov.hmcts.reform.ref.pup.dto.ProfessionalUserCreation;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
 
 import java.util.Optional;
-import java.util.UUID;
 
 public interface ProfessionalUserService {
 
@@ -14,8 +13,4 @@ public interface ProfessionalUserService {
     Optional<ProfessionalUser> retrieve(String userId) throws ApplicationException;
 
     void delete(String userId) throws ApplicationException;
-    
-    void assignPaymentAccount(String userId, UUID paymentAccountId) throws ApplicationException;
-
-    void unassignPaymentAccount(String userId, UUID paymentAccountId) throws ApplicationException;
 }
