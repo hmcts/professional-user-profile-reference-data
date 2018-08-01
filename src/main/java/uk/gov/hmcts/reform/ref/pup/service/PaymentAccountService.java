@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface PaymentAccountService {
 
-    PaymentAccount create(PaymentAccountCreation paymentAccount) throws ApplicationException;
+    PaymentAccount findOrCreate(PaymentAccountCreation paymentAccount) throws ApplicationException;
 
     Optional<PaymentAccount> retrieve(String pbaNumber) throws ApplicationException;
 

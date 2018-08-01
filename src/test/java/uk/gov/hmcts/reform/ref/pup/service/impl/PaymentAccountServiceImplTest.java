@@ -30,16 +30,16 @@ public class PaymentAccountServiceImplTest {
 
     @Mock
     private PaymentAccountRepository paymentAccountRepository;
-    
+
     @Mock
     private OrganisationService organisationService;
-    
+
     @InjectMocks
     private PaymentAccountServiceImpl paymentAccountService;
 
     private PaymentAccountCreation paymentAccountRequest;
     private PaymentAccount paymentAccount;
-    
+
     private Organisation testOrganisation;
 
     @Before
@@ -49,7 +49,7 @@ public class PaymentAccountServiceImplTest {
         paymentAccount = createFakePaymentAccount();
         paymentAccountRequest = createFakePaymentAccountRequest();
     }
-    
+
     private Organisation createFakeOrganisation() {
         Organisation fakeTestOrganisation = new Organisation();
         fakeTestOrganisation.setName("DUMMY");
@@ -57,7 +57,7 @@ public class PaymentAccountServiceImplTest {
         fakeTestOrganisation.setUuid(UUID.randomUUID());
         return fakeTestOrganisation;
     }
-    
+
     private PaymentAccountCreation createFakePaymentAccountRequest() {
         PaymentAccountCreation paymentAccount = new PaymentAccountCreation();
         paymentAccount.setPbaNumber("DUMMY");
@@ -71,25 +71,25 @@ public class PaymentAccountServiceImplTest {
         paymentAccount.setOrganisation(testOrganisation);
         return paymentAccount;
     }
-    
+
 
     @Test
     public void create() throws ApplicationException {
         when(paymentAccountRepository.save(any())).thenAnswer(i -> i.getArgument(0));
         when(organisationService.retrieve(testOrganisation.getUuid())).thenReturn(Optional.of(testOrganisation));
-        
-        PaymentAccount created = paymentAccountService.create(paymentAccountRequest);
+
+        PaymentAccount created = paymentAccountService.findOrCreate(paymentAccountRequest);
 
         assertThat(created.getOrganisation(), equalTo(testOrganisation));
         assertThat(created.getPbaNumber(), equalTo(paymentAccountRequest.getPbaNumber()));
     }
-    
+
     @Test(expected = ApplicationException.class)
     public void create_withAnInexistantOrganisationShouldReturnAnException() throws ApplicationException {
         when(paymentAccountRepository.save(any())).thenAnswer(i -> i.getArgument(0));
         when(organisationService.retrieve(testOrganisation.getUuid())).thenReturn(Optional.empty());
-        
-        paymentAccountService.create(paymentAccountRequest);
+
+        paymentAccountService.findOrCreate(paymentAccountRequest);
     }
 
     @Test
@@ -108,5 +108,5 @@ public class PaymentAccountServiceImplTest {
 
         verify(paymentAccountRepository, only()).deleteByPbaNumber(paymentAccountRequest.getPbaNumber());
     }
-    
+
 }

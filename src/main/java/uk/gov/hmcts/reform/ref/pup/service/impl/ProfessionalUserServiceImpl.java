@@ -22,7 +22,7 @@ import javax.transaction.Transactional;
 public class ProfessionalUserServiceImpl implements ProfessionalUserService {
 
     private final ProfessionalUserRepository professionalUserRepository;
-    
+
     private final PaymentAccountRepository paymentAccountRepository;
 
     @Autowired
@@ -32,20 +32,20 @@ public class ProfessionalUserServiceImpl implements ProfessionalUserService {
     }
 
     @Override
-    public ProfessionalUser create(final ProfessionalUserCreation professionalUserInput) throws ApplicationException {
-        
+    public ProfessionalUser findOrCreate(final ProfessionalUserCreation professionalUserInput) throws ApplicationException {
+
         Optional<ProfessionalUser> professionalUsers = professionalUserRepository.findOneByEmail(professionalUserInput.getEmail());
         if (professionalUsers.isPresent()) {
-            throw new ApplicationException(ApplicationErrorCode.PROFESSIONAL_USER_ID_IN_USE);
+            return professionalUsers.get();
         }
-        
+
         ProfessionalUser professionalUser = new ProfessionalUser();
         professionalUser.setEmail(professionalUserInput.getEmail());
         professionalUser.setFirstName(professionalUserInput.getFirstName());
         professionalUser.setPhoneNumber(professionalUserInput.getPhoneNumber());
         professionalUser.setSurname(professionalUserInput.getSurname());
         professionalUser.setUserId(professionalUserInput.getUserId());
-        
+
         return professionalUserRepository.save(professionalUser);
     }
 
@@ -58,33 +58,33 @@ public class ProfessionalUserServiceImpl implements ProfessionalUserService {
     public void delete(String userId) throws ApplicationException {
         professionalUserRepository.deleteByUserId(userId);
     }
-    
+
     @Override
     public void assignPaymentAccount(String userId, UUID paymentAccountId) throws ApplicationException {
         ProfessionalUser professionalUser = professionalUserRepository.findOneByUserId(userId)
                                                                       .orElseThrow(() -> new ApplicationException(ApplicationErrorCode.PROFESSIONAL_USER_ID_DOES_NOT_EXIST));
-        
+
         PaymentAccount paymentAccount = paymentAccountRepository.findById(paymentAccountId)
                                                                     .orElseThrow(() -> new ApplicationException(ApplicationErrorCode.PAYMENT_ACCOUNT_ID_DOES_NOT_EXIST));
-        
-        
+
+
         professionalUser.getAccountAssignments().add(paymentAccount);
-        
+
         professionalUserRepository.save(professionalUser);
     }
-    
+
     @Override
     public void unassignPaymentAccount(String userId, UUID paymentAccountId) throws ApplicationException {
         ProfessionalUser professionalUser = professionalUserRepository.findOneByUserId(userId)
                                                                       .orElseThrow(() -> new ApplicationException(ApplicationErrorCode.PROFESSIONAL_USER_ID_DOES_NOT_EXIST));
-        
+
         PaymentAccount paymentAccount = paymentAccountRepository.findById(paymentAccountId)
                                                                     .orElseThrow(() -> new ApplicationException(ApplicationErrorCode.PAYMENT_ACCOUNT_ID_DOES_NOT_EXIST));
-        
-        
+
+
         professionalUser.getAccountAssignments().remove(paymentAccount);
-        
+
         professionalUserRepository.save(professionalUser);
-        
+
     }
 }

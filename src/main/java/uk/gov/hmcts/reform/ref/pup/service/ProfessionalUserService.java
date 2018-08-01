@@ -9,12 +9,12 @@ import java.util.UUID;
 
 public interface ProfessionalUserService {
 
-    ProfessionalUser create(ProfessionalUserCreation professionalUser) throws ApplicationException;
+    ProfessionalUser findOrCreate(ProfessionalUserCreation professionalUser) throws ApplicationException;
 
     Optional<ProfessionalUser> retrieve(String userId) throws ApplicationException;
 
     void delete(String userId) throws ApplicationException;
-    
+
     void assignPaymentAccount(String userId, UUID paymentAccountId) throws ApplicationException;
 
     void unassignPaymentAccount(String userId, UUID paymentAccountId) throws ApplicationException;

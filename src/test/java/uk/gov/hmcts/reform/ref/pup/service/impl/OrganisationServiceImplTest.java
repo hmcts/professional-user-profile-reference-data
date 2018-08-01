@@ -29,7 +29,7 @@ public class OrganisationServiceImplTest {
 
     @Mock
     private OrganisationRepository organisationRepository;
-    
+
     @InjectMocks
     private OrganisationServiceImpl organisationService;
 
@@ -48,7 +48,7 @@ public class OrganisationServiceImplTest {
         firstTestOrganisationRequest.setName("DUMMY");
         return firstTestOrganisationRequest;
     }
-    
+
     private Organisation createFakeOrganisation() {
         Organisation firstTestOrganisation = new Organisation();
         firstTestOrganisation.setName("DUMMY");
@@ -56,7 +56,7 @@ public class OrganisationServiceImplTest {
         firstTestOrganisation.setUuid(UUID.randomUUID());
         return firstTestOrganisation;
     }
-    
+
     private Organisation createFakeOrganisationWithSamName() {
         Organisation foolTestOrganisation = new Organisation();
         foolTestOrganisation.setName("DUMMY");
@@ -69,23 +69,23 @@ public class OrganisationServiceImplTest {
     public void create() throws ApplicationException {
         Mockito.when(organisationRepository.save(any())).thenReturn(testOrganisation);
 
-        Organisation created = organisationService.create(testOrganisationRequest);
+        Organisation created = organisationService.findOrCreate(testOrganisationRequest);
 
         assertThat(created.getName(), equalTo(testOrganisationRequest.getName()));
     }
-    
+
     @Test
     public void create_withAnAlreadyUsedNameShouldReturnAnException() throws ApplicationException {
         Mockito.when(organisationRepository.findOneByName(testOrganisation.getName())).thenReturn(Optional.of(createFakeOrganisationWithSamName()));
         Mockito.when(organisationRepository.save(testOrganisation)).thenReturn(testOrganisation);
-        
+
         try {
-            organisationService.create(testOrganisationRequest);
+            organisationService.findOrCreate(testOrganisationRequest);
             fail();
         } catch (ApplicationException e) {
             assertThat(e.getApplicationErrorCode(), equalTo(ApplicationErrorCode.ORGANISATION_ID_IN_USE));
         }
-        
+
     }
 
     @Test
@@ -96,7 +96,7 @@ public class OrganisationServiceImplTest {
 
         assertThat(retrieve.get().getUuid(), equalTo(testOrganisation.getUuid()));
     }
-    
+
 
     @Test
     public void delete() throws ApplicationException {
@@ -105,5 +105,5 @@ public class OrganisationServiceImplTest {
 
         Mockito.verify(organisationRepository, only()).deleteById(testOrganisation.getUuid());
     }
-    
+
 }

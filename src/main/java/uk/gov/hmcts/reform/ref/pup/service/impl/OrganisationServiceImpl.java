@@ -22,22 +22,22 @@ import javax.transaction.Transactional;
 public class OrganisationServiceImpl implements OrganisationService {
 
     private final OrganisationRepository organisationRepository;
-    
+
     @Autowired
     public OrganisationServiceImpl(OrganisationRepository organisationRepository) {
         this.organisationRepository = organisationRepository;
     }
 
     @Override
-    public Organisation create(final OrganisationCreation organisationInput) throws ApplicationException {
+    public Organisation findOrCreate(final OrganisationCreation organisationInput) throws ApplicationException {
         Optional<Organisation> organisationByName = organisationRepository.findOneByName(organisationInput.getName());
         if (organisationByName.isPresent()) {
-            throw new ApplicationException(ApplicationErrorCode.ORGANISATION_ID_IN_USE);
+            return organisationByName.get();
         }
-        
+
         Organisation organisation = new Organisation();
         organisation.setName(organisationInput.getName());
-        
+
         return organisationRepository.save(organisation);
     }
 
@@ -50,13 +50,13 @@ public class OrganisationServiceImpl implements OrganisationService {
     public void delete(UUID uuid) throws ApplicationException {
         organisationRepository.deleteById(uuid);
     }
-    
+
     @Override
     public Organisation addAddress(UUID uuid, AddressCreation addressCreation) throws ApplicationException {
 
         Organisation organisation = organisationRepository.findById(uuid)
                                         .orElseThrow(() -> new ApplicationException(ApplicationErrorCode.ORGANISATION_ID_DOES_NOT_EXIST));
-        
+
         Address address = new Address();
         address.setOrganisation(organisation);
         address.setAddressLine1(addressCreation.getAddressLine1());
@@ -65,9 +65,9 @@ public class OrganisationServiceImpl implements OrganisationService {
         address.setCity(addressCreation.getCity());
         address.setCountry(addressCreation.getCountry());
         address.setCounty(addressCreation.getCounty());
-        
+
         organisation.getAddresses().add(address);
-        
+
         return organisationRepository.save(organisation);
     }
 }

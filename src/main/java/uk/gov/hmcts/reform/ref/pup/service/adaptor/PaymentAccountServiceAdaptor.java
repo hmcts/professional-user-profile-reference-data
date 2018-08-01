@@ -17,7 +17,7 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 public class PaymentAccountServiceAdaptor {
-    
+
     private final PaymentAccountService paymentAccountService;
     private final PaymentAccountConverter paymentAccountConverter;
 
@@ -26,9 +26,9 @@ public class PaymentAccountServiceAdaptor {
         this.paymentAccountService = paymentAccountService;
         this.paymentAccountConverter = paymentAccountConverter;
     }
-    
+
     public PaymentAccountDto create(PaymentAccountCreation paymentAccount) throws ApplicationException {
-        return paymentAccountConverter.apply(paymentAccountService.create(paymentAccount));
+        return paymentAccountConverter.apply(paymentAccountService.findOrCreate(paymentAccount));
     }
 
     public Optional<PaymentAccountDto> retrieve(String pbaNumber) throws ApplicationException {

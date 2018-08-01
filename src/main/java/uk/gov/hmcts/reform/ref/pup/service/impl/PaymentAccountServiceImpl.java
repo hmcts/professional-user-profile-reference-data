@@ -31,20 +31,23 @@ public class PaymentAccountServiceImpl implements PaymentAccountService {
     }
 
     @Override
-    public PaymentAccount create(PaymentAccountCreation paymentAccountInput) throws ApplicationException {
-        
-        Organisation organisation = organisationService.retrieve(paymentAccountInput.getOrganisationId())
-                                                       .orElseThrow(() -> new ApplicationException(ApplicationErrorCode.PAYMENT_ACCOUNT_ID_DOES_NOT_EXIST));
+    public PaymentAccount findOrCreate(PaymentAccountCreation paymentAccountInput) throws ApplicationException {
 
-        PaymentAccount paymentAccount = new PaymentAccount();
-        
-        paymentAccount.setPbaNumber(paymentAccountInput.getPbaNumber());
-        paymentAccount.setOrganisation(organisation);
-        
-        return paymentAccountRepository.save(paymentAccount);
-        
+        Organisation organisation = organisationService.retrieve(paymentAccountInput.getOrganisationId())
+            .orElseThrow(() -> new ApplicationException(ApplicationErrorCode.PAYMENT_ACCOUNT_ID_DOES_NOT_EXIST));
+
+        Optional<PaymentAccount> maybePaymentAccount = paymentAccountRepository.findByPbaNumberAndAndOrganisation(paymentAccountInput.getPbaNumber(), organisation);
+
+        if (maybePaymentAccount.isPresent()) {
+            return maybePaymentAccount.get();
+        } else {
+            PaymentAccount paymentAccount = new PaymentAccount();
+            paymentAccount.setPbaNumber(paymentAccountInput.getPbaNumber());
+            paymentAccount.setOrganisation(organisation);
+            return paymentAccountRepository.save(paymentAccount);
+        }
     }
-    
+
     @Override
     public Optional<PaymentAccount> retrieve(String pbaNumber) {
         return paymentAccountRepository.findByPbaNumber(pbaNumber);

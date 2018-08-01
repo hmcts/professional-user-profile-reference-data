@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableBatchProcessing
 @EnableConfigurationProperties(BatchProperties.class)
-public class BatchConfiguration { 
+public class BatchConfiguration {
 
     @Bean
     public JobRepository jobRepository(DataSource dataSource, @Qualifier("transactionManager") PlatformTransactionManager transactionManager) {
@@ -31,7 +31,7 @@ public class BatchConfiguration {
             factory.afterPropertiesSet();
             return factory.getObject();
         } catch (Exception e) {
-            throw new AppConfigurationException("Could not create 'jobRepository' bean", e);
+            throw new AppConfigurationException("Could not findOrCreate 'jobRepository' bean", e);
         }
 
     }
