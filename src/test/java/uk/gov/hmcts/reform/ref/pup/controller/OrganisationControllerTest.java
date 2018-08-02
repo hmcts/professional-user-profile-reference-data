@@ -83,7 +83,7 @@ public class OrganisationControllerTest {
 
         when(organisationService.create(any())).thenReturn(firstTestOrganisation);
 
-        mvc.perform(post("/pup/organisation").with(user("user"))
+        mvc.perform(post("/pup/organisations").with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(firstTestOrganisationJson))
             .andExpect(status().isOk())
