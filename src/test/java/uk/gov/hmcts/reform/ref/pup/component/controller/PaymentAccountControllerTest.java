@@ -67,7 +67,7 @@ public class PaymentAccountControllerTest {
         String firstTestPaymentAccountJson = "{\"pbaNumber\":\"pbaNumber1010\", \"organisationId\":\"" + organisationId + "\"}";
         pbaNUmber = "pbaNumber1010";
 
-        result = mvc.perform(post("/pup/pba").with(user("user"))
+        result = mvc.perform(post("/pup/payment-accounts").with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(firstTestPaymentAccountJson))
             .andDo(print())
