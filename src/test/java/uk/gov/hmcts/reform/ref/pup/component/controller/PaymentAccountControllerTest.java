@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @EnableSpringDataWebSupport
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = MOCK)
-public class PackageBankAccountControllerTest {
+public class PaymentAccountControllerTest {
 
     @Autowired
     protected WebApplicationContext webApplicationContext;
@@ -53,7 +53,7 @@ public class PackageBankAccountControllerTest {
 
         String firstTestOrganisationJson = "{\"name\":\"Solicitor Ltd\"}";
 
-        MvcResult result = mvc.perform(post("/pup/organisation").with(user("user"))
+        MvcResult result = mvc.perform(post("/pup/organisations").with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(firstTestOrganisationJson))
             .andExpect(status().isOk())
@@ -76,7 +76,7 @@ public class PackageBankAccountControllerTest {
 
         String firstTestUserJson = "{\"userId\":\"1\",\"firstName\":\"Alexis\",\"surname\":\"GAYTE\",\"email\":\"alexis.gayte@gmail.com\",\"phoneNumber\":\"+447591715204\"}";
 
-        mvc.perform(post("/pup/professionalUsers").with(user("user"))
+        mvc.perform(post("/pup/professional-users").with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(firstTestUserJson))
             .andExpect(status().isOk())
@@ -94,7 +94,7 @@ public class PackageBankAccountControllerTest {
     @Test
     public void getPaymentAccount_forAPaymentAccountThatDoesnotExistShouldReturn404() throws Exception {
 
-        mvc.perform(get("/pup/pba/{uuid}", "c6c561cd-8f68-474e-89d3-13fece9b66f8").with(user("user")))
+        mvc.perform(get("/pup/payment-accounts/{uuid}", "c6c561cd-8f68-474e-89d3-13fece9b66f8").with(user("user")))
             .andExpect(status().isNotFound())
             .andDo(print());
     }
@@ -102,7 +102,7 @@ public class PackageBankAccountControllerTest {
     @Test
     public void getPaymentAccount_forAPaymentAccountShouldReturnPaymentAccountDetail() throws Exception {
 
-        mvc.perform(get("/pup/pba/{uuid}", pbaNUmber).with(user("user")))
+        mvc.perform(get("/pup/payment-accounts/{uuid}", pbaNUmber).with(user("user")))
             .andExpect(status().isOk())
             .andDo(print());
     }
@@ -110,11 +110,11 @@ public class PackageBankAccountControllerTest {
     @Test
     public void deletePaymentAccount_forAPaymentAccountShouldReturnNoContentAndTheUserShouldNotBeRequestable() throws Exception {
 
-        mvc.perform(delete("/pup/pba/{uuid}", pbaNUmber).with(user("user")))
+        mvc.perform(delete("/pup/payment-accounts/{uuid}", pbaNUmber).with(user("user")))
             .andExpect(status().isNoContent())
             .andDo(print());
 
-        mvc.perform(get("/pup/pba/{uuid}", pbaNUmber).with(user("user")))
+        mvc.perform(get("/pup/payment-accounts/{uuid}", pbaNUmber).with(user("user")))
             .andExpect(status().isNotFound())
             .andDo(print());
     }
@@ -122,7 +122,7 @@ public class PackageBankAccountControllerTest {
     @Test
     public void assignPaymentAccounts_forPbaShouldReturnPaymentAccountDetail() throws Exception {
 
-        mvc.perform(post("/pup/pba/{uuid}/assign", pbaNUmber).with(user("user"))
+        mvc.perform(post("/pup/payment-accounts/{uuid}/assign", pbaNUmber).with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(firstTestAssignmentJson))
             .andExpect(status().isOk())
@@ -132,12 +132,12 @@ public class PackageBankAccountControllerTest {
     @Test
     public void assignPaymentAccounts_twiceForPbaShouldReturnAnError() throws Exception {
 
-        mvc.perform(post("/pup/pba/{uuid}/assign", pbaNUmber).with(user("user"))
+        mvc.perform(post("/pup/payment-accounts/{uuid}/assign", pbaNUmber).with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(firstTestAssignmentJson))
             .andExpect(status().isOk());
 
-        mvc.perform(post("/pup/pba/{uuid}/assign", pbaNUmber).with(user("user"))
+        mvc.perform(post("/pup/payment-accounts/{uuid}/assign", pbaNUmber).with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(firstTestAssignmentJson))
             .andDo(print())
@@ -147,12 +147,12 @@ public class PackageBankAccountControllerTest {
     @Test
     public void unassignPaymentAccounts_forAPaymentAccountAssignedShouldReturnPaymentAccountDetail() throws Exception {
 
-        mvc.perform(post("/pup/pba/{uuid}/assign", pbaNUmber).with(user("user"))
+        mvc.perform(post("/pup/payment-accounts/{uuid}/assign", pbaNUmber).with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(firstTestAssignmentJson))
             .andExpect(status().isOk());
 
-        mvc.perform(post("/pup/pba/{uuid}/unassign", pbaNUmber).with(user("user"))
+        mvc.perform(post("/pup/payment-accounts/{uuid}/unassign", pbaNUmber).with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(firstTestAssignmentJson))
             .andDo(print())
@@ -162,7 +162,7 @@ public class PackageBankAccountControllerTest {
     @Test
     public void unassignPaymentAccounts_forAPaymentAccountAssignedShouldReturnError() throws Exception {
 
-        mvc.perform(post("/pup/pba/{uuid}/unassign", pbaNUmber).with(user("user"))
+        mvc.perform(post("/pup/payment-accounts/{uuid}/unassign", pbaNUmber).with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(firstTestAssignmentJson))
             .andDo(print())
@@ -173,12 +173,12 @@ public class PackageBankAccountControllerTest {
     @Test
     public void myPaymentAccounts_shouldReturnPaymentAccountDetailAssignedToMe() throws Exception {
 
-        mvc.perform(post("/pup/pba/{uuid}/assign", pbaNUmber).with(user("user"))
+        mvc.perform(post("/pup/payment-accounts/{uuid}/assign", pbaNUmber).with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(firstTestAssignmentJson))
             .andExpect(status().isOk());
 
-        mvc.perform(get("/pup/pba/mine", pbaNUmber).with(user("1")))
+        mvc.perform(get("/pup/payment-accounts/mine", pbaNUmber).with(user("1")))
             .andExpect(status().isOk())
             .andDo(print());
     }

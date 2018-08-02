@@ -39,29 +39,29 @@ public class ProfessionalUserControllerTest {
 
     @Mock
     protected ProfessionalUserServiceAdaptor professionalUserService;
-    
+
     @InjectMocks
     protected ProfessionalUserController professionalUserController;
-    
+
     @Captor
     ArgumentCaptor<String> userIdCaptor;
-    
+
     @Captor
     ArgumentCaptor<ProfessionalUserCreation> professionalUserCaptor;
-    
+
     private MockMvc mvc;
 
     private ProfessionalUserDto firstTestUserDto;
     private String firstTestUserJson;
-    
+
     @Before
     public void setUp() throws Exception {
-        
+
         mvc = MockMvcBuilders.standaloneSetup(professionalUserController).build();
-        
+
         firstTestUserDto = createFakeProfessionalUserDto();
         firstTestUserJson = "{\"userId\":\"1\",\"firstName\":\"DUMMY\",\"surname\":\"DUMMY\",\"email\":\"DUMMY@DUMMY.com\",\"phoneNumber\":\"DUMMY\"}";
-        
+
     }
 
     private ProfessionalUserDto createFakeProfessionalUserDto() {
@@ -73,29 +73,29 @@ public class ProfessionalUserControllerTest {
                     .userId("1").build();
     }
 
-    
+
     @Test
     public void createProfessionalUserShouldCallCreateFormProfessionalUserService() throws Exception {
-        
+
         when(professionalUserService.create(any())).thenReturn(firstTestUserDto);
-        
-        mvc.perform(post("/pup/professionalUsers").with(user("user"))
+
+        mvc.perform(post("/pup/professional-users").with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(firstTestUserJson))
             .andExpect(status().isOk())
             .andDo(print());
-        
+
         verify(professionalUserService, only()).create(professionalUserCaptor.capture());
         assertThat(professionalUserCaptor.getValue().getUserId(), equalTo("1"));
-        
+
     }
-    
+
     @Test
     public void getProfessionalUserShouldReturnTheUser() throws Exception {
 
         when(professionalUserService.retrieve("1")).thenReturn(Optional.of(firstTestUserDto));
 
-        mvc.perform(get("/pup/professionalUsers/1").with(user("user")))
+        mvc.perform(get("/pup/professional-users/1").with(user("user")))
             .andExpect(status().isOk())
             .andExpect(jsonPath("userId", is("1")))
             .andExpect(jsonPath("email", is("DUMMY@DUMMY.com")))
@@ -104,24 +104,24 @@ public class ProfessionalUserControllerTest {
 
     @Test
     public void getProfessionalUserShouldReturnNotFoundIfTheServiceReturnEmpty() throws Exception {
-        
-        when(professionalUserService.retrieve("1")).thenReturn(Optional.empty());   
-        
-        mvc.perform(get("/pup/professionalUsers/1").with(user("user")))
+
+        when(professionalUserService.retrieve("1")).thenReturn(Optional.empty());
+
+        mvc.perform(get("/pup/professional-users/1").with(user("user")))
             .andExpect(status().isNotFound())
             .andDo(print());
     }
-    
+
     @Test
     public void deleteProfessionalUserShouldCallTheDeleteFormProfessionalUserService() throws Exception {
-        
-        mvc.perform(delete("/pup/professionalUsers/1").with(user("user")))
+
+        mvc.perform(delete("/pup/professional-users/1").with(user("user")))
             .andExpect(status().isNoContent())
             .andDo(print());
-        
+
         verify(professionalUserService, only()).delete(userIdCaptor.capture());
         assertThat(userIdCaptor.getValue(), equalTo("1"));
-        
+
     }
-    
+
 }

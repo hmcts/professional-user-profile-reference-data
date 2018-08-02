@@ -26,7 +26,7 @@ import java.util.UUID;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("pup/organisation")
+@RequestMapping("pup/organisations")
 public class OrganisationController {
 
     private static final ResponseEntity<OrganisationDto> NOT_FOUND_RESPONSE = ResponseEntity.notFound().build();
@@ -69,7 +69,7 @@ public class OrganisationController {
         organisationService.delete(UUID.fromString(organisationUuid));
         return ResponseEntity.noContent().build();
     }
-    
+
     @PostMapping("{organisationUuid}/address")
     @ApiOperation("Create Address.")
     @ApiResponses(value = {
@@ -78,7 +78,7 @@ public class OrganisationController {
     public ResponseEntity<OrganisationDto> addOrganisationAddress(
             @PathVariable String organisationUuid,
             @RequestBody @Valid AddressCreation address) throws ApplicationException {
-        
+
         return ResponseEntity.ok(organisationService.addAddress(UUID.fromString(organisationUuid), address));
     }
 

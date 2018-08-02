@@ -41,32 +41,32 @@ public class OrganisationControllerTest {
 
     @Autowired
     protected WebApplicationContext webApplicationContext;
-    
+
     private MockMvc mvc;
-    
+
     private String firstTestAddressJson;
 
     private String organisationId;
-    
+
     @Before
     public void setUp() throws Exception {
         mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
-        
+
         String firstTestOrganisationJson = "{\"name\":\"Solicitor Ltd\"}";
         firstTestAddressJson = "{\"addressLine1\":\"address 1\"}";
-    
-        MvcResult result = mvc.perform(post("/pup/organisation").with(user("user"))
+
+        MvcResult result = mvc.perform(post("/pup/organisations").with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(firstTestOrganisationJson))
             .andExpect(status().isOk())
             .andDo(print())
             .andReturn();
-        
-        
+
+
         String contentAsString = result.getResponse().getContentAsString();
-        
+
         Organisation contentFrom = new ObjectMapper().readValue(contentAsString, Organisation.class);
-        
+
         organisationId = contentFrom.getUuid().toString();
     }
 
@@ -77,36 +77,36 @@ public class OrganisationControllerTest {
 
     @Test
     public void getOrganisation_forAOrganisationThatDoesnotExistShouldReturn404() throws Exception {
-        
-        mvc.perform(get("/pup/organisation/{uuid}", "c6c561cd-8f68-474e-89d3-13fece9b66f8").with(user("user")))
+
+        mvc.perform(get("/pup/organisations/{uuid}", "c6c561cd-8f68-474e-89d3-13fece9b66f8").with(user("user")))
             .andExpect(status().isNotFound())
             .andDo(print());
     }
-    
+
     @Test
     public void getOrganisation_forAOrganisationShouldReturnOrganisationDetail() throws Exception {
-        
-        mvc.perform(get("/pup/organisation/{uuid}", organisationId).with(user("user")))
+
+        mvc.perform(get("/pup/organisations/{uuid}", organisationId).with(user("user")))
             .andExpect(status().isOk())
             .andDo(print());
     }
-    
+
     @Test
     public void deleteOrganisation_forAOrganisationShouldReturnNoContentAndTheUserShouldNotBeRequestable() throws Exception {
-        
-        mvc.perform(delete("/pup/organisation/{uuid}", organisationId).with(user("user")))
+
+        mvc.perform(delete("/pup/organisations/{uuid}", organisationId).with(user("user")))
             .andExpect(status().isNoContent())
             .andDo(print());
-        
-        mvc.perform(get("/pup/organisation/{uuid}", organisationId).with(user("user")))
+
+        mvc.perform(get("/pup/organisations/{uuid}", organisationId).with(user("user")))
             .andExpect(status().isNotFound())
             .andDo(print());
     }
-    
+
     @Test
     public void addOrganisationAddress_forAOrganisationShouldReturnOrganisationDetailWithTheAddress() throws Exception {
-        
-        mvc.perform(post("/pup/organisation/{uuid}/address", organisationId).with(user("user"))
+
+        mvc.perform(post("/pup/organisations/{uuid}/address", organisationId).with(user("user"))
                     .contentType(MediaType.APPLICATION_JSON_UTF8)
                     .content(firstTestAddressJson))
             .andExpect(status().isOk())
