@@ -7,6 +7,7 @@ import uk.gov.hmcts.reform.ref.pup.domain.OrganisationType;
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
 import uk.gov.hmcts.reform.ref.pup.dto.OrganisationCreation;
+import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountAssignment;
 import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountCreation;
 import uk.gov.hmcts.reform.ref.pup.dto.ProfessionalUserCreation;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
@@ -24,12 +25,12 @@ import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -39,32 +40,34 @@ public class ProfessionalUserAccountAssignmentCsvProcessorTest {
 
     @Mock
     private OrganisationService organisationService;
-    
+
     @Mock
     private PaymentAccountService paymentAccountService;
 
     @Mock
     private ProfessionalUserService professionalUserService;
-    
-    
+
+
     @InjectMocks
     private ProfessionalUserAccountAssignmentCsvProcessor professionalUserAccountAssignmentCsv;
 
     private Organisation testOrganisation;
     private ProfessionalUser testProfessionalUser;
     private PaymentAccount testPaymentAccount;
-    
+
     @Captor
     ArgumentCaptor<PaymentAccountCreation> paymentAccountRequestCaptor;
     @Captor
-    ArgumentCaptor<String> userIdCaptor;
+    ArgumentCaptor<PaymentAccountAssignment> paymentAccountAssignmentCaptor;
     @Captor
     ArgumentCaptor<UUID> organisationUuidCaptor;
     @Captor
     ArgumentCaptor<ProfessionalUserCreation> professionalUserRequestCaptor;
     @Captor
     ArgumentCaptor<OrganisationCreation> organisationRequestCaptor;
-    
+    @Captor
+    ArgumentCaptor<String> pbaNumberCaptor;
+
     private ProfessionalUserAccountAssignmentCsvModel testProfessionalUserAccountAssignmentCsvModel;
 
     @Before
@@ -74,7 +77,7 @@ public class ProfessionalUserAccountAssignmentCsvProcessorTest {
         testProfessionalUser = createFakeProfessionalUser();
         testPaymentAccount = createFakePaymentAccount();
         testProfessionalUserAccountAssignmentCsvModel = createFakeModel();
-        
+
     }
 
     private ProfessionalUser createFakeProfessionalUser() {
@@ -88,7 +91,7 @@ public class ProfessionalUserAccountAssignmentCsvProcessorTest {
         firstTestUser.setAccountAssignments(new HashSet<>());
         return firstTestUser;
     }
-    
+
     private Organisation createFakeOrganisation() {
         Organisation firstTestOrganisation = new Organisation();
         firstTestOrganisation.setName("DUMMY");
@@ -96,14 +99,14 @@ public class ProfessionalUserAccountAssignmentCsvProcessorTest {
         firstTestOrganisation.setUuid(UUID.randomUUID());
         return firstTestOrganisation;
     }
-    
+
     private PaymentAccount createFakePaymentAccount() {
         PaymentAccount paymentAccount = new PaymentAccount();
         paymentAccount.setPbaNumber("DUMMY");
         paymentAccount.setUuid(UUID.randomUUID());
         return paymentAccount;
     }
-    
+
     private ProfessionalUserAccountAssignmentCsvModel createFakeModel() {
         ProfessionalUserAccountAssignmentCsvModel firstTestProfessionalUserAccountAssignmentCsvModel = new ProfessionalUserAccountAssignmentCsvModel();
         firstTestProfessionalUserAccountAssignmentCsvModel.setOrgName("DUMMY");
@@ -111,27 +114,27 @@ public class ProfessionalUserAccountAssignmentCsvProcessorTest {
         firstTestProfessionalUserAccountAssignmentCsvModel.setUserEmail("DUMMY@DUMMY.com");
         return firstTestProfessionalUserAccountAssignmentCsvModel;
     }
-    
-    
+
+
     @Test
     public void process_happyPath() throws ApplicationException {
         when(organisationService.create(any())).thenReturn(testOrganisation);
         when(professionalUserService.create(any())).thenReturn(testProfessionalUser);
-        doNothing().when(professionalUserService).assignPaymentAccount(any(), any());
+        when(paymentAccountService.assign(any(), any())).thenReturn(Optional.of(testPaymentAccount));
         when(paymentAccountService.create(any())).thenReturn(testPaymentAccount);
-        
+
         professionalUserAccountAssignmentCsv.process(testProfessionalUserAccountAssignmentCsvModel);
 
-        
+
         verify(organisationService, only()).create(organisationRequestCaptor.capture());
         verify(professionalUserService).create(professionalUserRequestCaptor.capture());
-        verify(professionalUserService).assignPaymentAccount(userIdCaptor.capture(), organisationUuidCaptor.capture());
-        verify(paymentAccountService, only()).create(paymentAccountRequestCaptor.capture());
-        
+        verify(paymentAccountService).assign(pbaNumberCaptor.capture(), paymentAccountAssignmentCaptor.capture());
+        verify(paymentAccountService).create(paymentAccountRequestCaptor.capture());
+
         assertThat(organisationRequestCaptor.getValue().getName(), equalTo(testProfessionalUserAccountAssignmentCsvModel.getOrgName()));
         assertThat(professionalUserRequestCaptor.getValue().getEmail(), equalTo(testProfessionalUserAccountAssignmentCsvModel.getUserEmail()));
         assertThat(paymentAccountRequestCaptor.getValue().getPbaNumber(), equalTo(testProfessionalUserAccountAssignmentCsvModel.getPbaNumber()));
-        
+
     }
-    
+
 }
