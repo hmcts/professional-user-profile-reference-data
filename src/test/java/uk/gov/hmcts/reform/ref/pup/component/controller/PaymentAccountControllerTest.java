@@ -4,7 +4,6 @@ import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -169,7 +168,7 @@ public class PaymentAccountControllerTest {
             .andExpect(status().isBadRequest());
     }
 
-    @Ignore
+
     @Test
     public void myPaymentAccounts_shouldReturnPaymentAccountDetailAssignedToMe() throws Exception {
 

@@ -70,7 +70,7 @@ public class OrganisationController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("{organisationUuid}/address")
+    @PostMapping("{organisationUuid}/addresses")
     @ApiOperation("Create Address.")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success", response = OrganisationDto.class)

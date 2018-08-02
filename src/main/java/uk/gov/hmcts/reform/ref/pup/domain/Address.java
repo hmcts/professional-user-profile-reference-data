@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 
 @Getter
@@ -11,23 +13,23 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Address extends AbstractDomain {
 
-    private String addressLine1; // number
+    private String addressLine1;
 
-    private String addressLine2; // Street Name
+    private String addressLine2;
 
-    private String addressLine3; // Other
+    private String addressLine3;
 
-    private String city; // St Albans
+    private String city;
 
-    private String county; // Hertfordshire
+    private String county;
 
-    private String country; //England
+    private String country;
 
     private String postcode;
 
     @ManyToOne
     private Organisation organisation;
 
-    @ManyToOne
-    private AddressType addressType;
+    @Enumerated(EnumType.STRING)
+    protected AddressType addressType;
 }

@@ -1,7 +1,6 @@
 package uk.gov.hmcts.reform.ref.pup.batch.process;
 
 import uk.gov.hmcts.reform.ref.pup.batch.model.ProfessionalUserAccountAssignmentCsvModel;
-import uk.gov.hmcts.reform.ref.pup.batch.process.ProfessionalUserAccountAssignmentCsvProcessor;
 import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
 import uk.gov.hmcts.reform.ref.pup.domain.OrganisationType;
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
@@ -95,7 +94,7 @@ public class ProfessionalUserAccountAssignmentCsvProcessorTest {
     private Organisation createFakeOrganisation() {
         Organisation firstTestOrganisation = new Organisation();
         firstTestOrganisation.setName("DUMMY");
-        firstTestOrganisation.setOrganisationType(new OrganisationType());
+        firstTestOrganisation.setOrganisationType(OrganisationType.LEGAL_REPRESENTATION);
         firstTestOrganisation.setUuid(UUID.randomUUID());
         return firstTestOrganisation;
     }

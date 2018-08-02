@@ -132,7 +132,7 @@ public class OrganisationControllerTest {
 
         when(organisationService.addAddress(any(), any())).thenReturn(firstTestOrganisation);
 
-        mvc.perform(post("/pup/organisations/{uuid}/address", "c6c561cd-8f68-474e-89d3-13fece9b66f8").with(user("user"))
+        mvc.perform(post("/pup/organisations/{uuid}/addresses", "c6c561cd-8f68-474e-89d3-13fece9b66f8").with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(firstTestAddressJson))
             .andExpect(status().isOk())

@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -18,15 +20,15 @@ import javax.persistence.UniqueConstraint;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "pbanumber"))
 public class PaymentAccount extends AbstractDomain {
 
-    private String pbaNumber; // "PBA123"
+    private String pbaNumber;
 
-    @ManyToOne
-    private PaymentAccountType pbaType;
+    @Enumerated(EnumType.STRING)
+    private PaymentAccountType paymentAccountType;
 
     @ManyToMany
     private Set<ProfessionalUser> professionalUser = new HashSet<>();
 
     @ManyToOne
     private Organisation organisation;
-    
+
 }
