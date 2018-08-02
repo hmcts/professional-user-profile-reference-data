@@ -5,6 +5,7 @@ import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
 import uk.gov.hmcts.reform.ref.pup.dto.OrganisationCreation;
+import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountAssignment;
 import uk.gov.hmcts.reform.ref.pup.dto.PaymentAccountCreation;
 import uk.gov.hmcts.reform.ref.pup.dto.ProfessionalUserCreation;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
@@ -25,31 +26,33 @@ public class ProfessionalUserAccountAssignmentCsvProcessor implements ItemProces
 
     @Autowired
     private ProfessionalUserService professionalUserService;
-    
-    
+
+
     @Override
     public ProfessionalUser process(ProfessionalUserAccountAssignmentCsvModel professionalUserAccountAssignmentCsvModel) throws ApplicationException {
 
         final String orgName = professionalUserAccountAssignmentCsvModel.getOrgName();
         final String pbaNumber = professionalUserAccountAssignmentCsvModel.getPbaNumber();
         final String userEmail = professionalUserAccountAssignmentCsvModel.getUserEmail();
-       
+
         OrganisationCreation organisationRequest = new OrganisationCreation();
         organisationRequest.setName(orgName);
         Organisation organisation = organisationService.create(organisationRequest);
-        
+
         ProfessionalUserCreation professionalUserRequest = new ProfessionalUserCreation();
         professionalUserRequest.setUserId(userEmail);
         professionalUserRequest.setEmail(userEmail);
         ProfessionalUser create = professionalUserService.create(professionalUserRequest);
-        
+
         PaymentAccountCreation paymentAccountRequest = new PaymentAccountCreation();
         paymentAccountRequest.setOrganisationId(organisation.getUuid());
         paymentAccountRequest.setPbaNumber(pbaNumber);
         PaymentAccount paymentAccount = paymentAccountService.create(paymentAccountRequest);
 
-        professionalUserService.assignPaymentAccount(professionalUserRequest.getUserId(), paymentAccount.getUuid());
-        
+        PaymentAccountAssignment paymentAccountAssignment = new PaymentAccountAssignment();
+        paymentAccountAssignment.setUserId(professionalUserRequest.getUserId());
+        paymentAccountService.assign(paymentAccount.getPbaNumber(), paymentAccountAssignment);
+
         return create;
     }
 }
