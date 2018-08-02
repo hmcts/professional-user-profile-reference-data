@@ -35,5 +35,3 @@ services:
       - POSTGRES_USER=pup
       - POSTGRES_PASSWORD=pup
       - POSTGRES_DB=pup
-      ports:
-#      - 5432:5432
