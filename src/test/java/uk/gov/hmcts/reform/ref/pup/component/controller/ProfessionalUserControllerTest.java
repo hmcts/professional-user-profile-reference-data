@@ -34,18 +34,18 @@ public class ProfessionalUserControllerTest {
 
     @Autowired
     protected WebApplicationContext webApplicationContext;
-    
+
     private MockMvc mvc;
-    
+
     private String firstTestUserJson;
 
     @Before
     public void setUp() throws Exception {
         mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
-        
+
         firstTestUserJson = "{\"userId\":\"1\",\"firstName\":\"Alexis\",\"surname\":\"GAYTE\",\"email\":\"alexis.gayte@gmail.com\",\"phoneNumber\":\"+447591715204\"}";
-        
-        mvc.perform(post("/pup/professionalUsers").with(user("user"))
+
+        mvc.perform(post("/pup/professional-users").with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(firstTestUserJson))
             .andExpect(status().isOk())
@@ -59,42 +59,42 @@ public class ProfessionalUserControllerTest {
 
     @Test
     public void getProfessionalUser_forAUserThatDoesnotExistShouldReturn404() throws Exception {
-        
-        mvc.perform(get("/pup/professionalUsers/2").with(user("user")))
+
+        mvc.perform(get("/pup/professional-users/2").with(user("user")))
             .andExpect(status().isNotFound())
             .andDo(print());
     }
-    
+
     @Test
     public void getProfessionalUser_forAUserShouldReturnUserDetail() throws Exception {
-        
-        mvc.perform(get("/pup/professionalUsers/1").with(user("user")))
+
+        mvc.perform(get("/pup/professional-users/1").with(user("user")))
             .andExpect(status().isOk())
             .andDo(print());
     }
-    
+
     @Test
     public void deleteProfessionalUser_forAUserShouldReturnNoContentAndTheUserShouldNotBeRequestable() throws Exception {
-        
-        mvc.perform(delete("/pup/professionalUsers/1").with(user("user")))
+
+        mvc.perform(delete("/pup/professional-users/1").with(user("user")))
             .andExpect(status().isNoContent())
             .andDo(print());
-        
-        mvc.perform(get("/pup/professionalUsers/1").with(user("user")))
+
+        mvc.perform(get("/pup/professional-users/1").with(user("user")))
             .andExpect(status().isNotFound())
             .andDo(print());
     }
-    
+
     @Test
     public void createProfessionalUser_forAUserAlreadyExistantShouldReturn() throws Exception {
-        
-        mvc.perform(post("/pup/professionalUsers").with(user("user"))
+
+        mvc.perform(post("/pup/professional-users").with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(firstTestUserJson))
             .andExpect(status().isBadRequest())
             .andDo(print());
     }
-    
 
-    
+
+
 }

@@ -28,21 +28,21 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("pup/pba")
-public class PayByAccountController {
+@RequestMapping("pup/payment-accounts")
+public class PaymentAccountController {
 
     private static final ResponseEntity<PaymentAccountDto> NOT_FOUND_RESPONSE = ResponseEntity.notFound().build();
     private final PaymentAccountServiceAdaptor paymentAccountService;
 
     @Autowired
-    public PayByAccountController(PaymentAccountServiceAdaptor paymentAccountService) {
+    public PaymentAccountController(PaymentAccountServiceAdaptor paymentAccountService) {
         this.paymentAccountService = paymentAccountService;
     }
 
     @PostMapping
     @ApiOperation("Create payment account.")
-    @ApiResponses(value = { 
-            @ApiResponse(code = 200, message = "Success", response = PaymentAccountDto.class) 
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success", response = PaymentAccountDto.class)
     })
     public ResponseEntity<PaymentAccountDto> createPaymentAccount(@RequestBody @Valid PaymentAccountCreation paymentAccount) throws ApplicationException {
         return ResponseEntity.ok(paymentAccountService.create(paymentAccount));
@@ -54,9 +54,9 @@ public class PayByAccountController {
         @ApiResponse(code = 200, message = "Success", response = PaymentAccountDto.class)
     })
     public ResponseEntity<PaymentAccountDto> getProfessionalUser(@PathVariable String uuid) throws ApplicationException {
-        
+
         Optional<PaymentAccountDto> paymentAccount = paymentAccountService.retrieve(uuid);
-        
+
         if (!paymentAccount.isPresent()) {
             return NOT_FOUND_RESPONSE;
         }
@@ -70,18 +70,18 @@ public class PayByAccountController {
         @ApiResponse(code = 204, message = "No Content")
     })
     public ResponseEntity<Void> deletePaymentAccount(@PathVariable String uuid) throws ApplicationException {
-        
+
         paymentAccountService.delete(uuid);
         return ResponseEntity.noContent().build();
     }
-    
+
     @GetMapping(value = "mine")
     @ApiOperation("Retrieve my payment account.")
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Success", response = PaymentAccountDto.class)
     })
     public ResponseEntity<List<PaymentAccountDto>> myPaymentAccounts(@AuthenticationPrincipal ServiceAndUserDetails userDetails) throws ApplicationException {
-        
+
         List<PaymentAccountDto> paymentAccount = paymentAccountService.retrieveForUser(userDetails.getUsername());
         return ResponseEntity.ok(paymentAccount);
     }
@@ -94,7 +94,7 @@ public class PayByAccountController {
     public ResponseEntity<PaymentAccountDto> assignPaymentAccounts(
             @PathVariable String uuid,
             @RequestBody @Valid PaymentAccountAssignment paymentAccountAssignment) throws ApplicationException {
-        
+
         Optional<PaymentAccountDto> paymentAccount = paymentAccountService.assign(uuid, paymentAccountAssignment);
         if (!paymentAccount.isPresent()) {
             return NOT_FOUND_RESPONSE;
@@ -111,7 +111,7 @@ public class PayByAccountController {
     public ResponseEntity<PaymentAccountDto> unassignPaymentAccounts(
             @PathVariable String uuid,
             @RequestBody @Valid PaymentAccountAssignment paymentAccountAssignment) throws ApplicationException {
-        
+
         Optional<PaymentAccountDto> paymentAccount = paymentAccountService.unassign(uuid, paymentAccountAssignment);
         if (!paymentAccount.isPresent()) {
             return NOT_FOUND_RESPONSE;

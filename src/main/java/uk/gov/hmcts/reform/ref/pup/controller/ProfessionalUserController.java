@@ -25,7 +25,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("pup/professionalUsers")
+@RequestMapping("pup/professional-users")
 public class ProfessionalUserController {
 
     private static final ResponseEntity<ProfessionalUserDto> NOT_FOUND_RESPONSE = ResponseEntity.notFound().build();
