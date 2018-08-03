@@ -3,6 +3,7 @@ package uk.gov.hmcts.reform.ref.pup.controller;
 import uk.gov.hmcts.reform.ref.pup.dto.AddressCreation;
 import uk.gov.hmcts.reform.ref.pup.dto.OrganisationCreation;
 import uk.gov.hmcts.reform.ref.pup.dto.OrganisationDto;
+import uk.gov.hmcts.reform.ref.pup.service.adaptor.AddressServiceAdaptor;
 import uk.gov.hmcts.reform.ref.pup.service.adaptor.OrganisationServiceAdaptor;
 
 import org.junit.Before;
@@ -42,6 +43,9 @@ public class OrganisationControllerTest {
     @Mock
     protected OrganisationServiceAdaptor organisationService;
 
+    @Mock
+    protected AddressServiceAdaptor addressService;
+
     @InjectMocks
     protected OrganisationController organisationController;
 
@@ -58,7 +62,6 @@ public class OrganisationControllerTest {
 
     private OrganisationDto firstTestOrganisation;
     private String firstTestOrganisationJson;
-    private String firstTestAddressJson;
 
     @Before
     public void setUp() throws Exception {
@@ -67,8 +70,6 @@ public class OrganisationControllerTest {
 
         firstTestOrganisation = createFakeOrganisationDto();
         firstTestOrganisationJson = "{\"name\":\"Solicitor Ltd\"}";
-        firstTestAddressJson = "{\"addressLine1\":\"address 1\",\"addressLine2\":\"address 2\",\"addressLine3\":\"address 3\",\"city\":\"london\",\"county\":\"UK\",\"country\":\"UK\",\"postcode\":\"N112AS\"}";
-
     }
 
     private OrganisationDto createFakeOrganisationDto() {
@@ -124,22 +125,6 @@ public class OrganisationControllerTest {
 
         verify(organisationService, only()).delete(organisationIdCaptor.capture());
         assertThat(organisationIdCaptor.getValue(), equalTo(UUID.fromString("c6c561cd-8f68-474e-89d3-13fece9b66f8")));
-
-    }
-
-    @Test
-    public void addOrganisationAddressShouldCallAddAddressFormOrganisationService() throws Exception {
-
-        when(organisationService.addAddress(any(), any())).thenReturn(firstTestOrganisation);
-
-        mvc.perform(post("/pup/organisations/{uuid}/addresses", "c6c561cd-8f68-474e-89d3-13fece9b66f8").with(user("user"))
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(firstTestAddressJson))
-            .andExpect(status().isOk())
-            .andDo(print());
-
-        verify(organisationService, only()).addAddress(any(), addressCaptor.capture());
-        assertThat(addressCaptor.getValue().getAddressLine1(), equalTo("address 1"));
 
     }
 

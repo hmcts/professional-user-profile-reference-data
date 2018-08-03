@@ -1,7 +1,6 @@
 package uk.gov.hmcts.reform.ref.pup.service;
 
 import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
-import uk.gov.hmcts.reform.ref.pup.dto.AddressCreation;
 import uk.gov.hmcts.reform.ref.pup.dto.OrganisationCreation;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
 
@@ -15,7 +14,5 @@ public interface OrganisationService {
     Optional<Organisation> retrieve(UUID organisationUuid) throws ApplicationException;
 
     void delete(UUID organisationUuid) throws ApplicationException;
-
-    Organisation addAddress(UUID organisationUuid, AddressCreation address) throws ApplicationException;
 
 }

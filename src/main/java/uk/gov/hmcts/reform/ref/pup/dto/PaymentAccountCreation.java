@@ -1,5 +1,7 @@
 package uk.gov.hmcts.reform.ref.pup.dto;
 
+import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccountType;
+
 import lombok.Data;
 
 import java.util.UUID;
@@ -8,6 +10,8 @@ import java.util.UUID;
 public class PaymentAccountCreation {
 
     private String pbaNumber;
+
+    private PaymentAccountType type;
 
     private UUID organisationId;
 }

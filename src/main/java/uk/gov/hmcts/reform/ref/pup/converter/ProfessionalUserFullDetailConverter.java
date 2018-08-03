@@ -36,10 +36,9 @@ public class ProfessionalUserFullDetailConverter implements Function<Professiona
                 .surname(source.getSurname())
                 .email(source.getEmail())
                 .phoneNumber(source.getPhoneNumber())
+                .paymentAccounts(source.getOrganisation().getPaymentAccounts()
+                            .stream().map(paymentAccountConverter).collect(Collectors.toList()))
                 .organisation(organisationConverter.apply(source.getOrganisation()))
-                .paymentAccounts(source.getAccountAssignments().stream()
-                                            .map(paymentAccountConverter)
-                                            .collect(Collectors.toList()))
                 .build();
 
     }

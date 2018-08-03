@@ -18,8 +18,8 @@ public interface PaymentAccountService {
 
     List<PaymentAccount> retrieveForUser(String userId) throws ApplicationException;
 
-    Optional<PaymentAccount> assign(String pbaNumber, PaymentAccountAssignment paymentAccountAssignment) throws ApplicationException;
+    void assign(String pbaNumber, PaymentAccountAssignment paymentAccountAssignment) throws ApplicationException;
 
-    Optional<PaymentAccount> unassign(String pbaNumber, PaymentAccountAssignment paymentAccountAssignment) throws ApplicationException;
-    
+    void unassign(String pbaNumber, PaymentAccountAssignment paymentAccountAssignment) throws ApplicationException;
+
 }

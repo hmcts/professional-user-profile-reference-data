@@ -1,6 +1,8 @@
 package uk.gov.hmcts.reform.ref.pup.component.repository;
 
+import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
 import uk.gov.hmcts.reform.ref.pup.domain.PaymentAccount;
+import uk.gov.hmcts.reform.ref.pup.repository.OrganisationRepository;
 import uk.gov.hmcts.reform.ref.pup.repository.PaymentAccountRepository;
 
 import org.junit.After;
@@ -28,43 +30,54 @@ public class PaymentAccountRepositoryTest {
     @Autowired
     private PaymentAccountRepository paymentAccountRepository;
 
+    @Autowired
+    private OrganisationRepository organisationRepository;
+
     private PaymentAccount firstTestPaymentAccount;
     private PaymentAccount secondTestPaymentAccount;
 
     @Before
     public void setUp() {
 
+        // Fake Organisation
+        Organisation firstTestOrganisation = new Organisation();
+        firstTestOrganisation.setName("AGA");
+
+        organisationRepository.save(firstTestOrganisation);
+
         // first test payment account
         firstTestPaymentAccount = new PaymentAccount();
         firstTestPaymentAccount.setPbaNumber("123_456");
-       
+        firstTestPaymentAccount.setOrganisation(firstTestOrganisation);
+
         paymentAccountRepository.save(firstTestPaymentAccount);
-        
+
         // second test payment account
         secondTestPaymentAccount = new PaymentAccount();
         secondTestPaymentAccount.setPbaNumber("123_789");
-       
+        secondTestPaymentAccount.setOrganisation(firstTestOrganisation);
+
         paymentAccountRepository.save(secondTestPaymentAccount);
-        
+
     }
-    
+
     @After
     public void tearDown() {
         paymentAccountRepository.delete(firstTestPaymentAccount);
         paymentAccountRepository.delete(secondTestPaymentAccount);
     }
-    
+
 
     @Test
     public void findByPbaNumber_shouldReturnNoPresentIfNoPbANumberIsNotThere() throws Exception {
         Optional<PaymentAccount> findByPbaNumber = paymentAccountRepository.findByPbaNumber("13_456");
         assertFalse(findByPbaNumber.isPresent());
     }
-    
+
     @Test
     public void findByPbaNumber_shouldReturnThePaymentAccountAssociatedWithThePbaNumber() throws Exception {
         Optional<PaymentAccount> findByPbaNumber = paymentAccountRepository.findByPbaNumber("123_456");
-        
+
         assertThat("123_456", equalTo(findByPbaNumber.get().getPbaNumber()));
     }
 

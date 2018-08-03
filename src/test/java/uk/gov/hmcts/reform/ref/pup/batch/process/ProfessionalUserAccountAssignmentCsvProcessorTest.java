@@ -23,8 +23,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.HashSet;
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -87,7 +85,6 @@ public class ProfessionalUserAccountAssignmentCsvProcessorTest {
         firstTestUser.setSurname("DUMMY");
         firstTestUser.setUserId("DUMMY");
         firstTestUser.setUuid(UUID.randomUUID());
-        firstTestUser.setAccountAssignments(new HashSet<>());
         return firstTestUser;
     }
 
@@ -119,7 +116,6 @@ public class ProfessionalUserAccountAssignmentCsvProcessorTest {
     public void process_happyPath() throws ApplicationException {
         when(organisationService.create(any())).thenReturn(testOrganisation);
         when(professionalUserService.create(any())).thenReturn(testProfessionalUser);
-        when(paymentAccountService.assign(any(), any())).thenReturn(Optional.of(testPaymentAccount));
         when(paymentAccountService.create(any())).thenReturn(testPaymentAccount);
 
         professionalUserAccountAssignmentCsv.process(testProfessionalUserAccountAssignmentCsvModel);

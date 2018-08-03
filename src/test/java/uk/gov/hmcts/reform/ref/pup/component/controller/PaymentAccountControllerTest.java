@@ -1,7 +1,6 @@
 package uk.gov.hmcts.reform.ref.pup.component.controller;
 
 import uk.gov.hmcts.reform.auth.checker.spring.serviceanduser.ServiceAndUserDetails;
-import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
 
 import org.junit.After;
 import org.junit.Before;
@@ -20,7 +19,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jayway.jsonpath.JsonPath;
 
 import java.util.Collections;
 
@@ -55,18 +54,23 @@ public class PaymentAccountControllerTest {
                                 .apply(springSecurity())
                                 .build();
 
-        String firstTestOrganisationJson = "{\"name\":\"Solicitor Ltd\"}";
-
         MvcResult result = mvc.perform(post("/pup/organisations").with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(firstTestOrganisationJson))
+                .content("{\"name\":\"Solicitor Ltd\"}"))
             .andExpect(status().isOk())
-            .andDo(print())
             .andReturn();
 
         String contentAsString = result.getResponse().getContentAsString();
-        Organisation contentFromOrganisation = new ObjectMapper().readValue(contentAsString, Organisation.class);
-        String organisationId = contentFromOrganisation.getUuid().toString();
+        final String organisationId = JsonPath.parse(contentAsString).read("uuid");
+
+        result = mvc.perform(post("/pup/organisations/{uuid}/addresses", organisationId).with(user("user"))
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content("{\"addressLine1\":\"address 1\", \"organisationId\":\"" + organisationId + "\"}"))
+            .andExpect(status().isOk())
+            .andReturn();
+
+        contentAsString = result.getResponse().getContentAsString();
+        final String addressId = JsonPath.parse(contentAsString).read("addresses[0].uuid");
 
         String firstTestPaymentAccountJson = "{\"pbaNumber\":\"pbaNumber1010\", \"organisationId\":\"" + organisationId + "\"}";
         pbaNUmber = "pbaNumber1010";
@@ -78,7 +82,7 @@ public class PaymentAccountControllerTest {
             .andExpect(status().isOk())
             .andReturn();
 
-        String firstTestUserJson = "{\"userId\":\"1\",\"firstName\":\"Alexis\",\"surname\":\"GAYTE\",\"email\":\"alexis.gayte@gmail.com\",\"phoneNumber\":\"+447591715204\"}";
+        String firstTestUserJson = "{\"userId\":\"1\",\"firstName\":\"Alexis\",\"surname\":\"GAYTE\",\"email\":\"alexis.gayte@gmail.com\",\"phoneNumber\":\"+447591715204\", \"organisationId\":\"" + organisationId + "\"}";
 
         mvc.perform(post("/pup/professional-users").with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -86,7 +90,7 @@ public class PaymentAccountControllerTest {
             .andExpect(status().isOk())
             .andDo(print());
 
-        firstTestAssignmentJson = "{\"userId\":\"1\"}";
+        firstTestAssignmentJson = "{\"userId\":\"1\", \"addressId\":\"" + addressId + "\"}";
 
     }
 
@@ -182,7 +186,8 @@ public class PaymentAccountControllerTest {
                 .content(firstTestAssignmentJson))
             .andExpect(status().isOk());
 
-        mvc.perform(get("/pup/payment-accounts/mine", pbaNUmber).with(user(new ServiceAndUserDetails("1", "", Collections.emptyList(), "pui-webapp"))))
+        mvc.perform(get("/pup/payment-accounts/mine").with(user(new ServiceAndUserDetails("1", "", Collections.emptyList(), "pui-webapp"))))
+            .andDo(print())
             .andExpect(status().isOk());
     }
 

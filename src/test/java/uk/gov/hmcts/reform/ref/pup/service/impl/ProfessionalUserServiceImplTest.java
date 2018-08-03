@@ -14,12 +14,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.HashSet;
 import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -53,7 +51,6 @@ public class ProfessionalUserServiceImplTest {
         firstTestUser.setPhoneNumber("DUMMY");
         firstTestUser.setSurname("DUMMY");
         firstTestUser.setUserId("DUMMY");
-        firstTestUser.setAccountAssignments(new HashSet<>());
         return firstTestUser;
     }
 
@@ -64,6 +61,7 @@ public class ProfessionalUserServiceImplTest {
         firstTestUser.setPhoneNumber("DUMMY");
         firstTestUser.setSurname("DUMMY");
         firstTestUser.setUserId("DUMMY");
+        firstTestUser.setOrganisationId("c6c561cd-8f68-474e-89d3-13fece9b66f7");
         return firstTestUser;
     }
 
@@ -76,20 +74,6 @@ public class ProfessionalUserServiceImplTest {
         foolTestUser.setSurname("FOOL");
         foolTestUser.setUserId("FOOL");
         return foolTestUser;
-    }
-
-    @Test
-    public void create() throws ApplicationException {
-        when(professionalUserRepository.save(any())).thenAnswer(i -> i.getArgument(0));
-
-        ProfessionalUser created = professionalUserService.create(testUserRequest);
-
-        assertThat(created.getEmail(), equalTo(testUserRequest.getEmail()));
-        assertThat(created.getFirstName(), equalTo(testUserRequest.getFirstName()));
-        assertThat(created.getPhoneNumber(), equalTo(testUserRequest.getPhoneNumber()));
-        assertThat(created.getSurname(), equalTo(testUserRequest.getSurname()));
-        assertThat(created.getUserId(), equalTo(testUserRequest.getUserId()));
-
     }
 
     @Test(expected = ApplicationException.class)

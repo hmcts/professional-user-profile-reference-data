@@ -29,7 +29,6 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -48,43 +47,33 @@ public class RootControllerTest {
     public void setUp() throws Exception {
         mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
 
-
-        String firstTestOrganisationJson = "{\"name\":\"Solicitor Ltd\"}";
-
         MvcResult result = mvc.perform(post("/pup/organisations").with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(firstTestOrganisationJson))
+                .content("{\"name\":\"Solicitor Ltd\"}"))
             .andExpect(status().isOk())
-            .andDo(print())
             .andReturn();
 
         String contentAsString = result.getResponse().getContentAsString();
         Organisation contentFromOrganisation = new ObjectMapper().readValue(contentAsString, Organisation.class);
         String organisationId = contentFromOrganisation.getUuid().toString();
 
-        String firstTestPaymentAccountJson = "{\"pbaNumber\":\"pbaNumber1010\", \"organisationId\":\"" + organisationId + "\"}";
-
-
         mvc.perform(post("/pup/organisations/{uuid}/addresses", organisationId).with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content("{\"addressLine1\":\"address 1\"}"))
-            .andDo(print());
+                .content("{\"addressLine1\":\"address 1\"}"));
 
 
         result = mvc.perform(post("/pup/payment-accounts").with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(firstTestPaymentAccountJson))
-            .andDo(print())
+                .content("{\"pbaNumber\":\"pbaNumber1010\", \"organisationId\":\"" + organisationId + "\"}"))
             .andExpect(status().isOk())
             .andReturn();
 
-        String firstTestUserJson = "{\"userId\":\"1\",\"firstName\":\"Alexis\",\"surname\":\"GAYTE\",\"email\":\"alexis.gayte@gmail.com\",\"phoneNumber\":\"+447591715204\"}";
+        String firstTestUserJson = "{\"userId\":\"1\",\"firstName\":\"Alexis\",\"surname\":\"GAYTE\",\"email\":\"alexis.gayte@gmail.com\",\"phoneNumber\":\"+447591715204\",\"organisationId\":\"" + organisationId + "\"}";
 
         mvc.perform(post("/pup/professional-users").with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(firstTestUserJson))
-            .andExpect(status().isOk())
-            .andDo(print());
+            .andExpect(status().isOk());
     }
 
     @After

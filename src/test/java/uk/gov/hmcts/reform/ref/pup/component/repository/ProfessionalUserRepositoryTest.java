@@ -1,6 +1,8 @@
 package uk.gov.hmcts.reform.ref.pup.component.repository;
 
+import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
 import uk.gov.hmcts.reform.ref.pup.domain.ProfessionalUser;
+import uk.gov.hmcts.reform.ref.pup.repository.OrganisationRepository;
 import uk.gov.hmcts.reform.ref.pup.repository.ProfessionalUserRepository;
 
 import org.junit.After;
@@ -28,6 +30,9 @@ import static org.junit.Assert.fail;
 public class ProfessionalUserRepositoryTest {
 
     @Autowired
+    private OrganisationRepository organisationRepository;
+
+    @Autowired
     private ProfessionalUserRepository professionalUserRepository;
 
     private ProfessionalUser firstTestUser;
@@ -35,6 +40,8 @@ public class ProfessionalUserRepositoryTest {
 
     @Before
     public void setUp() {
+        Organisation organisation = createFakeOrganisation();
+        organisationRepository.save(organisation);
 
         // first test user
         firstTestUser = new ProfessionalUser();
@@ -43,9 +50,10 @@ public class ProfessionalUserRepositoryTest {
         firstTestUser.setPhoneNumber("00711223");
         firstTestUser.setSurname("gayte");
         firstTestUser.setUserId("01");
-       
+        firstTestUser.setOrganisation(organisation);
+
         professionalUserRepository.save(firstTestUser);
-        
+
         // second test user
         secondTestUser = new ProfessionalUser();
         secondTestUser.setEmail("alexis.gayte@hmcts.net");
@@ -53,9 +61,16 @@ public class ProfessionalUserRepositoryTest {
         secondTestUser.setPhoneNumber("00711223");
         secondTestUser.setSurname("gayte");
         secondTestUser.setUserId("02");
-       
+        secondTestUser.setOrganisation(organisation);
+
         professionalUserRepository.save(secondTestUser);
-        
+
+    }
+
+    private Organisation createFakeOrganisation() {
+        Organisation firstTestOrganisation = new Organisation();
+        firstTestOrganisation.setName("AGA");
+        return firstTestOrganisation;
     }
 
     private ProfessionalUser createFakeProfessionalUser() {
@@ -67,7 +82,7 @@ public class ProfessionalUserRepositoryTest {
         firstTestUser.setUserId("DUMMY");
         return firstTestUser;
     }
-    
+
     @After
     public void tearDown() {
         professionalUserRepository.delete(firstTestUser);
@@ -77,26 +92,27 @@ public class ProfessionalUserRepositoryTest {
     @Test
     public void findOneByEmail_ShouldReturnNoPresentIfNoUserIsAssociatedWithEmail() throws Exception {
         Optional<ProfessionalUser> findByEmail = professionalUserRepository.findOneByEmail("");
-        
+
         assertFalse(findByEmail.isPresent());
     }
 
     @Test
     public void findOneByEmail_ShouldReturnTheUserAssociatesWithEmail() throws Exception {
         Optional<ProfessionalUser> findByEmail = professionalUserRepository.findOneByEmail("alexis.gayte@hmcts.net");
-        
+
         assertThat("alexis.gayte@hmcts.net", equalTo(findByEmail.get().getEmail()));
     }
 
 
     @Test(expected = DataIntegrityViolationException.class)
     public void modelCheck_ShouldNotBeAbleToCreateToUserWithTheSameUserId() throws Exception {
-        
+
         ProfessionalUser testUser = createFakeProfessionalUser();
         testUser.setUserId(firstTestUser.getUserId());
-        
+        testUser.setOrganisation(firstTestUser.getOrganisation());
+
         professionalUserRepository.save(testUser);
-        
+
         fail();
     }
 

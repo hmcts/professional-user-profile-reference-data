@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -24,13 +25,16 @@ public class Organisation extends AbstractDomain {
     @Enumerated(EnumType.STRING)
     private OrganisationType organisationType;
 
+    @OneToOne
+    private Organisation organisation;
+
     @OneToMany(mappedBy = "organisation")
-    private Set<PaymentAccount> pbas = new HashSet<>();
+    private Set<PaymentAccount> paymentAccounts = new HashSet<>();
 
     @OneToMany(mappedBy = "organisation")
     private Set<Address> addresses = new HashSet<>();
 
     @OneToMany(mappedBy = "organisation")
-    private Set<ProfessionalUser> professionalUser = new HashSet<>();
+    private Set<ProfessionalUser> professionalUsers = new HashSet<>();
 
 }

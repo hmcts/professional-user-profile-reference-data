@@ -52,7 +52,7 @@ public class OrganisationControllerTest {
     public void setUp() throws Exception {
         mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
 
-        String firstTestOrganisationJson = "{\"name\":\"Solicitor Ltd\"}";
+        String firstTestOrganisationJson = "{\"name\":\"Solicitor Ltd\", \"type\":\"LEGAL_REPRESENTATION\" }";
         firstTestAddressJson = "{\"addressLine1\":\"address 1\"}";
 
         MvcResult result = mvc.perform(post("/pup/organisations").with(user("user"))

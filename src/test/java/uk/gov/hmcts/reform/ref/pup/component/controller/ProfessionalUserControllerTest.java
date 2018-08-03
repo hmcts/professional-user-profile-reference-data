@@ -13,8 +13,11 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import com.jayway.jsonpath.JsonPath;
 
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.MOCK;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -43,7 +46,18 @@ public class ProfessionalUserControllerTest {
     public void setUp() throws Exception {
         mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
 
-        firstTestUserJson = "{\"userId\":\"1\",\"firstName\":\"Alexis\",\"surname\":\"GAYTE\",\"email\":\"alexis.gayte@gmail.com\",\"phoneNumber\":\"+447591715204\"}";
+
+        MvcResult result = mvc.perform(post("/pup/organisations").with(user("user"))
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content("{\"name\":\"Solicitor Ltd\"}"))
+            .andExpect(status().isOk())
+            .andReturn();
+
+        String contentAsString = result.getResponse().getContentAsString();
+        final String organisationId = JsonPath.parse(contentAsString).read("uuid");
+
+
+        firstTestUserJson = "{\"userId\":\"1\",\"firstName\":\"Alexis\",\"surname\":\"GAYTE\",\"email\":\"alexis.gayte@gmail.com\",\"phoneNumber\":\"+447591715204\", \"organisationId\":\"" + organisationId + "\"}";
 
         mvc.perform(post("/pup/professional-users").with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
