@@ -1,5 +1,6 @@
 package uk.gov.hmcts.reform.ref.pup.component.controller;
 
+import uk.gov.hmcts.reform.auth.checker.spring.serviceanduser.ServiceAndUserDetails;
 import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
 
 import org.junit.After;
@@ -20,6 +21,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.Collections;
 
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.MOCK;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -48,7 +51,9 @@ public class PaymentAccountControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
+        mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
+                                .apply(springSecurity())
+                                .build();
 
         String firstTestOrganisationJson = "{\"name\":\"Solicitor Ltd\"}";
 
@@ -177,9 +182,8 @@ public class PaymentAccountControllerTest {
                 .content(firstTestAssignmentJson))
             .andExpect(status().isOk());
 
-        mvc.perform(get("/pup/payment-accounts/mine", pbaNUmber).with(user("1")))
-            .andExpect(status().isOk())
-            .andDo(print());
+        mvc.perform(get("/pup/payment-accounts/mine", pbaNUmber).with(user(new ServiceAndUserDetails("1", "", Collections.emptyList(), "pui-webapp"))))
+            .andExpect(status().isOk());
     }
 
 }

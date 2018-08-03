@@ -1,10 +1,10 @@
 package uk.gov.hmcts.reform.ref.pup.component.controller;
 
+import uk.gov.hmcts.reform.auth.checker.spring.serviceanduser.ServiceAndUserDetails;
 import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +21,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.Collections;
 
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.MOCK;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -90,13 +92,11 @@ public class RootControllerTest {
         SecurityContextHolder.clearContext();
     }
 
-    @Ignore
     @Test
     public void myFullDetail_forAUserShouldReturnTheFullDetail() throws Exception {
 
-        mvc.perform(get("/pup/mine").with(user("user")))
-            .andExpect(status().isOk())
-            .andDo(print());
+        mvc.perform(get("/pup/mine").with(user(new ServiceAndUserDetails("1", "", Collections.emptyList(), "pui-webapp"))))
+            .andExpect(status().isOk());
     }
 
 
