@@ -60,7 +60,7 @@ public class ProfessionalUserControllerTest {
         mvc = MockMvcBuilders.standaloneSetup(professionalUserController).build();
 
         firstTestUserDto = createFakeProfessionalUserDto();
-        firstTestUserJson = "{\"userId\":\"1\",\"firstName\":\"DUMMY\",\"surname\":\"DUMMY\",\"email\":\"DUMMY@DUMMY.com\",\"phoneNumber\":\"DUMMY\"}";
+        firstTestUserJson = "{\"userId\":\"1\",\"firstName\":\"DUMMY\",\"surname\":\"DUMMY\",\"email\":\"DUMMY@DUMMY.com\",\"phoneNumber\":\"DUMMY\", \"organisationId\":\"c6c561cd-8f68-474e-89d3-13fece9b66f7\"}";
 
     }
 

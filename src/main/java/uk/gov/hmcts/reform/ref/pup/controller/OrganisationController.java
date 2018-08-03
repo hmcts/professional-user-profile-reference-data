@@ -4,6 +4,7 @@ import uk.gov.hmcts.reform.ref.pup.dto.AddressCreation;
 import uk.gov.hmcts.reform.ref.pup.dto.OrganisationCreation;
 import uk.gov.hmcts.reform.ref.pup.dto.OrganisationDto;
 import uk.gov.hmcts.reform.ref.pup.exception.ApplicationException;
+import uk.gov.hmcts.reform.ref.pup.service.adaptor.AddressServiceAdaptor;
 import uk.gov.hmcts.reform.ref.pup.service.adaptor.OrganisationServiceAdaptor;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +32,12 @@ public class OrganisationController {
 
     private static final ResponseEntity<OrganisationDto> NOT_FOUND_RESPONSE = ResponseEntity.notFound().build();
     private final OrganisationServiceAdaptor organisationService;
+    private final AddressServiceAdaptor addressService;
 
     @Autowired
-    public OrganisationController(OrganisationServiceAdaptor organisationService) {
+    public OrganisationController(OrganisationServiceAdaptor organisationService, AddressServiceAdaptor addressService) {
         this.organisationService = organisationService;
+        this.addressService = addressService;
     }
 
     @PostMapping
@@ -70,7 +73,7 @@ public class OrganisationController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("{organisationUuid}/address")
+    @PostMapping("{organisationUuid}/addresses")
     @ApiOperation("Create Address.")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success", response = OrganisationDto.class)
@@ -79,7 +82,9 @@ public class OrganisationController {
             @PathVariable String organisationUuid,
             @RequestBody @Valid AddressCreation address) throws ApplicationException {
 
-        return ResponseEntity.ok(organisationService.addAddress(UUID.fromString(organisationUuid), address));
+        addressService.create(UUID.fromString(organisationUuid), address);
+
+        return getOrganisation(organisationUuid);
     }
 
 }

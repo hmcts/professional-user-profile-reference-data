@@ -20,7 +20,7 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 public class PaymentAccountServiceAdaptor {
-    
+
     private final PaymentAccountService paymentAccountService;
     private final PaymentAccountConverter paymentAccountConverter;
 
@@ -29,7 +29,7 @@ public class PaymentAccountServiceAdaptor {
         this.paymentAccountService = paymentAccountService;
         this.paymentAccountConverter = paymentAccountConverter;
     }
-    
+
     public PaymentAccountDto create(PaymentAccountCreation paymentAccount) throws ApplicationException {
         return paymentAccountConverter.apply(paymentAccountService.create(paymentAccount));
     }
@@ -51,24 +51,16 @@ public class PaymentAccountServiceAdaptor {
         List<PaymentAccount> retrieve = paymentAccountService.retrieveForUser(username);
         return retrieve.stream().map(paymentAccountConverter)
                                 .collect(Collectors.toList());
-        
+
     }
 
     public Optional<PaymentAccountDto> assign(String pbaNumber, PaymentAccountAssignment paymentAccountAssignment) throws ApplicationException {
-        Optional<PaymentAccount> retrieve = paymentAccountService.assign(pbaNumber, paymentAccountAssignment);
-        if (retrieve.isPresent()) {
-            return Optional.of(paymentAccountConverter.apply(retrieve.get()));
-        } else {
-            return Optional.empty();
-        }
+        paymentAccountService.assign(pbaNumber, paymentAccountAssignment);
+        return retrieve(pbaNumber);
     }
-    
+
     public Optional<PaymentAccountDto> unassign(String pbaNumber, PaymentAccountAssignment paymentAccountAssignment) throws ApplicationException {
-        Optional<PaymentAccount> retrieve = paymentAccountService.unassign(pbaNumber, paymentAccountAssignment);
-        if (retrieve.isPresent()) {
-            return Optional.of(paymentAccountConverter.apply(retrieve.get()));
-        } else {
-            return Optional.empty();
-        }
+        paymentAccountService.unassign(pbaNumber, paymentAccountAssignment);
+        return retrieve(pbaNumber);
     }
 }

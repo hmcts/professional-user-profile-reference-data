@@ -1,0 +1,134 @@
+databaseChangeLog:
+- changeSet:
+    id: 1533220541868-1
+    author: agyt (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            name: address_type
+            type: varchar(255)
+        tableName: address
+- changeSet:
+    id: 1533220541868-2
+    author: agyt (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            name: organisation_type
+            type: varchar(255)
+        tableName: organisation
+- changeSet:
+    id: 1533220541868-3
+    author: agyt (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            name: organisation_uuid
+            type: uuid
+        tableName: professional_user
+- changeSet:
+    id: 1533220541868-4
+    author: agyt (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            name: payment_account_type
+            type: varchar(255)
+        tableName: payment_account
+- changeSet:
+    id: 1533220541868-5
+    author: agyt (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: organisation_uuid
+        baseTableName: professional_user
+        constraintName: FK3d8m42hxi82ofh2dhl08w5heh
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: uuid
+        referencedTableName: organisation
+- changeSet:
+    id: 1533220541868-6
+    author: agyt (generated)
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: payment_account
+        constraintName: FKe8tcvtvj27s673b24cxb8gh62
+- changeSet:
+    id: 1533220541868-7
+    author: agyt (generated)
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: address
+        constraintName: FKsate6ouw4h2b90x62ngl0gaou
+- changeSet:
+    id: 1533220541868-8
+    author: agyt (generated)
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: organisation
+        constraintName: FKt67fm9jqe0awslluy91uikapy
+- changeSet:
+    id: 1533220541868-14
+    author: agyt (generated)
+    changes:
+    - dropUniqueConstraint:
+        constraintName: UK5gkbb6lj4dgngpl2jj4s2ju0y
+        tableName: payment_account_type
+- changeSet:
+    id: 1533220541868-15
+    author: agyt (generated)
+    changes:
+    - dropUniqueConstraint:
+        constraintName: UKfnmwikam9hv97dlg3ujye9kbq
+        tableName: organisation_type
+- changeSet:
+    id: 1533220541868-16
+    author: agyt (generated)
+    changes:
+    - dropUniqueConstraint:
+        constraintName: UKrkfxa9waujg49ekmffyyaviem
+        tableName: address_type
+- changeSet:
+    id: 1533220541868-18
+    author: agyt (generated)
+    changes:
+    - dropTable:
+        tableName: address_type
+- changeSet:
+    id: 1533220541868-25
+    author: agyt (generated)
+    changes:
+    - dropTable:
+        tableName: organisation_type
+- changeSet:
+    id: 1533220541868-26
+    author: agyt (generated)
+    changes:
+    - dropTable:
+        tableName: payment_account_type
+- changeSet:
+    id: 1533220541868-27
+    author: agyt (generated)
+    changes:
+    - dropColumn:
+        columnName: address_type_uuid
+        tableName: address
+- changeSet:
+    id: 1533220541868-28
+    author: agyt (generated)
+    changes:
+    - dropColumn:
+        columnName: organisation_type_uuid
+        tableName: organisation
+- changeSet:
+    id: 1533220541868-29
+    author: agyt (generated)
+    changes:
+    - dropColumn:
+        columnName: pba_type_uuid
+        tableName: payment_account

@@ -1,0 +1,128 @@
+databaseChangeLog:
+- changeSet:
+    id: 1533303744347-1
+    author: agyt (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: uuid
+            type: UUID
+        - column:
+            name: address_uuid
+            type: UUID
+        - column:
+            name: payment_account_uuid
+            type: UUID
+        - column:
+            name: professional_user_uuid
+            type: UUID
+        tableName: assignment
+- changeSet:
+    id: 1533303744347-2
+    author: agyt (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            name: organisation_uuid
+            type: uuid
+        tableName: organisation
+- changeSet:
+    id: 1533303744347-3
+    author: agyt (generated)
+    changes:
+    - addPrimaryKey:
+        columnNames: uuid
+        constraintName: assignmentPK
+        tableName: assignment
+- changeSet:
+    id: 1533303744347-4
+    author: agyt (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: organisation_uuid
+        baseTableName: organisation
+        constraintName: FKb3426gq32r45xmc2tlkd59xm3
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: uuid
+        referencedTableName: organisation
+- changeSet:
+    id: 1533303744347-5
+    author: agyt (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: address_uuid
+        baseTableName: assignment
+        constraintName: FKd52wsui79n86tycdgq1brd8lq
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: uuid
+        referencedTableName: address
+- changeSet:
+    id: 1533303744347-6
+    author: agyt (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: payment_account_uuid
+        baseTableName: assignment
+        constraintName: FKfyw7i5a88jbvw76fdfq2iuccf
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: uuid
+        referencedTableName: payment_account
+- changeSet:
+    id: 1533303744347-7
+    author: agyt (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: professional_user_uuid
+        baseTableName: assignment
+        constraintName: FKpapr27h2isnoa8brh3kq14d1h
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: uuid
+        referencedTableName: professional_user
+- changeSet:
+    id: 1533303744347-8
+    author: agyt (generated)
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: professional_user_account_assignments
+        constraintName: FK93o37d1v4nnpnbwrf0nyndwvn
+- changeSet:
+    id: 1533303744347-9
+    author: agyt (generated)
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: payment_account_professional_user
+        constraintName: FKd59d1k55r5x7wgfx051laag79
+- changeSet:
+    id: 1533303744347-10
+    author: agyt (generated)
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: payment_account_professional_user
+        constraintName: FKevqgusir0olr9f6mkcykb5rk3
+- changeSet:
+    id: 1533303744347-11
+    author: agyt (generated)
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: professional_user_account_assignments
+        constraintName: FKnoycwk8uylqvhxiswt4hyatg6
+- changeSet:
+    id: 1533303744347-24
+    author: agyt (generated)
+    changes:
+    - dropTable:
+        tableName: payment_account_professional_user
+- changeSet:
+    id: 1533303744347-25
+    author: agyt (generated)
+    changes:
+    - dropTable:
+        tableName: professional_user_account_assignments

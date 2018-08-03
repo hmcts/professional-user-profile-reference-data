@@ -2,9 +2,12 @@ package uk.gov.hmcts.reform.ref.pup.dto;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
+
 @Data
 public class ProfessionalUserCreation {
 
+    @NotEmpty
     private String userId;
 
     private String firstName;
@@ -14,5 +17,8 @@ public class ProfessionalUserCreation {
     private String email;
 
     private String phoneNumber;
+
+    @NotEmpty
+    private String organisationId;
 
 }

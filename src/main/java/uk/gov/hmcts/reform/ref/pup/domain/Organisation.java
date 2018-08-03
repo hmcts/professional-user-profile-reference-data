@@ -6,10 +6,11 @@ import lombok.Setter;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -21,13 +22,19 @@ public class Organisation extends AbstractDomain {
 
     private String name;
 
-    @ManyToOne
+    @Enumerated(EnumType.STRING)
     private OrganisationType organisationType;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "organisation")
-    private Set<PaymentAccount> pbas = new HashSet<>();
+    @OneToOne
+    private Organisation organisation;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "organisation")
+    @OneToMany(mappedBy = "organisation")
+    private Set<PaymentAccount> paymentAccounts = new HashSet<>();
+
+    @OneToMany(mappedBy = "organisation")
     private Set<Address> addresses = new HashSet<>();
+
+    @OneToMany(mappedBy = "organisation")
+    private Set<ProfessionalUser> professionalUsers = new HashSet<>();
 
 }

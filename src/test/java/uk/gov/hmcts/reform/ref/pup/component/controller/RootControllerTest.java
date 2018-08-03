@@ -1,5 +1,6 @@
 package uk.gov.hmcts.reform.ref.pup.component.controller;
 
+import uk.gov.hmcts.reform.auth.checker.spring.serviceanduser.ServiceAndUserDetails;
 import uk.gov.hmcts.reform.ref.pup.domain.Organisation;
 
 import org.junit.After;
@@ -21,15 +22,13 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import static org.hamcrest.CoreMatchers.is;
+import java.util.Collections;
+
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.MOCK;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -37,37 +36,44 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @EnableSpringDataWebSupport
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = MOCK)
-public class OrganisationControllerTest {
+public class RootControllerTest {
 
     @Autowired
     protected WebApplicationContext webApplicationContext;
 
     private MockMvc mvc;
 
-    private String firstTestAddressJson;
-
-    private String organisationId;
-
     @Before
     public void setUp() throws Exception {
         mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
 
-        String firstTestOrganisationJson = "{\"name\":\"Solicitor Ltd\", \"type\":\"LEGAL_REPRESENTATION\" }";
-        firstTestAddressJson = "{\"addressLine1\":\"address 1\"}";
-
         MvcResult result = mvc.perform(post("/pup/organisations").with(user("user"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(firstTestOrganisationJson))
+                .content("{\"name\":\"Solicitor Ltd\"}"))
             .andExpect(status().isOk())
-            .andDo(print())
             .andReturn();
 
-
         String contentAsString = result.getResponse().getContentAsString();
+        Organisation contentFromOrganisation = new ObjectMapper().readValue(contentAsString, Organisation.class);
+        String organisationId = contentFromOrganisation.getUuid().toString();
 
-        Organisation contentFrom = new ObjectMapper().readValue(contentAsString, Organisation.class);
+        mvc.perform(post("/pup/organisations/{uuid}/addresses", organisationId).with(user("user"))
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content("{\"addressLine1\":\"address 1\"}"));
 
-        organisationId = contentFrom.getUuid().toString();
+
+        result = mvc.perform(post("/pup/payment-accounts").with(user("user"))
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content("{\"pbaNumber\":\"pbaNumber1010\", \"organisationId\":\"" + organisationId + "\"}"))
+            .andExpect(status().isOk())
+            .andReturn();
+
+        String firstTestUserJson = "{\"userId\":\"1\",\"firstName\":\"Alexis\",\"surname\":\"GAYTE\",\"email\":\"alexis.gayte@gmail.com\",\"phoneNumber\":\"+447591715204\",\"organisationId\":\"" + organisationId + "\"}";
+
+        mvc.perform(post("/pup/professional-users").with(user("user"))
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(firstTestUserJson))
+            .andExpect(status().isOk());
     }
 
     @After
@@ -76,42 +82,12 @@ public class OrganisationControllerTest {
     }
 
     @Test
-    public void getOrganisation_forAOrganisationThatDoesnotExistShouldReturn404() throws Exception {
+    public void myFullDetail_forAUserShouldReturnTheFullDetail() throws Exception {
 
-        mvc.perform(get("/pup/organisations/{uuid}", "c6c561cd-8f68-474e-89d3-13fece9b66f8").with(user("user")))
-            .andExpect(status().isNotFound())
-            .andDo(print());
+        mvc.perform(get("/pup/mine").with(user(new ServiceAndUserDetails("1", "", Collections.emptyList(), "pui-webapp"))))
+            .andExpect(status().isOk());
     }
 
-    @Test
-    public void getOrganisation_forAOrganisationShouldReturnOrganisationDetail() throws Exception {
 
-        mvc.perform(get("/pup/organisations/{uuid}", organisationId).with(user("user")))
-            .andExpect(status().isOk())
-            .andDo(print());
-    }
-
-    @Test
-    public void deleteOrganisation_forAOrganisationShouldReturnNoContentAndTheUserShouldNotBeRequestable() throws Exception {
-
-        mvc.perform(delete("/pup/organisations/{uuid}", organisationId).with(user("user")))
-            .andExpect(status().isNoContent())
-            .andDo(print());
-
-        mvc.perform(get("/pup/organisations/{uuid}", organisationId).with(user("user")))
-            .andExpect(status().isNotFound())
-            .andDo(print());
-    }
-
-    @Test
-    public void addOrganisationAddress_forAOrganisationShouldReturnOrganisationDetailWithTheAddress() throws Exception {
-
-        mvc.perform(post("/pup/organisations/{uuid}/addresses", organisationId).with(user("user"))
-                    .contentType(MediaType.APPLICATION_JSON_UTF8)
-                    .content(firstTestAddressJson))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("name", is("Solicitor Ltd")))
-            .andDo(print());
-    }
 
 }

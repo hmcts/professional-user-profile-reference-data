@@ -12,9 +12,9 @@ import static org.junit.Assert.assertThat;
 
 public class OrganisationConverterTest {
 
-    
-    OrganisationConverter organisationConverter = new OrganisationConverter();
-    
+
+    OrganisationConverter organisationConverter = new OrganisationConverter(new AddressConverter());
+
     @Test
     public void shouldReturnNullIsObjectIsNull() throws Exception {
 

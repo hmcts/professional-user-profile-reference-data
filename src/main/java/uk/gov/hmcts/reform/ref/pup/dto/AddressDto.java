@@ -2,10 +2,16 @@ package uk.gov.hmcts.reform.ref.pup.dto;
 
 import uk.gov.hmcts.reform.ref.pup.domain.AddressType;
 
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
 
-@Data
-public class AddressCreation {
+import java.util.UUID;
+
+@Builder
+@Getter
+public class AddressDto {
+
+    private UUID uuid;
 
     private AddressType type;
 
