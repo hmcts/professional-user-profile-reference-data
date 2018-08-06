@@ -82,7 +82,7 @@ public class RootControllerTest {
     }
 
     @Test
-    public void myFullDetail_forAnUserShouldReturnTheFullDetail() throws Exception {
+    public void myFullDetail_forAUserShouldReturnTheFullDetail() throws Exception {
 
         mvc.perform(get("/pup/mine").with(user(new ServiceAndUserDetails("1", "", Collections.emptyList(), "pui-webapp"))))
             .andExpect(status().isOk());
