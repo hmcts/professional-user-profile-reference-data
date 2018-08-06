@@ -82,10 +82,17 @@ public class RootControllerTest {
     }
 
     @Test
-    public void myFullDetail_forAUserShouldReturnTheFullDetail() throws Exception {
+    public void myFullDetail_forAnUserShouldReturnTheFullDetail() throws Exception {
 
         mvc.perform(get("/pup/mine").with(user(new ServiceAndUserDetails("1", "", Collections.emptyList(), "pui-webapp"))))
             .andExpect(status().isOk());
+    }
+
+    @Test
+    public void myFullDetail_forAnInexistantUserShouldReturn404Error() throws Exception {
+
+        mvc.perform(get("/pup/mine").with(user(new ServiceAndUserDetails("2", "", Collections.emptyList(), "pui-webapp"))))
+            .andExpect(status().isNotFound());
     }
 
 
