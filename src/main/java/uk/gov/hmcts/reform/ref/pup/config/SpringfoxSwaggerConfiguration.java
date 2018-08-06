@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 @EnableSwagger2
 public class SpringfoxSwaggerConfiguration {
 
-    private static final String apiVersion = "0.0.1";
+    private static final String API_VERSION = "0.0.1";
 
     private static final String MODEL_REF_TYPE = "string";
     private static final String PARAMETER_TYPE = "header";
@@ -56,7 +56,7 @@ public class SpringfoxSwaggerConfiguration {
                 .title("Professional User Profile Reference Data API")
                 .description("Documented API for the tactical professional user profile reference data solution."
                     + "To use the API calls generate an Authorization JWT Tokens (user and service) which is required in the header.")
-                .version(apiVersion)
+                .version(API_VERSION)
                 .build();
     }
 
