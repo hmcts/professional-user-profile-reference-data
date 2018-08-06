@@ -34,7 +34,7 @@ public class WebChecker {
             final HealthCheckResponse healthCheckResponse = restTemplate.getForObject(url + "/health", HealthCheckResponse.class);
             return "UP".equalsIgnoreCase(healthCheckResponse.getStatus());
         } catch (Exception ex) {
-            log.error(name + " " + url + " Failed",keyValue("stackTrace",ex));
+            log.error(name + " " + url + " Failed", keyValue("stackTrace", ex));
             return false;
         }
     }

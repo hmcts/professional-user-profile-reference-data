@@ -88,6 +88,13 @@ public class RootControllerTest {
             .andExpect(status().isOk());
     }
 
+    @Test
+    public void myFullDetail_forAnInexistantUserShouldReturn404Error() throws Exception {
+
+        mvc.perform(get("/pup/mine").with(user(new ServiceAndUserDetails("2", "", Collections.emptyList(), "pui-webapp"))))
+            .andExpect(status().isNotFound());
+    }
+
 
 
 }

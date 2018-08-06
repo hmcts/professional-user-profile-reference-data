@@ -11,14 +11,16 @@ import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Configuration
+@EnableSwagger2
 public class SpringfoxSwaggerConfiguration {
 
-    private static final String apiVersion = "0.0.1";
+    private static final String API_VERSION = "0.0.1";
 
     private static final String MODEL_REF_TYPE = "string";
     private static final String PARAMETER_TYPE = "header";
@@ -54,7 +56,7 @@ public class SpringfoxSwaggerConfiguration {
                 .title("Professional User Profile Reference Data API")
                 .description("Documented API for the tactical professional user profile reference data solution."
                     + "To use the API calls generate an Authorization JWT Tokens (user and service) which is required in the header.")
-                .version(apiVersion)
+                .version(API_VERSION)
                 .build();
     }
 
