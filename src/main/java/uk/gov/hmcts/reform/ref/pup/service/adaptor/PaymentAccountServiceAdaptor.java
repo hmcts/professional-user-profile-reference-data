@@ -56,11 +56,11 @@ public class PaymentAccountServiceAdaptor {
 
     public PaymentAccountDto assign(String pbaNumber, PaymentAccountAssignment paymentAccountAssignment) throws ApplicationException {
         paymentAccountService.assign(pbaNumber, paymentAccountAssignment);
-        return retrieve(pbaNumber).get();
+        return retrieve(pbaNumber).orElseThrow(NullPointerException::new);
     }
 
     public PaymentAccountDto unassign(String pbaNumber, PaymentAccountAssignment paymentAccountAssignment) throws ApplicationException {
         paymentAccountService.unassign(pbaNumber, paymentAccountAssignment);
-        return retrieve(pbaNumber).get();
+        return retrieve(pbaNumber).orElseThrow(NullPointerException::new);
     }
 }
