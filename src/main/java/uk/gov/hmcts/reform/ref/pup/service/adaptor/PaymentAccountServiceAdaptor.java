@@ -54,13 +54,13 @@ public class PaymentAccountServiceAdaptor {
 
     }
 
-    public Optional<PaymentAccountDto> assign(String pbaNumber, PaymentAccountAssignment paymentAccountAssignment) throws ApplicationException {
+    public PaymentAccountDto assign(String pbaNumber, PaymentAccountAssignment paymentAccountAssignment) throws ApplicationException {
         paymentAccountService.assign(pbaNumber, paymentAccountAssignment);
-        return retrieve(pbaNumber);
+        return retrieve(pbaNumber).get();
     }
 
-    public Optional<PaymentAccountDto> unassign(String pbaNumber, PaymentAccountAssignment paymentAccountAssignment) throws ApplicationException {
+    public PaymentAccountDto unassign(String pbaNumber, PaymentAccountAssignment paymentAccountAssignment) throws ApplicationException {
         paymentAccountService.unassign(pbaNumber, paymentAccountAssignment);
-        return retrieve(pbaNumber);
+        return retrieve(pbaNumber).get();
     }
 }

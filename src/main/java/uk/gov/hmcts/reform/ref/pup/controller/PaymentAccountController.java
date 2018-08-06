@@ -95,12 +95,8 @@ public class PaymentAccountController {
             @PathVariable String pbaNumber,
             @RequestBody @Valid PaymentAccountAssignment paymentAccountAssignment) throws ApplicationException {
 
-        Optional<PaymentAccountDto> paymentAccount = paymentAccountService.assign(pbaNumber, paymentAccountAssignment);
-        if (!paymentAccount.isPresent()) {
-            return NOT_FOUND_RESPONSE;
-        }
-
-        return ResponseEntity.ok(paymentAccount.get());
+        PaymentAccountDto paymentAccount = paymentAccountService.assign(pbaNumber, paymentAccountAssignment);
+        return ResponseEntity.ok(paymentAccount);
     }
 
     @PostMapping(value = "{pbaNumber}/unassign")
@@ -112,11 +108,7 @@ public class PaymentAccountController {
             @PathVariable String pbaNumber,
             @RequestBody @Valid PaymentAccountAssignment paymentAccountAssignment) throws ApplicationException {
 
-        Optional<PaymentAccountDto> paymentAccount = paymentAccountService.unassign(pbaNumber, paymentAccountAssignment);
-        if (!paymentAccount.isPresent()) {
-            return NOT_FOUND_RESPONSE;
-        }
-
-        return ResponseEntity.ok(paymentAccount.get());
+        PaymentAccountDto paymentAccount = paymentAccountService.unassign(pbaNumber, paymentAccountAssignment);
+        return ResponseEntity.ok(paymentAccount);
     }
 }
