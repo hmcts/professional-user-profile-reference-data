@@ -53,15 +53,12 @@ def versions = [
     springfoxSwagger   : '2.9.2',
     liquibase          : '3.5.3',
     lombok             : '1.18.0',
-    azure              : '7.0.0',
     hmctsAuth          : '2.1.3',
-    hmctsProxy         :  '2.0.0',
     h2                 : '1.4.197',
 ]
 
 dependencies {
 
-    compile("com.microsoft.azure:azure-storage:${versions.azure}")
     compile("io.springfox:springfox-swagger2:${versions.springfoxSwagger}")
     compile("io.springfox:springfox-swagger-ui:${versions.springfoxSwagger}")
     compile('org.springframework.boot:spring-boot-starter-actuator')
@@ -74,7 +71,6 @@ dependencies {
     compile("uk.gov.hmcts.reform:java-logging-httpcomponents:${versions.hmctsJavaLogging}")
     compile("uk.gov.hmcts.reform:java-logging-appinsights:${versions.hmctsJavaLogging}")
     compile("uk.gov.hmcts.reform.auth:auth-checker-lib:${versions.hmctsAuth}")
-//    compile("uk.gov.hmcts.reform:http-proxy-spring-boot-autoconfigure:${versions.hmctsProxy}")
     compile("org.projectlombok:lombok:${versions.lombok}")
     runtime('org.springframework.boot:spring-boot-devtools')
 
@@ -89,9 +85,6 @@ def coverageExclusionList = [
     '**uk/gov/hmcts/reform/ref/pup/dto/*',
     '**uk/gov/hmcts/reform/ref/pup/domain/*',
     '**uk/gov/hmcts/reform/ref/pup/config/**/*',
-    '**uk/gov/hmcts/reform/ref/pup/batch/exception/*',
-    '**uk/gov/hmcts/reform/ref/pup/batch/config/*',
-    '**uk/gov/hmcts/reform/ref/pup/batch/model/*',
     '**uk/gov/hmcts/reform/ref/pup/actuate/health/IdamHealth*',
     '**uk/gov/hmcts/reform/ref/pup/actuate/health/S2SHealth*',
 ]

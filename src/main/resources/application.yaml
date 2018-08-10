@@ -19,11 +19,6 @@ spring:
       max-idle: ${MAX_IDLE_DB_CONNECTIONS:25}
       max-wait: ${MAX_WAIT_DB_CONNECTIONS:10000} # Number of ms to wait before throwing an exception if no connection is available.
       test-on-borrow: ${TEST_ON_BORROW_DB_CONNECTION:true} # Validate the connection before borrowing it from the pool.
-  batch:
-    initialize-schema: always
-    job:
-      enabled: ${ENABLE_CRON:true}
-      csvUpload: ${TTL_CRON_EXPRESSION:"*/60 * * * * *"}
   liquibase:
     enabled: ${ENABLE_DB_MIGRATE:true}
     change-log: classpath:/db/changelog/db.changelog-master.yaml
@@ -77,17 +72,8 @@ authorization:
 info:
   app:
     environment: ${PACKAGES_ENVIRONMENT:local}
-    project: ${PACKAGES_PROJECT:evidence}
-    name: ${PACKAGES_NAME:dm-store}
-
-azure:
-  app_insights_key: ${APPINSIGHTS_INSTRUMENTATIONKEY:false}
-  storage:
-    connection-string: ${AZURE_STORAGE_CONNECTION_STRING:false}
-    file-share-name: ${AZURE_FILE_SHARE_NAME:puprd-test}
-    blob-container-reference: ${AZURE_BLOB_CONTAINER_REFERENCE:storage}
-
-file-storage-client: ${FILE_STORAGE_CLIENT:azureBlobStorageClient}
+    project: ${PACKAGES_PROJECT:pui}
+    name: ${PACKAGES_NAME:prd}
 
 app-insights:
   dev-mode: off
@@ -97,4 +83,3 @@ app-insights:
 toggle:
   includeidamhealth: ${ENABLE_IDAM_HEALTH_CHECK:false}
   includes2shealth: ${ENABLE_S2S_HEALTH_CHECK:false}
-  uploadCSV: ${ENABLE_UPLOAD_CSV:true}
