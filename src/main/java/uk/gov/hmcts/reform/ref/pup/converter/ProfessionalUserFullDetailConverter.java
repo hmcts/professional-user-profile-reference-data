@@ -18,7 +18,6 @@ public class ProfessionalUserFullDetailConverter implements Function<Professiona
 
     @Autowired
     public ProfessionalUserFullDetailConverter(OrganisationConverter organisationConverter, PaymentAccountConverter paymentAccountConverter) {
-
         this.organisationConverter = organisationConverter;
         this.paymentAccountConverter = paymentAccountConverter;
 
