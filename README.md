@@ -1,17 +1,11 @@
 professional-reference-data-api
 
 
-# ccd-user-profile-api
+# professional-reference-data-api
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Build Status](https://travis-ci.org/hmcts/ccd-user-profile-api.svg?branch=master)](https://travis-ci.org/hmcts/ccd-user-profile-api)
-[![codecov](https://codecov.io/gh/hmcts/ccd-user-profile-api/branch/master/graph/badge.svg)](https://codecov.io/gh/hmcts/ccd-user-profile-api)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3798a9145e064d71bcf5fc7c89c74013)](https://www.codacy.com/app/adr1ancho/ccd-user-profile-api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=hmcts/ccd-user-profile-api&amp;utm_campaign=Badge_Grade)
-[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/3798a9145e064d71bcf5fc7c89c74013)](https://www.codacy.com/app/adr1ancho/ccd-user-profile-api?utm_source=github.com&utm_medium=referral&utm_content=hmcts/ccd-user-profile-api&utm_campaign=Badge_Coverage)
-[![Known Vulnerabilities](https://snyk.io/test/github/hmcts/ccd-user-profile-api/badge.svg)](https://snyk.io/test/github/hmcts/ccd-user-profile-api)
-[![HitCount](http://hits.dwyl.io/hmcts/ccd-user-profile-api.svg)](#ccd-user-profile-api)
+[![Build Status](https://travis-ci.org/hmcts/ref-professional-user-profile.svg?branch=master)](https://travis-ci.org/hmcts/ref-professional-user-profile)
+[![codecov](https://codecov.io/gh/hmcts/ref-professional-user-profile/branch/master/graph/badge.svg)](https://codecov.io/gh/hmcts/ref-professional-user-profile)
 
-
-UI preferences for Core Case Data users.
 ____
 
 ## Getting started
@@ -19,7 +13,6 @@ ____
 ### Prerequisites
 
 - [JDK 8](https://www.oracle.com/java)
-- [Docker](https://www.docker.com)
 
 #### Environment variables
 
