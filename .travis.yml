@@ -16,6 +16,7 @@ before_install:
 script:
   - ./gradlew check
   - ./gradlew jacocoTestReport
+  - ./gradlew dependencyCheckAnalyze
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
