@@ -4,9 +4,6 @@ locals {
   local_env = "${(var.env == "preview" || var.env == "spreview") ? (var.env == "preview" ) ? "aat" : "saat" : var.env}"
   shared_vault_name = "${var.shared_product_name}-${local.local_env}"
 }
-# "${local.ase_name}"
-# "${local.app_full_name}"
-# "${local.local_env}"
 
 module "app" {
   source = "git@github.com:hmcts/moj-module-webapp?ref=master"
@@ -20,6 +17,8 @@ module "app" {
   additional_host_name = "${local.app_full_name}-${var.env}.service.${var.env}.platform.hmcts.net"
   https_only="false"
   common_tags  = "${var.common_tags}"
+  asp_rg = "${var.asp_rg}"
+  asp_name = "${var.asp_name}"
 
   app_settings = {
     POSTGRES_HOST = "${module.db.host_name}"
