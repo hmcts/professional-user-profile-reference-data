@@ -27,14 +27,6 @@ variable "env" {
   type = "string"
 }
 
-variable "asp_rg" {
-  type = "string"
-}
-
-variable "asp_name" {
-  type = "string"
-}
-
 variable "subscription" {
   type = "string"
 }
