@@ -47,7 +47,7 @@ variable "common_tags" {
 //Addtional Vars ///////////////////////////////
 ////////////////////////////////////////////////
 variable "capacity" {
-  default = "2"
+  default = "1"
 }
 
 variable "java_opts" {
@@ -56,10 +56,6 @@ variable "java_opts" {
 ////////////////////////////////////////////////
 // Endpoints
 ////////////////////////////////////////////////
-variable "vault_section" {
-  default = "test"
-}
-
 variable "idam_api_url" {
   default = "http://betaDevBccidamAppLB.reform.hmcts.net:80"
 }
